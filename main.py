@@ -4,13 +4,16 @@
 try:
     import pygame
 except ImportError:
-    print("Please run 'pip install -r requirements.txt' in this folder's directory.")
+    print("Please run 'pip install -r requirements.txt in this folder's directory.")
 
 
 #Pune codu aci
 def main():
-    print("It works!")
+    print("Merge frate")
 
 
 if __name__ == "__main__":
     main()
+print("merge bine")
+
+print("COMMIT test")
