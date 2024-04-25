@@ -15,3 +15,5 @@ def main():
 if __name__ == "__main__":
     main()
 print("merge bine")
+
+print("COMMIT test")
