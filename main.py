@@ -7,15 +7,16 @@ try:
     from sys import exit
     import resources.pygameResources as assets
 except ImportError:
-    print("Error >> Please run 'pip install -r requirements.txt in this folder's directory.")
+    print("Error >> Please run 'pip install -r requirements.txt' in this folder's directory.")
 
 
 pygame.init()
+running = True
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1600, 900))
 pygame.display.set_caption('SuperPong')
 
-while True:
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
