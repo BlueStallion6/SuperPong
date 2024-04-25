@@ -1,14 +1,12 @@
 #Dupa ce instalezi importurile baga in consola "pip freeze > requirements.txt"
-
 try:
     import pygame
     import colored
     from keywords import *
-    from sys import exit
+    import sys
     import resources.pygameResources as assets
 except ImportError:
     print("Error >> Please run 'pip install -r requirements.txt' in this folder's directory.")
-
 
 pygame.init()
 running = True
@@ -21,11 +19,13 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
             print_success("Closing the game...")
+            running = False
             exit()
+
     screen.blit(assets.bg,(-240,0))
     pygame.display.update()
 
-    clock.tick(75)
+    clock.tick(100)
 
 
 
