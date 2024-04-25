@@ -4,7 +4,7 @@
 try:
     import pygame
 except ImportError:
-    print("Please run 'pip install -r requirements.txt in this folder's directory.")
+    print("Please run 'pip install -r requirements.txt' in this folder's directory.")
 
 
 #Pune codu aci
