@@ -24,6 +24,7 @@ while running:
             exit()
     screen.blit(assets.bg,(-240,0))
     pygame.display.update()
+
     clock.tick(75)
 
 
