@@ -27,7 +27,7 @@ while running:
 
     clock.tick(100)
 
-
+# ardei ..... 2/ 14
 
 
 
