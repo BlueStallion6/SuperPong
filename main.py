@@ -1,19 +1,32 @@
-#Pune importurile aici
-#
-#Dupa ce instalezi importurile baga in consola "pip freeze > requirements.txt
+#Dupa ce instalezi importurile baga in consola "pip freeze > requirements.txt"
+
 try:
     import pygame
+    import colored
+    from keywords import *
+    from sys import exit
+    import resources.pygameResources as assets
 except ImportError:
-    print("Please run 'pip install -r requirements.txt in this folder's directory.")
+    print("Error >> Please run 'pip install -r requirements.txt in this folder's directory.")
 
 
-#Pune codu aci
-def main():
-    print("Merge frate")
+pygame.init()
+clock = pygame.time.Clock()
+screen = pygame.display.set_mode((1600, 900))
+pygame.display.set_caption('SuperPong')
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            print_success("Closing the game...")
+            exit()
+    screen.blit(assets.bg,(-240,0))
+    pygame.display.update()
+    clock.tick(75)
 
 
-if __name__ == "__main__":
-    main()
-print("merge bine")
 
-print("COMMIT test")
+
+
+
