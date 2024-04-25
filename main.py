@@ -9,7 +9,7 @@ except ImportError:
 
 #Pune codu aci
 def main():
-    print("It works!")
+    print("Merge frate")
 
 
 if __name__ == "__main__":
