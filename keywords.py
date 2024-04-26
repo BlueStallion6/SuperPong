@@ -19,7 +19,7 @@ def print_error(*txt):
     string = ""
     for substr in txt:
         string += str(substr) + " "
-    print(f"{c_white}[{c_rst}{c_red}warning{c_rst}{c_white}]{c_rst} " + string)
+    print(f"{c_white}[{c_rst}{c_red}error{c_rst}{c_white}]{c_rst} " + string)
 
 def print_debug(*txt):
     string = ""
