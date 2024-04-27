@@ -47,7 +47,6 @@ class Paddle:
 left_paddle = Paddle(20, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_MULT)
 right_paddle = Paddle(W_WIDTH - 20 - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_MULT)
 
-
 class Ball:
     def __init__(self, x, y):
         self.x = x
@@ -76,6 +75,10 @@ while running:
 
     left_paddle.draw(screen)
     right_paddle.draw(screen)
+    for i in range(0, 50):
+        LINE_START = i * 2 * W_HEIGHT * W_PERC / 50
+        LINE_END = (i * 2 + 1) * W_HEIGHT / 50 * W_PERC
+        pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
 
     #Controls
     KEYS_PRESSED = pygame.key.get_pressed()

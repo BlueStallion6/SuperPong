@@ -17,7 +17,9 @@ class Colors:
     BLUE = (0, 0, 255)
     LIGHT_GRAY = (235, 235, 235)
     LIGHTER_GRAY = (245, 245, 245)
-
+    DARK_GRAY = (80, 80, 80)
+    VERY_DARK_GRAY = (50, 50, 50)
+    WAY_TOO_DARK_GRAY = (30, 30, 30)
 
 #Console Debugs
 def print_warning(*txt):
