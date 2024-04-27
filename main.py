@@ -109,6 +109,7 @@ while running:
         if DEBUG_MODE: print_debug("Keydown: S")
 
 
+
     #pygame.display.flip()
     pygame.display.update()
 
