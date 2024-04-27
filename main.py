@@ -44,8 +44,9 @@ class Paddle:
     def draw(self, win):
         pygame.draw.rect(win, Colors.LIGHT_GRAY, (self.x, self.y, self.width, self.height))
 
-left_paddle = Paddle(20, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_MULT)
-right_paddle = Paddle(W_WIDTH - 20 - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_MULT)
+
+left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_MULT)
+right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_MULT)
 
 class Ball:
     def __init__(self, x, y):

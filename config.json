@@ -9,6 +9,7 @@
         "paddle_width": 29,
         "paddle_height": 175,
         "ball_radius": 15,
-        "mid_lines_count": 60
+        "mid_lines_count": 60,
+        "paddle_spacing": 50
     }
 }
