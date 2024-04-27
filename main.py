@@ -35,7 +35,7 @@ with open("config.json", "r") as file:
     # print_debug(str(config["settings"]))
     file.close()
 
-if config["settings"]["window_perc"] == None:
+if config["settings"]["window_perc"] is None:
     w_perc = int(input(f"{c_white}~Please specify the window size (1-100): {c_rst}"))
     if input(f"{c_white}~Do you want to save your selection for the next time? (y/n): ").lower() == "y":
         config["settings"]["window_perc"] = w_perc
@@ -87,11 +87,13 @@ while running:
         if event.type == pygame.QUIT:
             print_success("Closing the game...")
             pygame.quit()
+            exit()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 print_success("Closing the game...")
                 pygame.quit()
+                exit()
 
     #Controls
 
