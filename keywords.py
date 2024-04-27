@@ -8,6 +8,17 @@ c_white = Fore.white
 c_yellow = Fore.yellow
 c_rst = Style.reset
 
+#Colors
+class Colors:
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    LIGHT_GRAY = (235, 235, 235)
+    LIGHTER_GRAY = (215, 215, 215)
+
+
 #Console Debugs
 def print_warning(*txt):
     string = ""
