@@ -16,7 +16,7 @@ class Colors:
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
     LIGHT_GRAY = (235, 235, 235)
-    LIGHTER_GRAY = (215, 215, 215)
+    LIGHTER_GRAY = (245, 245, 245)
 
 
 #Console Debugs

@@ -25,7 +25,7 @@ except FileNotFoundError:
 
 
 pygame.display.set_caption('SuperPong')
-tps = pygame.time.Clock()
+clock = pygame.time.Clock()
 
 monitors = get_monitors()
 primary_monitor = monitors[0]
@@ -44,14 +44,19 @@ if config["settings"]["window_perc"] is None:
             json.dump(config, file, indent=4)
             file.close()
 else:
-    w_perc = config["settings"]["window_perc"]
+    w_perc = config["settings"]["window_perc"] / 100
 
 flags = pygame.HWSURFACE | pygame.DOUBLEBUF
 
 DEBUG_MODE = config["settings"]["debug_mode"]
-W_WIDTH = primary_monitor.width * w_perc / 100
-W_HEIGHT = primary_monitor.height * w_perc / 100
-PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
+W_WIDTH = primary_monitor.width * w_perc
+W_HEIGHT = primary_monitor.height * w_perc
+PADDLE_WIDTH, PADDLE_HEIGHT = config["play_configs"]["paddle_width"] * w_perc, config["play_configs"]["paddle_height"] * w_perc
+TPS = config["settings"]["tps"]
+PADDLE_SPEED = config["play_configs"]["paddle_speed"] * w_perc
+
+RP_MULT = 1
+LP_MULT = 1
 
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), flags)
 
@@ -67,15 +72,18 @@ class Paddle:
         pygame.draw.rect(win, Colors.LIGHT_GRAY, (self.x, self.y, self.width, self.height))
 
 
+class Ball:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.radius = config["play_configs"]["ball_radius"]
 
-left_paddle = Paddle(10, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT)
-
-right_paddle = Paddle(W_WIDTH - 10 - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT)
-
+    def draw(self, win):
+        pygame.draw.circle(win, Colors.WHITE, (self.x, self.y, self.radius))
 
 
-
-
+left_paddle = Paddle(20, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_MULT)
+right_paddle = Paddle(W_WIDTH - 20 - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_MULT)
 
 
 
@@ -95,28 +103,36 @@ while running:
                 pygame.quit()
                 exit()
 
-    #Controls
+    left_paddle.draw(screen)
+    right_paddle.draw(screen)
 
+    #Controls
     KEYS_PRESSED = pygame.key.get_pressed()
     if KEYS_PRESSED[pygame.K_UP]:
         if DEBUG_MODE: print_debug("Keydown: UP")
+        if right_paddle.y > 0:
+            right_paddle.y -= PADDLE_SPEED / TPS
 
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
+        if right_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
+            right_paddle.y += PADDLE_SPEED / TPS
 
     if KEYS_PRESSED[pygame.K_w]:
         if DEBUG_MODE: print_debug("Keydown: W")
-
+        if left_paddle.y > 0:
+            left_paddle.y -= PADDLE_SPEED / TPS
     if KEYS_PRESSED[pygame.K_s]:
         if DEBUG_MODE: print_debug("Keydown: S")
-
+        if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
+            left_paddle.y += PADDLE_SPEED / TPS
 
 
     #pygame.display.flip()
     pygame.display.update()
 
     #Set the ticks per second for the game
-    tps.tick(60)
+    clock.tick(TPS)
 
 
 

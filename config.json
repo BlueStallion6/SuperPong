@@ -1,6 +1,13 @@
 {
     "settings": {
-        "window_perc": 60,
-        "debug_mode": 0
+        "window_perc": 10,
+        "debug_mode": 0,
+        "tps": 165
+    },
+    "play_configs": {
+        "paddle_speed": 630,
+        "paddle_width": 35,
+        "paddle_height": 280,
+        "ball_radius": 15
     }
 }
