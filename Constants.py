@@ -31,5 +31,6 @@ TPS = CONFIG["settings"]["tps"]
 PADDLE_SPEED = CONFIG["play_configs"]["paddle_speed"] * W_PERC
 RP_MULT = 1
 LP_MULT = 1
+MID_LINES_COUNT = CONFIG["play_configs"]["mid_lines_count"]
 
 FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF
