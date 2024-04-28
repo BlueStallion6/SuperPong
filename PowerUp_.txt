@@ -1,0 +1,23 @@
+###                   POWER-UP IDEAS                    ###
+
+# Speed/Size Increase/Decrease override each other:
+
+1. Enlarge Paddle - Make your paddle 90% larger for 6 seconds;
+
+2. Paddle speed boost - Give your paddle 80% more movement speed for 6 seconds;
+
+3. Sabotage - Move your opponent closer to the center of the screen for 5 seconds;
+
+4. Power shot - Your next shot will have 60% more speed on the ball;
+
+5. Reverse controls - Reverse the controls of your opponent for 6 seconds (3 seconds cast time);
+
+6. Slow motion - Decrease your opponent's paddle speed by 20% for 10 seconds;
+
+7. Shrink paddle - Shrink your opponent's paddle by 35% for 10 seconds;
+
+8. Score multiplier - If you score in the next 10 seconds, you will gain 2 points (needs 5 seconds of cast time);
+
+9. Freeze ball - Freeze the ball for 3 seconds;
+
+10. Ball slow - Your opponent's next 3 throws have 30% less speed on the ball;

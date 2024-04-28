@@ -1,7 +1,7 @@
 #~MAIN FILE START
-
 try:
     import os
+    from time import time
     import pygame
     import colored
     import sys
@@ -45,8 +45,8 @@ class Paddle:
         pygame.draw.rect(win, Colors.LIGHT_GRAY, (self.x, self.y, self.width, self.height))
 
 
-left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_MULT)
-right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_MULT)
+left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_HEIGHT_MULT)
+right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_HEIGHT_MULT)
 
 class Ball:
     def __init__(self, x, y):
@@ -71,8 +71,6 @@ class Score:
 
     def dec(self, amount):
         self.count -= amount
-
-
 
 running = True
 while running:
@@ -100,23 +98,25 @@ while running:
     #Controls
     KEYS_PRESSED = pygame.key.get_pressed()
     if KEYS_PRESSED[pygame.K_UP]:
-        if DEBUG_MODE: print_debug("Keydown: UP")
+        if DEBUG_MODE:
+            # print_debug("Keydown: UP")
+            print_debug(int(time() * 1000))
         if right_paddle.y > 0:
-            right_paddle.y -= PADDLE_SPEED / TPS
+            right_paddle.y -= PADDLE_SPEED * RP_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
         if right_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
-            right_paddle.y += PADDLE_SPEED / TPS
+            right_paddle.y += PADDLE_SPEED * RP_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_w]:
         if DEBUG_MODE: print_debug("Keydown: W")
         if left_paddle.y > 0:
-            left_paddle.y -= PADDLE_SPEED / TPS
+            left_paddle.y -= PADDLE_SPEED * LP_SPEED_MULT / TPS
     if KEYS_PRESSED[pygame.K_s]:
         if DEBUG_MODE: print_debug("Keydown: S")
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
-            left_paddle.y += PADDLE_SPEED / TPS
+            left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
 
 
     #pygame.display.flip()
@@ -124,6 +124,7 @@ while running:
 
     #Set the ticks per second for the game
     clock.tick(TPS)
+
 
 
 
