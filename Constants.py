@@ -38,7 +38,7 @@ LP_SPEED_MULT = 1
 
 
 MID_LINES_COUNT = CONFIG["play_configs"]["mid_lines_count"]
-PADDLE_SPACING = CONFIG["play_configs"]["paddle_spacing"]
-
+PADDLE_SPACING = CONFIG["play_configs"]["paddle_spacing"] * W_PERC
+BALL_RADIUS = CONFIG["play_configs"]["ball_radius"] * W_PERC
 
 FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF

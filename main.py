@@ -17,11 +17,13 @@ except ImportError:
     exit()
 
 ##########################################################################################################################################
+
 #~WINDOW INIT~
 pygame.init()
 pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
+
 ##########################################################################################################################################
 
 if CONFIG["settings"]["window_perc"] is None:
@@ -33,7 +35,7 @@ if CONFIG["settings"]["window_perc"] is None:
             json.dump(CONFIG, file, indent=4)
             file.close()
 
-
+#############################################################################################################################################
 class Paddle:
     def __init__(self, x, y, width, height):
         self.x = x
@@ -48,14 +50,43 @@ class Paddle:
 left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_HEIGHT_MULT)
 right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_HEIGHT_MULT)
 
+
+####################################################################################################################################################
+
+ball_velocity_x = 5 * W_PERC
+ball_velocity_y = 5 * W_PERC
 class Ball:
-    def __init__(self, x, y):
+    def __init__(self, x, y, radius):
         self.x = x
         self.y = y
-        self.radius = CONFIG["play_configs"]["ball_radius"]
+        self.radius = BALL_RADIUS
+        self.x_vel = ball_velocity_x
+        self.y_vel = ball_velocity_y
 
-    def draw(self, win):
-        pygame.draw.circle(win, Colors.WHITE, (self.x, self.y, self.radius))
+    def move(self):
+        self.x += self.x_vel
+        self.y += self.y_vel
+
+        if ball.y + ball.radius >= W_HEIGHT:
+            ball.y_vel *= -1
+        elif ball.y - ball.radius <= 0:
+            ball.y_vel *= -1
+
+    def draw(self, screen):
+        pygame.draw.circle(screen, Colors.LIGHTER_GRAY, (self.x, self.y), self.radius, width = 0)
+
+
+ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
+
+"""    def ballcolision(ball,left_paddle, right_paddle):
+        if ball.y + ball.radius >= W_HEIGHT:
+            ball.y_vel *= -1
+        elif ball.y - ball.radius <= 0:
+            ball.y_vel *= -1
+"""
+
+###############################################################################################################################################
+
 
 class Score:
     def __init__(self, x, y):
@@ -71,6 +102,9 @@ class Score:
 
     def dec(self, amount):
         self.count -= amount
+
+###############################################################################################
+
 
 running = True
 while running:
@@ -94,6 +128,10 @@ while running:
         LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
         LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
         pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
+
+
+    ball.draw(screen)
+    ball.move()
 
     #Controls
     KEYS_PRESSED = pygame.key.get_pressed()
