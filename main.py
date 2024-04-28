@@ -2,12 +2,14 @@
 try:
     import os
     from time import time
+    from time import sleep
     import pygame
     import colored
     import sys
     import screeninfo
     import json
     from screeninfo import get_monitors
+
 
     import resources.pygameResources as assets
     from keywords import *
@@ -16,7 +18,7 @@ except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
     exit()
 
-##########################################################################################################################################
+#################################################################################################################################################
 
 #~WINDOW INIT~
 pygame.init()
@@ -24,18 +26,8 @@ pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
 
-##########################################################################################################################################
+################################################################################################################################################
 
-if CONFIG["settings"]["window_perc"] is None:
-    W_PERC = int(input(f"{c_white}~Please specify the window size (1-100): {c_rst}"))
-    if input(f"{c_white}~Do you want to save your selection for the next time? (y/n): ").lower() == "y":
-        CONFIG["settings"]["window_perc"] = W_PERC
-        with open("config.json", "w") as file:
-            # print_debug(str(config))
-            json.dump(CONFIG, file, indent=4)
-            file.close()
-
-#############################################################################################################################################
 class Paddle:
     def __init__(self, x, y, width, height):
         self.x = x
@@ -50,11 +42,11 @@ class Paddle:
 left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_HEIGHT_MULT)
 right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_HEIGHT_MULT)
 
+###############################################################################################################################################
 
-####################################################################################################################################################
+ball_velocity_x = 900 * W_PERC / TPS
+ball_velocity_y = 800 * W_PERC / TPS
 
-ball_velocity_x = 5 * W_PERC
-ball_velocity_y = 5 * W_PERC
 class Ball:
     def __init__(self, x, y, radius):
         self.x = x
@@ -63,30 +55,45 @@ class Ball:
         self.x_vel = ball_velocity_x
         self.y_vel = ball_velocity_y
 
+    def reset(self):
+        self.x = W_WIDTH // 2
+        self.y = W_HEIGHT // 2
+
     def move(self):
         self.x += self.x_vel
         self.y += self.y_vel
 
+
         if ball.y + ball.radius >= W_HEIGHT:
             ball.y_vel *= -1
         elif ball.y - ball.radius <= 0:
             ball.y_vel *= -1
+
+
+        if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y < ball.y < left_paddle.y + left_paddle.height:
+
+            ball.x_vel *= -1
+            ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
+        if ball.x <= 0:
+            RIGHT_SCORE.inc(1)
+            ball.reset()
+            print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
+
+        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y < ball.y < right_paddle.y + right_paddle.height:
+
+            ball.x_vel *= -1
+            ball.x = right_paddle.x - ball.radius - 1 * W_PERC
+        if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:
+            LEFT_SCORE.inc(1)
+            ball.reset()
+            print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
         pygame.draw.circle(screen, Colors.LIGHTER_GRAY, (self.x, self.y), self.radius, width = 0)
 
-
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
 
-"""    def ballcolision(ball,left_paddle, right_paddle):
-        if ball.y + ball.radius >= W_HEIGHT:
-            ball.y_vel *= -1
-        elif ball.y - ball.radius <= 0:
-            ball.y_vel *= -1
-"""
-
-###############################################################################################################################################
-
+###################################################################################################################################################################################
 
 class Score:
     def __init__(self, x, y):
@@ -103,8 +110,12 @@ class Score:
     def dec(self, amount):
         self.count -= amount
 
-###############################################################################################
+    def draw(self):
+        a = 0
 
+LEFT_SCORE = Score(0, 0)
+RIGHT_SCORE = Score(0, 0)
+###############################################################################################################################################
 
 running = True
 while running:
@@ -122,18 +133,18 @@ while running:
                 pygame.quit()
                 exit()
 
+    # Draws
     left_paddle.draw(screen)
     right_paddle.draw(screen)
+    ball.draw(screen)
+    ball.move()
+
     for i in range(0, MID_LINES_COUNT):
         LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
         LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
         pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
 
-
-    ball.draw(screen)
-    ball.move()
-
-    #Controls
+    # Controls
     KEYS_PRESSED = pygame.key.get_pressed()
     if KEYS_PRESSED[pygame.K_UP]:
         if DEBUG_MODE:
@@ -156,11 +167,8 @@ while running:
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
             left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
 
-
-    #pygame.display.flip()
-    pygame.display.update()
-
     #Set the ticks per second for the game
+    pygame.display.update()
     clock.tick(TPS)
 
 
