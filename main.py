@@ -44,10 +44,10 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 
 ###############################################################################################################################################
 
-ball_velocity_x = 1300 * W_PERC / TPS
+ball_velocity_x = 1400 * W_PERC / TPS
 ball_velocity_y = 1 * W_PERC / TPS
 velocity_inc_rate = 1.8
-velocity_inc_flat = 40 * W_PERC /TPS
+velocity_inc_flat = 32 * W_PERC /TPS
 
 class Ball:
     def __init__(self, x, y, radius):
