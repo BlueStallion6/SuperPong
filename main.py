@@ -44,8 +44,10 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 
 ###############################################################################################################################################
 
-ball_velocity_x = 900 * W_PERC / TPS
-ball_velocity_y = 800 * W_PERC / TPS
+ball_velocity_x = 1300 * W_PERC / TPS
+ball_velocity_y = 1 * W_PERC / TPS
+velocity_inc_rate = 1.8
+velocity_inc_flat = 40 * W_PERC /TPS
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -70,19 +72,69 @@ class Ball:
             ball.y_vel *= -1
 
 
+        #LEFT PADDLE COLLISION - 1/7 = upper side,  6/7 = lower side
         if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y < ball.y < left_paddle.y + left_paddle.height:
+            if ball.y < left_paddle.y + left_paddle.height * 1 / 8:
+                ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
-            ball.x_vel *= -1
+            elif ball.y < left_paddle.y + left_paddle.height * 2 / 8:
+                ball.y_vel = (-3/5) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < left_paddle.y + left_paddle.height * 3 / 8:
+                ball.y_vel = (-3 / 10) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < left_paddle.y + left_paddle.height * 4 / 8:
+                ball.y_vel = ball_velocity_y + velocity_inc_flat       # nicio schimbare, se oglindeste
+
+            elif ball.y < left_paddle.y + left_paddle.height * 5 / 8:
+                ball.y_vel = (3 / 10) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < left_paddle.y + left_paddle.height * 6 / 8:
+                ball.y_vel = (3 / 5) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
+                ball.y_vel = 1 * ball_velocity_x + velocity_inc_flat
+
+
+            ball.x_vel *= - 1
+            ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
+
         if ball.x <= 0:
             RIGHT_SCORE.inc(1)
             ball.reset()
             print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
+
+        #RIGHT PADDLE COLLISION
         if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y < ball.y < right_paddle.y + right_paddle.height:
 
+            if ball.y < right_paddle.y + right_paddle.height * 1 / 8:
+                ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < right_paddle.y + right_paddle.height * 2 / 8:
+                ball.y_vel = (-3/5) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < right_paddle.y + right_paddle.height * 3 / 8:
+                ball.y_vel = (-3 / 10) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < right_paddle.y + right_paddle.height * 4 / 8:
+                ball.y_vel = ball_velocity_y + velocity_inc_flat       # nicio schimbare, se oglindeste
+
+            elif ball.y < right_paddle.y + right_paddle.height * 5.5 / 8:
+                ball.y_vel = (3 / 10) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y < right_paddle.y + right_paddle.height * 6 / 8:
+                ball.y_vel = (3 / 5) * ball_velocity_x + velocity_inc_flat
+
+            elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
+                ball.y_vel = (1) * ball_velocity_x + velocity_inc_flat
+
+
             ball.x_vel *= -1
+            ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
+
         if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:
             LEFT_SCORE.inc(1)
             ball.reset()
