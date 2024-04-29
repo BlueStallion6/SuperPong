@@ -86,8 +86,7 @@ class Ball:
                 ball.y_vel = (-3 / 10) * ball_velocity_x
 
             elif ball.y < left_paddle.y + left_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y    # nicio schimbare, se oglindeste
-
+                ball.y_vel = ball_velocity_y
             elif ball.y < left_paddle.y + left_paddle.height * 5 / 8:
                 ball.y_vel = (3 / 10) * ball_velocity_x
 
@@ -96,7 +95,6 @@ class Ball:
 
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
                 ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
-
 
             ball.x_vel *= - 1
             ball.x_vel += velocity_inc_flat
@@ -110,6 +108,7 @@ class Ball:
             ball.y_vel = - ball_velocity_y
             print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
+
         #RIGHT PADDLE COLLISION
         if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y  < right_paddle.y + right_paddle.height + ball.radius:
 
@@ -122,7 +121,7 @@ class Ball:
             elif ball.y < right_paddle.y + right_paddle.height * 3 / 8:
                 ball.y_vel = (-3 / 10) * ball_velocity_x
             elif ball.y < right_paddle.y + right_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y      # nicio schimbare, se oglindeste
+                ball.y_vel = ball_velocity_y
 
             elif ball.y < right_paddle.y + right_paddle.height * 5.5 / 8:
                 ball.y_vel = (3 / 10) * ball_velocity_x
@@ -172,6 +171,7 @@ class Score:
 
 LEFT_SCORE = Score(0, 0)
 RIGHT_SCORE = Score(0, 0)
+
 ###############################################################################################################################################
 
 midlines_draw = False
