@@ -22,6 +22,5 @@
 
 10. Ball slow - Your opponent's next 3 throws have 30% less speed on the ball;
 
-DEFAULT CONFIGS
 
 
