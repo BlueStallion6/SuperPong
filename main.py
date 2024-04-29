@@ -126,7 +126,7 @@ class Ball:
             elif ball.y < right_paddle.y + right_paddle.height * 4 / 8:
                 ball.y_vel = ball_velocity_y
 
-            elif ball.y < right_paddle.y + right_paddle.height * 5.5 / 8:
+            elif ball.y < right_paddle.y + right_paddle.height * 5 / 8:
                 ball.y_vel = (3 / 10) * ball_velocity_x
 
             elif ball.y < right_paddle.y + right_paddle.height * 6 / 8:
