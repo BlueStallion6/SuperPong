@@ -200,17 +200,19 @@ while running:
                 midlines_draw = True
 
     # Draws
-    left_paddle.draw(screen)
-    right_paddle.draw(screen)
-    ball.draw(screen)
-    if ball.moving:
-        ball.move()
 
     if midlines_draw:
         for i in range(0, MID_LINES_COUNT):
             LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
             LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
             pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
+
+    left_paddle.draw(screen)
+    right_paddle.draw(screen)
+    ball.draw(screen)
+    if ball.moving:
+        ball.move()
+
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()
