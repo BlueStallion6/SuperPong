@@ -44,4 +44,6 @@ MID_LINES_COUNT = CONFIG["play_configs"]["mid_lines_count"]
 PADDLE_SPACING = CONFIG["play_configs"]["paddle_spacing"] * W_PERC
 BALL_RADIUS = CONFIG["play_configs"]["ball_radius"] * W_PERC
 
+SFX_VOLUME = CONFIG["settings"]["sfx_volume"]
+
 FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF

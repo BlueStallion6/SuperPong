@@ -11,6 +11,7 @@ try:
     import json
     from screeninfo import get_monitors
 
+    from resources.pygameResources import sfx
     import resources.pygameResources as assets
     from keywords import *
     from Constants import *
@@ -25,7 +26,7 @@ pygame.init()
 pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
-font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
+score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
 
 ################################################################################################################################################
 
@@ -46,7 +47,7 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 ###############################################################################################################################################
 
 ball_velocity_x = 1330 * W_PERC / TPS
-ball_velocity_y = -10 * W_PERC / TPS
+ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
 
@@ -99,6 +100,7 @@ class Ball:
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
                 ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
+            sfx.play(assets.MIDPITCHED_HIT)
             ball.x_vel *= - 1
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
@@ -108,8 +110,8 @@ class Ball:
             ball.reset()
             ball.moving = False
             ball.x_vel = - ball_velocity_x
-            ball.y_vel = - ball_velocity_y
-            print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
+            ball.y_vel = ball_velocity_y
+            #print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
 
         #RIGHT PADDLE COLLISION
@@ -135,6 +137,7 @@ class Ball:
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
                 ball.y_vel = (1) * ball_velocity_x - velocity_inc_flat
 
+            sfx.play(assets.LOWPITCHED_HIT)
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
@@ -145,7 +148,7 @@ class Ball:
             ball.moving = False
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
-            print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
+            #print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
         pygame.draw.circle(screen, Colors.LIGHTER_GRAY, (self.x, self.y), self.radius, width = 0)
@@ -170,17 +173,18 @@ class Score:
         self.count -= amount
 
     def draw(self):
-        score_surface = font.render(str(self.get()), False, Colors.WHITE)
+        score_surface = score_font.render(str(self.get()), False, Colors.WHITE)
         screen.blit(score_surface, (self.x, self.y))
 
 
-LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 13 * W_PERC, TEXT_UP)
+LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 17 * W_PERC, TEXT_UP)
 RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
 
 ###############################################################################################################################################
 
 midlines_draw = True
 ball.moving = False
+
 running = True
 while running:
     screen.fill((0, 0, 0))
@@ -218,6 +222,32 @@ while running:
 
     if ball.moving:
         ball.move()
+    else:
+
+        Press_space_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 44)
+        Press_space_text = Press_space_font.render("PRESS SPACE TO START", True, Colors.GRAY)
+
+        gray_alpha = 250  # max=255
+        max_gray_alpha = 255
+        min_gray_alpha = 0
+        gray_alpha_inc = 40
+        gray_alpha_inc_coef = -1
+
+        if gray_alpha >= max_gray_alpha:
+                gray_alpha_inc_coef = -1
+                print("Decreasing alpha")
+
+        elif gray_alpha <= min_gray_alpha:
+                gray_alpha_inc_coef = 1
+                print("Increasing alpha")
+
+        gray_alpha = gray_alpha + gray_alpha_inc * gray_alpha_inc_coef
+
+
+        Press_space_text.set_alpha(gray_alpha)
+
+        screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
+
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()
@@ -240,12 +270,6 @@ while running:
         if DEBUG_MODE: print_debug("Keydown: S")
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
             left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
-
-
-
-
-
-
 
     #Set the ticks per second for the game
     pygame.display.update()
