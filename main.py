@@ -113,6 +113,7 @@ class Ball:
             ball.moving = False
             ball.x_vel = - ball_velocity_x
             ball.y_vel = ball_velocity_y
+            sfx.play(assets.LOWPITCHED_HIT)
             #print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
 
@@ -150,6 +151,7 @@ class Ball:
             ball.moving = False
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
+            sfx.play(assets.LOWPITCHED_HIT)
             #print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
