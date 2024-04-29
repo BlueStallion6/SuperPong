@@ -1,4 +1,5 @@
-#~MAIN FILE START
+#  MAIN FILE
+
 try:
     import os
     from time import time
@@ -9,7 +10,6 @@ try:
     import screeninfo
     import json
     from screeninfo import get_monitors
-
 
     import resources.pygameResources as assets
     from keywords import *
@@ -25,6 +25,7 @@ pygame.init()
 pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
+font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
 
 ################################################################################################################################################
 
@@ -47,7 +48,7 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 ball_velocity_x = 1330 * W_PERC / TPS
 ball_velocity_y = -10 * W_PERC / TPS
 velocity_inc_rate = 1.8
-velocity_inc_flat = 30 * W_PERC / TPS
+velocity_inc_flat = 32 * W_PERC / TPS
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -68,9 +69,11 @@ class Ball:
 
         if ball.y + ball.radius >= W_HEIGHT:  # lower barrier
             ball.y_vel *= -1
+            ball.y = W_HEIGHT - ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
         elif ball.y - ball.radius <= 0:
             ball.y_vel *= -1
+            ball.y = ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
 
 
@@ -167,18 +170,20 @@ class Score:
         self.count -= amount
 
     def draw(self):
-        a = 0
+        score_surface = font.render(str(self.get()), False, Colors.WHITE)
+        screen.blit(score_surface, (self.x, self.y))
 
-LEFT_SCORE = Score(0, 0)
-RIGHT_SCORE = Score(0, 0)
+
+LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 13 * W_PERC, TEXT_UP)
+RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
 
 ###############################################################################################################################################
 
-midlines_draw = False
+midlines_draw = True
 ball.moving = False
 running = True
 while running:
-    screen.fill((0,0,0))
+    screen.fill((0, 0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -199,7 +204,6 @@ while running:
                 midlines_draw = True
 
     # Draws
-
     if midlines_draw:
         for i in range(0, MID_LINES_COUNT):
             LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
@@ -209,6 +213,9 @@ while running:
     left_paddle.draw(screen)
     right_paddle.draw(screen)
     ball.draw(screen)
+    LEFT_SCORE.draw()
+    RIGHT_SCORE.draw()
+
     if ball.moving:
         ball.move()
 

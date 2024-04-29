@@ -2,10 +2,11 @@
     "settings": {
         "window_perc": 100,
         "debug_mode": 0,
-        "tps": 165
+        "tps": 165,
+        "font_size": 30
     },
     "play_configs": {
-        "paddle_speed": 990,
+        "paddle_speed": 900,
         "paddle_width": 29,
         "paddle_height": 185,
         "ball_radius": 17.8,

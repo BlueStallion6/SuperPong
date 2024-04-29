@@ -30,6 +30,9 @@ PADDLE_WIDTH, PADDLE_HEIGHT = CONFIG["play_configs"]["paddle_width"] * W_PERC, C
 TPS = CONFIG["settings"]["tps"]
 PADDLE_SPEED = CONFIG["play_configs"]["paddle_speed"] * W_PERC
 
+TEXT_UP = CONFIG["play_configs"]["text_up"] * W_PERC
+TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
+
 RP_HEIGHT_MULT = 1
 RP_SPEED_MULT = 1
 
