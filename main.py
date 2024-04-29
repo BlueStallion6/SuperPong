@@ -80,22 +80,22 @@ class Ball:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
             elif ball.y < left_paddle.y + left_paddle.height * 2 / 8:
-                ball.y_vel = (-3/5) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (-3/5) * ball_velocity_x
 
             elif ball.y < left_paddle.y + left_paddle.height * 3 / 8:
-                ball.y_vel = (-3 / 10) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (-3 / 10) * ball_velocity_x
 
             elif ball.y < left_paddle.y + left_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y + velocity_inc_flat       # nicio schimbare, se oglindeste
+                ball.y_vel = ball_velocity_y    # nicio schimbare, se oglindeste
 
             elif ball.y < left_paddle.y + left_paddle.height * 5 / 8:
-                ball.y_vel = (3 / 10) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (3 / 10) * ball_velocity_x
 
             elif ball.y < left_paddle.y + left_paddle.height * 6 / 8:
-                ball.y_vel = (3 / 5) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (3 / 5) * ball_velocity_x
 
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
-                ball.y_vel = 1 * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
 
             ball.x_vel *= - 1
@@ -117,22 +117,21 @@ class Ball:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
             elif ball.y < right_paddle.y + right_paddle.height * 2 / 8:
-                ball.y_vel = (-3/5) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (-3/5) * ball_velocity_x
 
             elif ball.y < right_paddle.y + right_paddle.height * 3 / 8:
-                ball.y_vel = (-3 / 10) * ball_velocity_x + velocity_inc_flat
-
+                ball.y_vel = (-3 / 10) * ball_velocity_x
             elif ball.y < right_paddle.y + right_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y + velocity_inc_flat       # nicio schimbare, se oglindeste
+                ball.y_vel = ball_velocity_y      # nicio schimbare, se oglindeste
 
             elif ball.y < right_paddle.y + right_paddle.height * 5.5 / 8:
-                ball.y_vel = (3 / 10) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (3 / 10) * ball_velocity_x
 
             elif ball.y < right_paddle.y + right_paddle.height * 6 / 8:
-                ball.y_vel = (3 / 5) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (3 / 5) * ball_velocity_x
 
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
-                ball.y_vel = (1) * ball_velocity_x + velocity_inc_flat
+                ball.y_vel = (1) * ball_velocity_x - velocity_inc_flat
 
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
@@ -212,7 +211,6 @@ while running:
     ball.draw(screen)
     if ball.moving:
         ball.move()
-
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()
