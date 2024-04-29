@@ -72,12 +72,12 @@ class Ball:
             ball.y_vel *= -1
             ball.y = W_HEIGHT - ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
-            sfx.play(assets.HIGHPITCHED_HIT)
+            sfx.play(assets.MARGIN_HIT_SOUND)
         elif ball.y - ball.radius <= 0:
             ball.y_vel *= -1
             ball.y = ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
-            sfx.play(assets.HIGHPITCHED_HIT)
+            sfx.play(assets.MARGIN_HIT_SOUND)
 
 
         #LEFT PADDLE COLLISION - 1/7 = upper side,  6/7 = lower side
@@ -102,7 +102,7 @@ class Ball:
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
                 ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
-            sfx.play(assets.MIDPITCHED_HIT)
+            sfx.play(assets.PADDLE_HIT_SOUND)
             ball.x_vel *= - 1
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
@@ -113,7 +113,7 @@ class Ball:
             ball.moving = False
             ball.x_vel = - ball_velocity_x
             ball.y_vel = ball_velocity_y
-            sfx.play(assets.LOWPITCHED_HIT)
+            sfx.play(assets.WIN_LOSE_SOUND)
             #print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
 
@@ -140,7 +140,7 @@ class Ball:
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
                 ball.y_vel = (1) * ball_velocity_x - velocity_inc_flat
 
-            sfx.play(assets.MIDPITCHED_HIT)
+            sfx.play(assets.PADDLE_HIT_SOUND)
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
@@ -151,7 +151,7 @@ class Ball:
             ball.moving = False
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
-            sfx.play(assets.LOWPITCHED_HIT)
+            sfx.play(assets.WIN_LOSE_SOUND)
             #print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
@@ -228,7 +228,7 @@ while running:
         ball.move()
     else:
 
-        Press_space_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 44)
+        Press_space_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Press_space_text = Press_space_font.render("PRESS SPACE TO START", True, Colors.GRAY)
 
         gray_alpha = 250  # max=255
