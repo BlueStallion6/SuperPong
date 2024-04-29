@@ -44,10 +44,10 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 
 ###############################################################################################################################################
 
-ball_velocity_x = 1400 * W_PERC / TPS
-ball_velocity_y = 1 * W_PERC / TPS
+ball_velocity_x = 1330 * W_PERC / TPS
+ball_velocity_y = -10 * W_PERC / TPS
 velocity_inc_rate = 1.8
-velocity_inc_flat = 32 * W_PERC /TPS
+velocity_inc_flat = 30 * W_PERC / TPS
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -66,14 +66,16 @@ class Ball:
         self.y += self.y_vel
 
 
-        if ball.y + ball.radius >= W_HEIGHT:
+        if ball.y + ball.radius >= W_HEIGHT:  # lower barrier
             ball.y_vel *= -1
+            ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
         elif ball.y - ball.radius <= 0:
             ball.y_vel *= -1
+            ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
 
 
         #LEFT PADDLE COLLISION - 1/7 = upper side,  6/7 = lower side
-        if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y < ball.y < left_paddle.y + left_paddle.height:
+        if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y - ball.radius < ball.y < left_paddle.y + left_paddle.height + ball.radius:
             if ball.y < left_paddle.y + left_paddle.height * 1 / 8:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
@@ -100,14 +102,16 @@ class Ball:
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
 
-        if ball.x <= 0:
+        if ball.x <= 0:   #Left_side
             RIGHT_SCORE.inc(1)
             ball.reset()
+            ball.moving = False
+            ball.x_vel = - ball_velocity_x
+            ball.y_vel = - ball_velocity_y
             print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
-
         #RIGHT PADDLE COLLISION
-        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y < ball.y < right_paddle.y + right_paddle.height:
+        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y  < right_paddle.y + right_paddle.height + ball.radius:
 
             if ball.y < right_paddle.y + right_paddle.height * 1 / 8:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
@@ -130,7 +134,6 @@ class Ball:
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
                 ball.y_vel = (1) * ball_velocity_x + velocity_inc_flat
 
-
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
@@ -138,6 +141,9 @@ class Ball:
         if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:
             LEFT_SCORE.inc(1)
             ball.reset()
+            ball.moving = False
+            ball.x_vel = ball_velocity_x
+            ball.y_vel = ball_velocity_y
             print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
@@ -169,6 +175,8 @@ LEFT_SCORE = Score(0, 0)
 RIGHT_SCORE = Score(0, 0)
 ###############################################################################################################################################
 
+midlines_draw = False
+ball.moving = False
 running = True
 while running:
     screen.fill((0,0,0))
@@ -185,16 +193,24 @@ while running:
                 pygame.quit()
                 exit()
 
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                ball.moving = True
+                midlines_draw = True
+
     # Draws
     left_paddle.draw(screen)
     right_paddle.draw(screen)
     ball.draw(screen)
-    ball.move()
+    if ball.moving:
+        ball.move()
 
-    for i in range(0, MID_LINES_COUNT):
-        LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
-        LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
-        pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
+    if midlines_draw:
+        for i in range(0, MID_LINES_COUNT):
+            LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
+            LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
+            pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()
@@ -204,7 +220,6 @@ while running:
             print_debug(int(time() * 1000))
         if right_paddle.y > 0:
             right_paddle.y -= PADDLE_SPEED * RP_SPEED_MULT / TPS
-
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
         if right_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
@@ -218,6 +233,12 @@ while running:
         if DEBUG_MODE: print_debug("Keydown: S")
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
             left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
+
+
+
+
+
+
 
     #Set the ticks per second for the game
     pygame.display.update()
