@@ -7,7 +7,7 @@
         "sfx_volume": 1
     },
     "play_configs": {
-        "paddle_speed": 900,
+        "paddle_speed": 930,
         "paddle_width": 29,
         "paddle_height": 185,
         "ball_radius": 17.8,

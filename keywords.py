@@ -16,7 +16,7 @@ class Colors:
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
     GRAY = (190, 190, 190)
-    LIGHT_GRAY = (235, 235, 235)
+    LIGHT_GRAY = (215, 215, 215)
     LIGHTER_GRAY = (245, 245, 245)
     DARK_GRAY = (80, 80, 80)
     VERY_DARK_GRAY = (50, 50, 50)

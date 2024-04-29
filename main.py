@@ -49,7 +49,7 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 ball_velocity_x = 1330 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
-velocity_inc_flat = 32 * W_PERC / TPS
+velocity_inc_flat = 36 * W_PERC / TPS
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -72,10 +72,12 @@ class Ball:
             ball.y_vel *= -1
             ball.y = W_HEIGHT - ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
+            sfx.play(assets.HIGHPITCHED_HIT)
         elif ball.y - ball.radius <= 0:
             ball.y_vel *= -1
             ball.y = ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
+            sfx.play(assets.HIGHPITCHED_HIT)
 
 
         #LEFT PADDLE COLLISION - 1/7 = upper side,  6/7 = lower side
@@ -137,7 +139,7 @@ class Ball:
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
                 ball.y_vel = (1) * ball_velocity_x - velocity_inc_flat
 
-            sfx.play(assets.LOWPITCHED_HIT)
+            sfx.play(assets.MIDPITCHED_HIT)
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
@@ -151,7 +153,7 @@ class Ball:
             #print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
     def draw(self, screen):
-        pygame.draw.circle(screen, Colors.LIGHTER_GRAY, (self.x, self.y), self.radius, width = 0)
+        pygame.draw.circle(screen, Colors.LIGHT_GRAY, (self.x, self.y), self.radius, width = 0)
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
 
