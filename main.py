@@ -9,12 +9,13 @@ try:
     import sys
     import screeninfo
     import json
-    from screeninfo import get_monitors
-
-    from resources.pygameResources import sfx
     import resources.pygameResources as assets
+    from screeninfo import get_monitors
+    from resources.pygameResources import sfx
     from keywords import *
     from Constants import *
+    import Power_ups
+
 except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
     exit()
