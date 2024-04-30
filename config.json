@@ -2,17 +2,17 @@
     "settings": {
         "window_perc": 100,
         "debug_mode": 0,
-        "tps": 165,
+        "tps": 200,
         "font_size": 30,
         "sfx_volume": 1
     },
     "play_configs": {
         "paddle_speed": 930,
         "paddle_width": 29,
-        "paddle_height": 185,
-        "ball_radius": 17.8,
+        "paddle_height": 197,
+        "ball_radius": 18,
         "mid_lines_count": 60,
-        "paddle_spacing": 50,
+        "paddle_spacing": 56,
         "text_up": 100,
         "text_spacing": 50
     },

@@ -28,7 +28,7 @@ pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
 score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
-
+ball_going_right = True
 ################################################################################################################################################
 
 class Paddle:
@@ -81,7 +81,7 @@ class Ball:
             sfx.play(assets.MARGIN_HIT_SOUND)
 
 
-        #LEFT PADDLE COLLISION - 1/7 = upper side,  6/7 = lower side
+        #LEFT PADDLE COLLISION - 1/8 = upper side,  7/8 = lower side
         if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y - ball.radius < ball.y < left_paddle.y + left_paddle.height + ball.radius:
             if ball.y < left_paddle.y + left_paddle.height * 1 / 8:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
@@ -103,10 +103,17 @@ class Ball:
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
                 ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
+
+
             sfx.play(assets.PADDLE_HIT_SOUND)
             ball.x_vel *= - 1
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
+
+        #### TBD- collision with the short side of the paddle
+
+
+
 
         if ball.x <= 0:   #Left_side
             RIGHT_SCORE.inc(1)
@@ -139,14 +146,14 @@ class Ball:
                 ball.y_vel = (3 / 5) * ball_velocity_x
 
             elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
-                ball.y_vel = (1) * ball_velocity_x - velocity_inc_flat
+                ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
             sfx.play(assets.PADDLE_HIT_SOUND)
             ball.x_vel *= -1
             ball.x_vel -= velocity_inc_flat
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
 
-        if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:
+        if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:   #right_side
             LEFT_SCORE.inc(1)
             ball.reset()
             ball.moving = False
@@ -184,6 +191,7 @@ class Score:
 
 LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 17 * W_PERC, TEXT_UP)
 RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
+SEM = 0
 
 ###############################################################################################################################################
 
@@ -229,29 +237,33 @@ while running:
         ball.move()
     else:
 
+
         Press_space_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Press_space_text = Press_space_font.render("PRESS SPACE TO START", True, Colors.GRAY)
 
-        gray_alpha = 250  # max=255
-        max_gray_alpha = 255
-        min_gray_alpha = 0
-        gray_alpha_inc = 40
-        gray_alpha_inc_coef = -1
+        Way_line_right_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 28)
+        Way_line_right_text = Press_space_font.render(">>>", True, Colors.WAY_TOO_DARK_GRAY)
 
-        if gray_alpha >= max_gray_alpha:
-                gray_alpha_inc_coef = -1
-                print("Decreasing alpha")
+        Way_line_left_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 28)
+        Way_line_left_text = Press_space_font.render("<<<", True, Colors.WAY_TOO_DARK_GRAY)
 
-        elif gray_alpha <= min_gray_alpha:
-                gray_alpha_inc_coef = 1
-                print("Increasing alpha")
 
-        gray_alpha = gray_alpha + gray_alpha_inc * gray_alpha_inc_coef
 
+        gray_alpha = 230  # max=255
         Press_space_text.set_alpha(gray_alpha)
 
         screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
 
+        if ball.x_vel < 0:
+            SEM = False  # Ball is moving left
+        else:
+            SEM = True
+
+
+        if SEM:
+            screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
+        elif not SEM:
+            screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()

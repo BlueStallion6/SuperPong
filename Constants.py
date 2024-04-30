@@ -35,7 +35,6 @@ TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
 
 RP_HEIGHT_MULT = 1
 RP_SPEED_MULT = 1
-
 LP_HEIGHT_MULT = 1
 LP_SPEED_MULT = 1
 
