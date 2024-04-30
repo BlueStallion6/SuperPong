@@ -248,7 +248,6 @@ while running:
 
         gray_alpha = gray_alpha + gray_alpha_inc * gray_alpha_inc_coef
 
-
         Press_space_text.set_alpha(gray_alpha)
 
         screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
