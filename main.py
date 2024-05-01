@@ -320,6 +320,12 @@ while running:
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
             left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
 
+    if DEBUG_MODE:
+        fps = clock.get_fps()
+        font = pygame.font.Font(None, 24)
+        fps_text = font.render(f"FPS: {fps:.2f}", True, (170, 170, 170))
+        screen.blit(fps_text, (10, 10))
+
     #Set the ticks per second for the game
     pygame.display.update()
     clock.tick(TPS)
