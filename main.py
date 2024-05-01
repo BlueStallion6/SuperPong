@@ -198,7 +198,7 @@ player_won = False
 
 running = True
 while running:
-    screen.fill((10, 10, 18))
+    screen.fill((10, 10, 15))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

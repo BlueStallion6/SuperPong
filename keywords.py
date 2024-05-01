@@ -21,8 +21,8 @@ class Colors:
     DARK_GRAY = (80, 80, 80)
     VERY_DARK_GRAY = (50, 50, 50)
     WAY_TOO_DARK_GRAY = (38, 38, 38)
-    MEGA_LIGHT_BLUE = (205, 205, 255)
-    MEGA_LIGHT_RED = (255, 205, 205)
+    MEGA_LIGHT_BLUE = (200, 200, 255)
+    MEGA_LIGHT_RED = (255, 200, 200)
 
 #Console Debugs
 def print_warning(*txt):
