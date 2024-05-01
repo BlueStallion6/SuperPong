@@ -238,13 +238,17 @@ while running:
             Left_won_text = Winning_font.render("LEFT SIDE WON !", True, Colors.GRAY)
             screen.blit(Left_won_text, (W_WIDTH // 2 - Left_won_text.get_width() // 2, W_HEIGHT // 3))
 
-            print("Left side won!")
         else:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 58)
             Right_won_text = Winning_font.render("RIGHT SIDE WON !", True, Colors.GRAY)
             screen.blit(Right_won_text, (W_WIDTH // 2 - Right_won_text.get_width() // 2, W_HEIGHT // 3))
 
-            print("Right side won!")
+        Continue_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 38)
+        Continue_text = Winning_font.render("Press SPACE to Restart", True, Colors.GRAY)
+        Continue_text.set_alpha(220)
+        screen.blit(Continue_text, (W_WIDTH // 2 - Continue_text.get_width() // 2, W_HEIGHT // 2 + W_HEIGHT// 8 ))
+
+
 
         player_won = True
         Press_space_sem = False
