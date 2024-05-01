@@ -196,7 +196,7 @@ player_won = False
 
 running = True
 while running:
-    screen.fill((2, 0, 20))
+    screen.fill((10, 10, 24))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -247,7 +247,7 @@ while running:
 
         Continue_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Continue_text = Continue_font.render("Press SPACE to Restart", True, Colors.GRAY)
-        Continue_text.set_alpha(152)
+        Continue_text.set_alpha(150)
         screen.blit(Continue_text, (W_WIDTH // 2 - Continue_text.get_width() // 2, W_HEIGHT // 2 + W_HEIGHT// 10 ))
 
 
@@ -276,9 +276,7 @@ while running:
         Way_line_left_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 28)
         Way_line_left_text = Press_space_font.render("<<<", True, Colors.WAY_TOO_DARK_GRAY)
 
-
-        gray_alpha = 230  # max=255
-        Press_space_text.set_alpha(gray_alpha)
+        Press_space_text.set_alpha(244)
 
         if Press_space_sem:
             screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
