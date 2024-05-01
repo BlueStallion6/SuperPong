@@ -47,10 +47,10 @@ right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADD
 
 ###############################################################################################################################################
 
-ball_velocity_x = 1330 * W_PERC / TPS
+ball_velocity_x = 1340 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
-velocity_inc_flat = 36 * W_PERC / TPS
+velocity_inc_flat = 32 * W_PERC / TPS
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -191,7 +191,7 @@ class Score:
 
 LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 17 * W_PERC, TEXT_UP)
 RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
-SEM = 0
+WAY_ARROW_SEM = 0
 
 ###############################################################################################################################################
 
@@ -255,15 +255,15 @@ while running:
         screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
 
         if ball.x_vel < 0:
-            SEM = False  # Ball is moving left
+            WAY_ARROW_SEM = False  # Ball is moving left
         else:
-            SEM = True
+            WAY_ARROW_SEM = True
 
-
-        if SEM:
+        if WAY_ARROW_SEM:
             screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
-        elif not SEM:
+        elif not WAY_ARROW_SEM:
             screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
+
 
     # Controls
     KEYS_PRESSED = pygame.key.get_pressed()

@@ -24,3 +24,5 @@
 
 
 
+paddle_height": 197
+"paddle_speed": 930,
