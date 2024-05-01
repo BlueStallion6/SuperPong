@@ -28,7 +28,7 @@ pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
 score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
-ball_going_right = True
+
 ################################################################################################################################################
 
 class Paddle:
@@ -51,7 +51,6 @@ ball_velocity_x = 1340 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
-
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -111,10 +110,6 @@ class Ball:
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
 
-        #### TBD- collision with the short side of the paddle
-
-
-
 
         if ball.x <= 0:   #Left_side
             RIGHT_SCORE.inc(1)
@@ -123,7 +118,6 @@ class Ball:
             ball.x_vel = - ball_velocity_x
             ball.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_SOUND)
-            #print_success(f"Score for the right: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
 
 
         #RIGHT PADDLE COLLISION
@@ -161,7 +155,7 @@ class Ball:
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_SOUND)
-            #print_success(f"Score for the left: {LEFT_SCORE.get()} : {RIGHT_SCORE.get()}")
+
 
     def draw(self, screen):
         pygame.draw.circle(screen, Colors.LIGHT_GRAY, (self.x, self.y), self.radius, width = 0)
@@ -198,6 +192,7 @@ WAY_ARROW_SEM = 0
 
 midlines_draw = True
 ball.moving = False
+player_won = False
 
 running = True
 while running:
@@ -214,7 +209,6 @@ while running:
                 print_success("Closing the game...")
                 pygame.quit()
                 exit()
-
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -234,10 +228,38 @@ while running:
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
 
+    Press_space_sem = True
+
+    # WINNING SITUATION
+    if LEFT_SCORE.get() >= WINNING_SCORE or RIGHT_SCORE.get() >= WINNING_SCORE:
+        # Print the winning message and reset the scores
+        if LEFT_SCORE.get() >= WINNING_SCORE:
+            Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 58)
+            Left_won_text = Winning_font.render("LEFT SIDE WON !", True, Colors.GRAY)
+            screen.blit(Left_won_text, (W_WIDTH // 2 - Left_won_text.get_width() // 2, W_HEIGHT // 3))
+
+            print("Left side won!")
+        else:
+            Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 58)
+            Right_won_text = Winning_font.render("RIGHT SIDE WON !", True, Colors.GRAY)
+            screen.blit(Right_won_text, (W_WIDTH // 2 - Right_won_text.get_width() // 2, W_HEIGHT // 3))
+
+            print("Right side won!")
+
+        player_won = True
+        Press_space_sem = False
+
+        if player_won and pygame.key.get_pressed()[pygame.K_SPACE]:
+            LEFT_SCORE.count = 0
+            RIGHT_SCORE.count = 0
+            ball.reset()
+            ball.moving = False
+            player_won = False
+            Press_space_sem = True
+
     if ball.moving:
         ball.move()
     else:
-
 
         Press_space_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Press_space_text = Press_space_font.render("PRESS SPACE TO START", True, Colors.GRAY)
@@ -249,11 +271,11 @@ while running:
         Way_line_left_text = Press_space_font.render("<<<", True, Colors.WAY_TOO_DARK_GRAY)
 
 
-
         gray_alpha = 230  # max=255
         Press_space_text.set_alpha(gray_alpha)
 
-        screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
+        if Press_space_sem:
+            screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
 
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
@@ -264,6 +286,8 @@ while running:
             screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
         elif not WAY_ARROW_SEM:
             screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
+
+
 
 
     # Controls
