@@ -52,6 +52,7 @@ ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
 
+
 class Ball:
     def __init__(self, x, y, radius):
         self.x = x
