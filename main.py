@@ -38,9 +38,11 @@ class Paddle:
         self.width = width
         self.height = height
 
-    def draw(self, win):
-        pygame.draw.rect(win, Colors.LIGHT_GRAY, (self.x, self.y, self.width, self.height))
+    def draw_right(self, win):
+        pygame.draw.rect(win, Colors.MEGA_LIGHT_BLUE, (self.x, self.y, self.width, self.height))
 
+    def draw_left(self, win):
+        pygame.draw.rect(win, Colors.MEGA_LIGHT_RED, (self.x, self.y, self.width, self.height))
 
 left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_HEIGHT_MULT)
 right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_HEIGHT_MULT)
@@ -196,7 +198,7 @@ player_won = False
 
 running = True
 while running:
-    screen.fill((10, 10, 24))
+    screen.fill((10, 10, 18))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -222,17 +224,18 @@ while running:
             LINE_END = (i * 2 + 1) * W_HEIGHT / (MID_LINES_COUNT * 2)
             pygame.draw.line(screen, Colors.WAY_TOO_DARK_GRAY, (W_WIDTH/2, LINE_START), (W_WIDTH/2, LINE_END), 2)
 
-    left_paddle.draw(screen)
-    right_paddle.draw(screen)
+    left_paddle.draw_left(screen)
+    right_paddle.draw_right(screen)
     ball.draw(screen)
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
 
     Press_space_sem = True
+    print_arrows = True
 
     # WINNING SITUATION
     if LEFT_SCORE.get() >= WINNING_SCORE or RIGHT_SCORE.get() >= WINNING_SCORE:
-        # Print the winning message and reset the scores
+
         if LEFT_SCORE.get() >= WINNING_SCORE:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
             Left_won_text = Winning_font.render("LEFT SIDE WON !", True, Colors.GRAY)
@@ -247,10 +250,9 @@ while running:
 
         Continue_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Continue_text = Continue_font.render("Press SPACE to Restart", True, Colors.GRAY)
-        Continue_text.set_alpha(150)
-        screen.blit(Continue_text, (W_WIDTH // 2 - Continue_text.get_width() // 2, W_HEIGHT // 2 + W_HEIGHT// 10 ))
-
-
+        Continue_text.set_alpha(148)
+        screen.blit(Continue_text, (W_WIDTH // 2 - Continue_text.get_width() // 2, W_HEIGHT // 2 + W_HEIGHT// 8 ))
+        print_arrows = False
 
         player_won = True
         Press_space_sem = False
@@ -262,6 +264,8 @@ while running:
             ball.moving = False
             player_won = False
             Press_space_sem = True
+            print_arrows = False
+
 
     if ball.moving:
         ball.move()
@@ -286,11 +290,11 @@ while running:
         else:
             WAY_ARROW_SEM = True
 
-        if WAY_ARROW_SEM:
-            screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
-        elif not WAY_ARROW_SEM:
-            screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
-
+        if print_arrows:
+            if WAY_ARROW_SEM:
+                screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
+            elif not WAY_ARROW_SEM:
+                screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
 
 
 
