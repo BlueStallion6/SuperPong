@@ -238,13 +238,13 @@ while running:
 
         if LEFT_SCORE.get() >= WINNING_SCORE:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
-            Left_won_text = Winning_font.render("LEFT SIDE WON !", True, Colors.GRAY)
+            Left_won_text = Winning_font.render("RED SIDE WON !", True, Colors.RED)
             Left_won_text.set_alpha(255)
             screen.blit(Left_won_text, (W_WIDTH // 2 - Left_won_text.get_width() // 2, W_HEIGHT // 3))
 
         else:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
-            Right_won_text = Winning_font.render("RIGHT SIDE WON !", True, Colors.GRAY)
+            Right_won_text = Winning_font.render("BLUE SIDE WON !", True, Colors.BLUE)
             Right_won_text.set_alpha(255)
             screen.blit(Right_won_text, (W_WIDTH // 2 - Right_won_text.get_width() // 2, W_HEIGHT // 3))
 
@@ -326,7 +326,6 @@ while running:
         fps_text = font.render(f"FPS: {fps:.2f}", True, (170, 170, 170))
         screen.blit(fps_text, (10, 10))
 
-    #Set the ticks per second for the game
     pygame.display.update()
     clock.tick(TPS)
 

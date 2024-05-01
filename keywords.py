@@ -12,17 +12,17 @@ c_rst = Style.reset
 class Colors:
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
+    RED = (210, 120, 120)
     GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
+    BLUE = (120, 120, 210)
     GRAY = (190, 190, 190)
     LIGHT_GRAY = (215, 215, 215)
     LIGHTER_GRAY = (245, 245, 245)
     DARK_GRAY = (80, 80, 80)
     VERY_DARK_GRAY = (50, 50, 50)
     WAY_TOO_DARK_GRAY = (38, 38, 38)
-    MEGA_LIGHT_BLUE = (200, 200, 255)
-    MEGA_LIGHT_RED = (255, 200, 200)
+    MEGA_LIGHT_BLUE = (180, 180, 255)
+    MEGA_LIGHT_RED = (255, 180, 180)
 
 #Console Debugs
 def print_warning(*txt):
