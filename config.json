@@ -15,7 +15,7 @@
         "paddle_spacing": 56,
         "text_up": 100,
         "text_spacing": 50,
-        "winning_score": 3
+        "winning_score": 1
     },
     "powerups": {}
 }
