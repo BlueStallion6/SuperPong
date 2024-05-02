@@ -1,19 +1,17 @@
 import pygame
-import json
 import time
 from keywords import *
-
-try:
-    open("config.json")
-except FileNotFoundError:
-    print_error("Config file not found.")
-
-with open("config.json", "r") as file:
-    CONFIG = json.load(file)
-    # print_debug(str(config["settings"]))
-    file.close()
+from Constants import CONFIG
 
 RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
+LEFT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
+
+LEFT_PADDLE_SPEED_MULT = 1
+RIGHT_PADDLE_SPEED_MULT = 1
+
+LEFT_PADDLE_HEIGHT_MULT = 2
+RIGHT_PADDLE_HEIGHT_MULT = 2
+
 
 
 POWER_UP_DURATION = 5

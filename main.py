@@ -14,7 +14,8 @@ try:
     from resources.pygameResources import sfx
     from keywords import *
     from Constants import *
-    import Power_ups
+    #import Power_ups
+    from Power_ups import *
 
 except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
@@ -44,8 +45,8 @@ class Paddle:
     def draw_left(self, win):
         pygame.draw.rect(win, Colors.MEGA_LIGHT_RED, (self.x, self.y, self.width, self.height))
 
-left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT * LP_HEIGHT_MULT)
-right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - PADDLE_HEIGHT/ 2, PADDLE_WIDTH, PADDLE_HEIGHT * RP_HEIGHT_MULT)
+left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)
+right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)
 
 ###############################################################################################################################################
 
@@ -307,20 +308,20 @@ while running:
             # print_debug("Keydown: UP")
             print_debug(int(time() * 1000))
         if right_paddle.y > 0:
-            right_paddle.y -= PADDLE_SPEED * RP_SPEED_MULT / TPS
+            right_paddle.y -= PADDLE_SPEED * RIGHT_PADDLE_SPEED_MULT / TPS
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
         if right_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
-            right_paddle.y += PADDLE_SPEED * RP_SPEED_MULT / TPS
+            right_paddle.y += PADDLE_SPEED * RIGHT_PADDLE_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_w]:
         if DEBUG_MODE: print_debug("Keydown: W")
         if left_paddle.y > 0:
-            left_paddle.y -= PADDLE_SPEED * LP_SPEED_MULT / TPS
+            left_paddle.y -= PADDLE_SPEED * LEFT_PADDLE_SPEED_MULT / TPS
     if KEYS_PRESSED[pygame.K_s]:
         if DEBUG_MODE: print_debug("Keydown: S")
         if left_paddle.y < W_HEIGHT - PADDLE_HEIGHT:
-            left_paddle.y += PADDLE_SPEED * LP_SPEED_MULT / TPS
+            left_paddle.y += PADDLE_SPEED * LEFT_PADDLE_SPEED_MULT / TPS
 
     if DEBUG_MODE:
         fps = clock.get_fps()

@@ -12,6 +12,7 @@ except FileNotFoundError:
     url = "https://raw.githubusercontent.com/BlueStallion6/SuperPong/main/config.json"
     config_file = requests.get(url)
     open("config.json", "wb").write(config_file.content)
+    print_success("'config.json' has been created")
 
 with open("config.json", "r") as file:
     CONFIG = json.load(file)
@@ -36,13 +37,6 @@ PADDLE_SPEED = CONFIG["play_configs"]["paddle_speed"] * W_PERC
 
 TEXT_UP = CONFIG["play_configs"]["text_up"] * W_PERC
 TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
-
-RP_HEIGHT_MULT = 1
-RP_SPEED_MULT = 1
-LP_HEIGHT_MULT = 1
-LP_SPEED_MULT = 1
-RIGHT_SCORE_INCREASE_MULT = 1
-LEFT_SCORE_INCREASE_MULT = 1
 
 SEM = 1
 Press_space_sem = True
