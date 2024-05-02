@@ -15,7 +15,20 @@
         "paddle_spacing": 56,
         "text_up": 100,
         "text_spacing": 50,
-        "winning_score": 2
+        "winning_score": 3
     },
-    "powerups": {}
+    "powerups": {
+        "enlarge": 1.9,
+        "paddle_speed_boost": 1.8,
+        "sabotage_spacing_increase": 300,
+        "power_shot": 1.6,
+        "weak_shot": 0.7,
+        "slow_motion": 0.8,
+        "shrink_paddle": 0.65,
+        "score_mult": 2,
+        "freeze_ball_time": 3000,
+        "scatter_time": 3000,
+        "scatter_spacing": 0,
+        "helping_hand_height": 200
+    }
 }

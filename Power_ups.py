@@ -1,5 +1,20 @@
 import pygame
+import json
 import time
+from keywords import *
+
+try:
+    open("config.json")
+except FileNotFoundError:
+    print_error("Config file not found.")
+
+with open("config.json", "r") as file:
+    CONFIG = json.load(file)
+    # print_debug(str(config["settings"]))
+    file.close()
+
+RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
+
 
 POWER_UP_DURATION = 5
 class PowerUp_Enlarge:

@@ -114,12 +114,12 @@ class Ball:
 
 
         if ball.x <= 0:   #Left_side
-            RIGHT_SCORE.inc(1)
+            RIGHT_SCORE.inc(1 * RIGHT_SCORE_INCREASE_MULT)
             ball.reset()
             ball.moving = False
             ball.x_vel = - ball_velocity_x
             ball.y_vel = ball_velocity_y
-            sfx.play(assets.WIN_LOSE_SOUND)
+            sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
 
         #RIGHT PADDLE COLLISION
@@ -151,12 +151,12 @@ class Ball:
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
 
         if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:   #right_side
-            LEFT_SCORE.inc(1)
+            LEFT_SCORE.inc(1 * RIGHT_SCORE_INCREASE_MULT)
             ball.reset()
             ball.moving = False
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
-            sfx.play(assets.WIN_LOSE_SOUND)
+            sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
 
     def draw(self, screen):
@@ -242,11 +242,13 @@ while running:
             Left_won_text.set_alpha(255)
             screen.blit(Left_won_text, (W_WIDTH // 2 - Left_won_text.get_width() // 2, W_HEIGHT // 3))
 
+
         else:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
             Right_won_text = Winning_font.render("BLUE SIDE WON !", True, Colors.BLUE)
             Right_won_text.set_alpha(255)
             screen.blit(Right_won_text, (W_WIDTH // 2 - Right_won_text.get_width() // 2, W_HEIGHT // 3))
+
 
         Continue_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 48)
         Continue_text = Continue_font.render("Press SPACE to Restart", True, Colors.GRAY)
@@ -280,7 +282,7 @@ while running:
         Way_line_left_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 28)
         Way_line_left_text = Press_space_font.render("<<<", True, Colors.WAY_TOO_DARK_GRAY)
 
-        Press_space_text.set_alpha(244)
+        Press_space_text.set_alpha(236)
 
         if Press_space_sem:
             screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))

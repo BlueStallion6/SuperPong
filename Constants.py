@@ -1,13 +1,17 @@
 import json
 import pygame
+import requests
 from keywords import *
 from screeninfo import get_monitors
-
 
 try:
     open("config.json")
 except FileNotFoundError:
     print_error("Config file not found.")
+    print_debug("Downloading config file from 'https://raw.githubusercontent.com/BlueStallion6/SuperPong/main/config.json'...")
+    url = "https://raw.githubusercontent.com/BlueStallion6/SuperPong/main/config.json"
+    config_file = requests.get(url)
+    open("config.json", "wb").write(config_file.content)
 
 with open("config.json", "r") as file:
     CONFIG = json.load(file)
@@ -37,6 +41,9 @@ RP_HEIGHT_MULT = 1
 RP_SPEED_MULT = 1
 LP_HEIGHT_MULT = 1
 LP_SPEED_MULT = 1
+RIGHT_SCORE_INCREASE_MULT = 1
+LEFT_SCORE_INCREASE_MULT = 1
+
 SEM = 1
 Press_space_sem = True
 ball_going_right = True

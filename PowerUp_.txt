@@ -20,9 +20,9 @@
 
 9. Freeze ball - Freeze the ball for 3 seconds;
 
-10. Ball slow - Your opponent's next 3 throws have 30% less speed on the ball;
+10. Ball slow - Your opponent's next 3 hits will have 30% less speed ;
 
+11. Scatter - create a wall in the middle for 4 seconds after the opponent touches the ball;
 
+12. Helping hand - Get 2 walls on the edges(over and under your paddle), that protect you for 6 seconds.
 
-paddle_height": 197
-"paddle_speed": 930,
