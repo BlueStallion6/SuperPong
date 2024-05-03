@@ -15,7 +15,7 @@ try:
     from keywords import *
     from Constants import *
     #import Power_ups
-    from Power_ups import *
+    #from Power_ups import *
 
 except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
@@ -32,10 +32,45 @@ score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["setti
 
 ################################################################################################################################################
 
+class PowerUp:
+    def __init__(self):
+        self.active = False
+        self.activation_time = 0
+
+    def activate(self):
+        self.active = True
+        self.activation_time = time()
+
+    def deactivate(self):
+        self.active = False
+        self.activation_time = 0
+
+    def is_active(self):
+        return self.active
+
+    def update(self):
+        if self.active and time() - self.activation_time > 10:
+            self.deactivate()
+
+class Score_Multiplier(PowerUp):
+    def effect_score_multiplier(self, score_inc):
+        if self.is_active():
+            return score_inc
+        else:
+            return 1
+
+
+powerup_score_multiplier_left = Score_Multiplier()
+powerup_score_multiplier_right = Score_Multiplier()
+
+
+############################################################################################################################################
+
 class Paddle:
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, side):
         self.x = x
         self.y = y
+        self.side = side
         self.width = width
         self.height = height
 
@@ -45,10 +80,10 @@ class Paddle:
     def draw_left(self, win):
         pygame.draw.rect(win, Colors.MEGA_LIGHT_RED, (self.x, self.y, self.width, self.height))
 
-left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)
-right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)
+left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT, "LEFT")
+right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT, "RIGHT")
 
-###############################################################################################################################################
+################################################################################################################################################################
 
 ball_velocity_x = 1340 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS

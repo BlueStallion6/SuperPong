@@ -34,6 +34,7 @@ W_HEIGHT = primary_monitor.height * W_PERC
 PADDLE_WIDTH, PADDLE_HEIGHT = CONFIG["play_configs"]["paddle_width"] * W_PERC, CONFIG["play_configs"]["paddle_height"] * W_PERC
 TPS = CONFIG["settings"]["tps"]
 PADDLE_SPEED = CONFIG["play_configs"]["paddle_speed"] * W_PERC
+SCORE_MULT = CONFIG["powerups"]["score_mult"]
 
 TEXT_UP = CONFIG["play_configs"]["text_up"] * W_PERC
 TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
@@ -50,4 +51,13 @@ SFX_VOLUME = CONFIG["settings"]["sfx_volume"]
 WINNING_SCORE = CONFIG["play_configs"]["winning_score"]
 
 FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF
+
+RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
+LEFT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
+
+LEFT_PADDLE_SPEED_MULT = 1
+RIGHT_PADDLE_SPEED_MULT = 1
+
+LEFT_PADDLE_HEIGHT_MULT = 1
+RIGHT_PADDLE_HEIGHT_MULT = 1
 
