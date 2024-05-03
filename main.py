@@ -2,8 +2,7 @@
 
 try:
     import os
-    from time import time
-    from time import sleep
+    import time
     import pygame
     import colored
     import sys
@@ -55,9 +54,9 @@ class PowerUp:
 class Score_Multiplier(PowerUp):
     def effect_score_multiplier(self, score_inc):
         if self.is_active():
-            return score_inc
+            return score_inc + 1
         else:
-            return 1
+            return score_inc
 
 
 powerup_score_multiplier_left = Score_Multiplier()
@@ -89,6 +88,9 @@ ball_velocity_x = 1340 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
+score_increment = 0
+start_frame = None
+
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -150,7 +152,7 @@ class Ball:
 
 
         if ball.x <= 0:   #Left_side
-            RIGHT_SCORE.inc(1 * RIGHT_SCORE_INCREASE_MULT)
+            RIGHT_SCORE.inc(1 + score_increment)
             ball.reset()
             ball.moving = False
             ball.x_vel = - ball_velocity_x
@@ -187,7 +189,7 @@ class Ball:
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
 
         if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:   #right_side
-            LEFT_SCORE.inc(1 * RIGHT_SCORE_INCREASE_MULT)
+            LEFT_SCORE.inc(1 + score_increment)
             ball.reset()
             ball.moving = False
             ball.x_vel = ball_velocity_x
@@ -235,6 +237,9 @@ player_won = False
 running = True
 while running:
     screen.fill((10, 10, 15))
+    current_frame = pygame.time.get_ticks()
+    #print (start_frame)
+    SECONDS = 10
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -252,6 +257,17 @@ while running:
             if event.key == pygame.K_SPACE:
                 ball.moving = True
                 midlines_draw = True
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN: # and pygame.time.get_ticks() - start_frame < 720: #start_time =~ 640 , 3 * TPS = 720,
+                score_increment = 1
+                start_frame = pygame.time.get_ticks()
+                print("ahuu")
+            elif start_frame is not None and current_frame - start_frame >= SECONDS * TPS:
+                score_increment = 0
+
+                print("n-ahuu")
+
 
     # Draws
     if midlines_draw:
@@ -334,6 +350,7 @@ while running:
             elif not WAY_ARROW_SEM:
                 screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
 
+    powerup_score_multiplier_left.update()
 
 
     # Controls
@@ -341,7 +358,7 @@ while running:
     if KEYS_PRESSED[pygame.K_UP]:
         if DEBUG_MODE:
             # print_debug("Keydown: UP")
-            print_debug(int(time() * 1000))
+            print_debug(int(time.time() * 1000))
         if right_paddle.y > 0:
             right_paddle.y -= PADDLE_SPEED * RIGHT_PADDLE_SPEED_MULT / TPS
     if KEYS_PRESSED[pygame.K_DOWN]:
