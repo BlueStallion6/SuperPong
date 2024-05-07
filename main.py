@@ -233,13 +233,16 @@ WAY_ARROW_SEM = 0
 midlines_draw = True
 ball.moving = False
 player_won = False
-
 running = True
+Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 38)
+
 while running:
     screen.fill((10, 10, 15))
     current_frame = pygame.time.get_ticks()
     #print (start_frame)
     SECONDS = 10
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -263,11 +266,12 @@ while running:
                 score_increment = 1
                 start_frame = pygame.time.get_ticks()
                 print("ahuu")
-            elif start_frame is not None and current_frame - start_frame >= SECONDS * TPS:
-                score_increment = 0
 
-                print("n-ahuu")
-
+    #current_frame += 1
+    if start_frame is not None and current_frame - start_frame >= SECONDS * TPS:
+        score_increment = 0
+        start_frame = None
+        print("n-ahuu")
 
     # Draws
     if midlines_draw:
@@ -281,6 +285,11 @@ while running:
     ball.draw(screen)
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
+
+    if score_increment == 1:
+        Powerup_text = Powerup_font.render("Score increment active!", False, Colors.GRAY)
+        screen.blit(Powerup_text, (W_WIDTH // 2 - Powerup_text.get_width() // 2, W_HEIGHT // 5))
+
 
     Press_space_sem = True
     print_arrows = True
@@ -338,6 +347,7 @@ while running:
 
         if Press_space_sem:
             screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
+            score_increment = 0
 
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
@@ -349,8 +359,6 @@ while running:
                 screen.blit(Way_line_right_text, (W_WIDTH // 2 + 40 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
             elif not WAY_ARROW_SEM:
                 screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
-
-    powerup_score_multiplier_left.update()
 
 
     # Controls
