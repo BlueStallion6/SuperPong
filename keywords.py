@@ -24,6 +24,10 @@ class Colors:
     MEGA_LIGHT_BLUE = (180, 180, 255)
     MEGA_LIGHT_RED = (255, 180, 180)
 
+    MEGA_LIGHT_BLUE_AUX = MEGA_LIGHT_BLUE
+    MEGA_LIGHT_RED_AUX = MEGA_LIGHT_RED
+
+
 #Console Debugs
 def print_warning(*txt):
     string = ""
