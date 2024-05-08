@@ -1,5 +1,4 @@
 #  MAIN FILE
-
 try:
     import os
     import time
@@ -14,8 +13,6 @@ try:
     from resources.pygameResources import sfx
     from keywords import *
     from Constants import *
-    #import Power_ups
-    #from Power_ups import *
 
 except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
@@ -61,7 +58,6 @@ velocity_inc_flat = 32 * W_PERC / TPS
 right_score_increment = 0
 left_score_increment = 0
 
-
 class Ball:
     def __init__(self, x, y, radius):
         self.x = x
@@ -78,7 +74,6 @@ class Ball:
         self.x += self.x_vel
         self.y += self.y_vel
 
-
         if ball.y + ball.radius >= W_HEIGHT:  # lower barrier
             ball.y_vel *= -1
             ball.y = W_HEIGHT - ball.radius
@@ -89,7 +84,6 @@ class Ball:
             ball.y = ball.radius
             ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
             sfx.play(assets.MARGIN_HIT_SOUND)
-
 
         #LEFT PADDLE COLLISION - 1/8 = upper side,  7/8 = lower side
         if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y - ball.radius < ball.y < left_paddle.y + left_paddle.height + ball.radius:
@@ -113,13 +107,10 @@ class Ball:
             elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
                 ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
-
-
             sfx.play(assets.PADDLE_HIT_SOUND)
             ball.x_vel *= - 1
             ball.x_vel += velocity_inc_flat
             ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
-
 
         if ball.x <= 0:   #Left_side
             RIGHT_SCORE.inc(1 + right_score_increment)
@@ -128,7 +119,6 @@ class Ball:
             ball.x_vel = - ball_velocity_x
             ball.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
-
 
         #RIGHT PADDLE COLLISION
         if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y < right_paddle.y + right_paddle.height + ball.radius:
@@ -165,7 +155,6 @@ class Ball:
             ball.x_vel = ball_velocity_x
             ball.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
-
 
     def draw(self, screen):
         pygame.draw.circle(screen, Colors.LIGHT_GRAY, (self.x, self.y), self.radius, width = 0)
@@ -302,12 +291,12 @@ while running:                                      #####################---- WH
         right_score_start_time = None
         left_score_mult_interdicted = False
 
-
     if left_score_start_time is not None and current_frame - left_score_start_time >= SCORE_MULT_LIFESPAN * TPS:
         right_score_increment = 0
         left_score_increment = 0
         left_score_start_time = None
         right_score_mult_interdicted = False
+
 
     if right_score_increment == 1:
         right_enlarge_paddle_interdicted = True
@@ -315,8 +304,7 @@ while running:                                      #####################---- WH
         right_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
         screen.blit(right_score_powerup_text, (W_WIDTH // 1.14 - right_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (0, 0, 9)
-    #elif right_score_increment == 0:
-        #right_enlarge_paddle_interdicted = False
+
     elif right_score_increment == 0 and left_score_increment == 0:
         Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
         right_enlarge_paddle_interdicted = False
@@ -327,11 +315,11 @@ while running:                                      #####################---- WH
         left_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
         screen.blit(left_score_powerup_text, (W_WIDTH // 10 - left_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (9, 0, 0)
-    #elif left_score_increment == 0:
-        #left_enlarge_paddle_interdicted = False
+
     elif left_score_increment == 0 and right_score_increment == 0:
         Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
         left_enlarge_paddle_interdicted = False
+
 
     if right_score_increment != 0:
         Colors.MEGA_LIGHT_BLUE = (0, 50, 245)
@@ -342,7 +330,6 @@ while running:                                      #####################---- WH
         Colors.MEGA_LIGHT_RED = (240, 100, 0)
     elif right_score_increment == 0:
         Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
-
 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # POWERUP - ENLARGE PADDLE
@@ -357,14 +344,12 @@ while running:                                      #####################---- WH
     else:
         Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
 
-
     if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
         enlarge_paddle_right_start_time = None
         right_paddle_enlarge_usage += 1
         right_paddle.height = left_paddle_height_aux
         right_paddle.y += 115 * W_PERC
         right_paddle_enlarge_active = False
-
 
     if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
         enlarge_paddle_left_start_time = None
@@ -388,8 +373,9 @@ while running:                                      #####################---- WH
 
     if right_paddle_enlarge_active:
         right_score_mult_interdicted = True
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        # DRAWS
+       ###### DRAWS #######
 
     if midlines_draw:
         for i in range(0, MID_LINES_COUNT):
@@ -403,12 +389,12 @@ while running:                                      #####################---- WH
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
 
-    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Press_space_sem = True
     print_arrows = True
 
-    #####   WINNING SITUATION   ######
+    #########   WINNING SITUATION   #########
 
     if LEFT_SCORE.get() >= WINNING_SCORE or RIGHT_SCORE.get() >= WINNING_SCORE:
         right_score_increment = 0
@@ -458,7 +444,7 @@ while running:                                      #####################---- WH
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    #######    PRESS SPACE TO START SITUATION    #######
+    #######  PRESS SPACE TO START SITUATION  #######
 
     if ball.moving:
         ball.move()
@@ -491,7 +477,6 @@ while running:                                      #####################---- WH
             right_paddle_enlarge_active = False
 
 
-
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
         else:
@@ -504,7 +489,7 @@ while running:                                      #####################---- WH
                 screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Controls
+    #########  Controls  #########
 
     KEYS_PRESSED = pygame.key.get_pressed()
     if KEYS_PRESSED[pygame.K_UP]:
