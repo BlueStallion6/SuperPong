@@ -131,7 +131,7 @@ class Ball:
 
 
         #RIGHT PADDLE COLLISION
-        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y  < right_paddle.y + right_paddle.height + ball.radius:
+        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y < right_paddle.y + right_paddle.height + ball.radius:
 
             if ball.y < right_paddle.y + right_paddle.height * 1 / 8:
                 ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
@@ -255,6 +255,7 @@ while running:                                      #####################---- WH
                     right_score_powerup_usage = 1
                 right_score_start_time = pygame.time.get_ticks()
                 left_score_mult_interdicted = True
+                sfx.play(assets.POWERUP_SOUND)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a and left_score_powerup_usage == 0 and left_score_mult_interdicted is False:
@@ -263,7 +264,7 @@ while running:                                      #####################---- WH
                     left_score_powerup_usage = 1
                 left_score_start_time = pygame.time.get_ticks()
                 right_score_mult_interdicted = True
-
+                sfx.play(assets.POWERUP_SOUND)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #POWERUP - PADDLE ENLARGE EVENT
@@ -276,6 +277,7 @@ while running:                                      #####################---- WH
                     right_paddle_enlarge_usage = 1
                     enlarge_paddle_right_start_time = pygame.time.get_ticks()
                     right_paddle_enlarge_active = True
+                    sfx.play(assets.POWERUP_SOUND2)
             paddle_height_increase = left_paddle.y
 
 
@@ -288,6 +290,7 @@ while running:                                      #####################---- WH
                     left_paddle_enlarge_usage = 1
                     enlarge_paddle_left_start_time = pygame.time.get_ticks()
                     left_paddle_enlarge_active = True
+                    sfx.play(assets.POWERUP_SOUND2)
             paddle_height_increase = left_paddle.y
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
