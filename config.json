@@ -18,7 +18,7 @@
         "winning_score": 3
     },
     "powerups": {
-        "enlarge": 1.9,
+        "enlarge": 230,
         "paddle_speed_boost": 1.8,
         "sabotage_spacing_increase": 300,
         "power_shot": 1.6,

@@ -259,10 +259,10 @@ while running:                                      #####################---- WH
     #POWERUP - PADDLE ENLARGE EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                if ball.moving and right_paddle_enlarge_usage == 0 and right_enlarge_paddle_interdicted is False:
-                    right_paddle.height += 230 * W_PERC
-                    right_paddle.y -= 115 * W_PERC
+            if event.key == pygame.K_RIGHT and right_paddle_enlarge_usage == 0 and right_enlarge_paddle_interdicted is False:
+                if ball.moving:
+                    right_paddle.height += THE_PADDLE_INCREASE * W_PERC
+                    right_paddle.y -= (THE_PADDLE_INCREASE / 2) * W_PERC
                     right_paddle_enlarge_usage = 1
                     enlarge_paddle_right_start_time = pygame.time.get_ticks()
                     right_paddle_enlarge_active = True
@@ -274,8 +274,8 @@ while running:                                      #####################---- WH
             if event.key == pygame.K_d and left_paddle_enlarge_usage == 0 and left_enlarge_paddle_interdicted is False:
                 if ball.moving:
 
-                    left_paddle.height += 230 * W_PERC
-                    left_paddle.y -= 115 * W_PERC
+                    left_paddle.height += THE_PADDLE_INCREASE 
+                    left_paddle.y -= (THE_PADDLE_INCREASE / 2)
                     left_paddle_enlarge_usage = 1
                     enlarge_paddle_left_start_time = pygame.time.get_ticks()
                     left_paddle_enlarge_active = True
@@ -348,14 +348,14 @@ while running:                                      #####################---- WH
         enlarge_paddle_right_start_time = None
         right_paddle_enlarge_usage += 1
         right_paddle.height = left_paddle_height_aux
-        right_paddle.y += 115 * W_PERC
+        right_paddle.y += (THE_PADDLE_INCREASE // 2)
         right_paddle_enlarge_active = False
 
     if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
         enlarge_paddle_left_start_time = None
         left_paddle_enlarge_usage += 1
         left_paddle.height = left_paddle_height_aux
-        left_paddle.y += 115 * W_PERC
+        left_paddle.y += (THE_PADDLE_INCREASE // 2)
         left_paddle_enlarge_active = False
 
     if right_paddle_enlarge_active == 1:
@@ -370,10 +370,13 @@ while running:                                      #####################---- WH
 
     if left_paddle_enlarge_active:
         left_score_mult_interdicted = True
+    elif not left_paddle_enlarge_active:
+        left_score_mult_interdicted = False
 
     if right_paddle_enlarge_active:
         right_score_mult_interdicted = True
-
+    elif not right_paddle_enlarge_active:
+        right_score_mult_interdicted = False
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        ###### DRAWS #######
 
