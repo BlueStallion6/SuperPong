@@ -312,11 +312,11 @@ while running:                                      #####################---- WH
         right_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
         screen.blit(right_score_powerup_text, (W_WIDTH // 1.14 - right_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (0, 0, 9)
-    elif right_score_increment == 0:
-        right_enlarge_paddle_interdicted = False
+    #elif right_score_increment == 0:
+        #right_enlarge_paddle_interdicted = False
     elif right_score_increment == 0 and left_score_increment == 0:
         Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
-
+        right_enlarge_paddle_interdicted = False
 
     if left_score_increment == 1:
         left_enlarge_paddle_interdicted = True
@@ -324,11 +324,11 @@ while running:                                      #####################---- WH
         left_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
         screen.blit(left_score_powerup_text, (W_WIDTH // 10 - left_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (9, 0, 0)
-    elif left_score_increment == 0:
-        left_enlarge_paddle_interdicted = False
+    #elif left_score_increment == 0:
+        #left_enlarge_paddle_interdicted = False
     elif left_score_increment == 0 and right_score_increment == 0:
         Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
-
+        left_enlarge_paddle_interdicted = False
 
     if right_score_increment != 0:
         Colors.MEGA_LIGHT_BLUE = (0, 50, 245)
@@ -344,22 +344,15 @@ while running:                                      #####################---- WH
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # POWERUP - ENLARGE PADDLE
 
-    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS <= (ENLARGE_PADDLE_LIFESPAN / 1.5) * TPS:
-        Colors.MEGA_LIGHT_BLUE = (0, 0, 120)
-    elif enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.5) * TPS <= (ENLARGE_PADDLE_LIFESPAN / 1.2):
-        Colors.MEGA_LIGHT_BLUE = (0, 180, 0)
-    elif enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.2) * TPS:
+    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS:
         Colors.MEGA_LIGHT_BLUE = (0, 0, 120)
     else:
         Colors.MEGA_LIGHT_BLUE = Colors.MEGA_LIGHT_BLUE_AUX
 
-
-    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= (ENLARGE_PADDLE_LIFESPAN / 2) * TPS:
+    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS:
         Colors.MEGA_LIGHT_RED = (120, 0, 0)
     else:
         Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
-
-
 
 
     if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
