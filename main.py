@@ -301,7 +301,7 @@ while running:                                      #####################---- WH
     if right_score_increment == 1:
         right_enlarge_paddle_interdicted = True
         SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
-        right_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
+        right_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_BLUE)
         screen.blit(right_score_powerup_text, (W_WIDTH // 1.14 - right_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (0, 0, 9)
 
@@ -312,13 +312,16 @@ while running:                                      #####################---- WH
     if left_score_increment == 1:
         left_enlarge_paddle_interdicted = True
         SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
-        left_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
+        left_score_powerup_text = SuperDreamFont.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_RED)
         screen.blit(left_score_powerup_text, (W_WIDTH // 10 - left_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
         Colors.SCREEN_FILL_COLOR = (9, 0, 0)
 
     elif left_score_increment == 0 and right_score_increment == 0:
         Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
         left_enlarge_paddle_interdicted = False
+
+    if left_score_increment == 1 and right_score_increment == 1:
+        Colors.SCREEN_FILL_COLOR = (10, 0, 14)
 
 
     if right_score_increment != 0:
@@ -334,24 +337,24 @@ while running:                                      #####################---- WH
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # POWERUP - ENLARGE PADDLE
 
-    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS:
+    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS and right_paddle_enlarge_active is True:
         Colors.MEGA_LIGHT_BLUE = (0, 0, 120)
     else:
         Colors.MEGA_LIGHT_BLUE = Colors.MEGA_LIGHT_BLUE_AUX
 
-    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS:
+    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= (ENLARGE_PADDLE_LIFESPAN / 1.1) * TPS and left_paddle_enlarge_active is True:
         Colors.MEGA_LIGHT_RED = (120, 0, 0)
     else:
         Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
 
-    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
+    if enlarge_paddle_right_start_time is not None and current_frame - enlarge_paddle_right_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS and right_paddle_enlarge_active is True:
         enlarge_paddle_right_start_time = None
         right_paddle_enlarge_usage += 1
         right_paddle.height = left_paddle_height_aux
         right_paddle.y += (THE_PADDLE_INCREASE // 2)
         right_paddle_enlarge_active = False
 
-    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS:
+    if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS and left_paddle_enlarge_active is True:
         enlarge_paddle_left_start_time = None
         left_paddle_enlarge_usage += 1
         left_paddle.height = left_paddle_height_aux
@@ -377,6 +380,7 @@ while running:                                      #####################---- WH
         right_score_mult_interdicted = True
     elif not right_paddle_enlarge_active:
         right_score_mult_interdicted = False
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        ###### DRAWS #######
 
