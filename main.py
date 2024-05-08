@@ -261,8 +261,8 @@ while running:                                      #####################---- WH
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT and right_paddle_enlarge_usage == 0 and right_enlarge_paddle_interdicted is False:
                 if ball.moving:
-                    right_paddle.height += THE_PADDLE_INCREASE * W_PERC
-                    right_paddle.y -= (THE_PADDLE_INCREASE / 2) * W_PERC
+                    right_paddle.height += THE_PADDLE_HEIGHT_INCREASE * W_PERC
+                    right_paddle.y -= (THE_PADDLE_HEIGHT_INCREASE / 2) * W_PERC
                     right_paddle_enlarge_usage = 1
                     enlarge_paddle_right_start_time = pygame.time.get_ticks()
                     right_paddle_enlarge_active = True
@@ -274,8 +274,8 @@ while running:                                      #####################---- WH
             if event.key == pygame.K_d and left_paddle_enlarge_usage == 0 and left_enlarge_paddle_interdicted is False:
                 if ball.moving:
 
-                    left_paddle.height += THE_PADDLE_INCREASE 
-                    left_paddle.y -= (THE_PADDLE_INCREASE / 2)
+                    left_paddle.height += THE_PADDLE_HEIGHT_INCREASE
+                    left_paddle.y -= (THE_PADDLE_HEIGHT_INCREASE / 2)
                     left_paddle_enlarge_usage = 1
                     enlarge_paddle_left_start_time = pygame.time.get_ticks()
                     left_paddle_enlarge_active = True
@@ -283,6 +283,26 @@ while running:                                      #####################---- WH
             paddle_height_increase = left_paddle.y
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # POWERUP - PADDLE SPEED BOOST EVENT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #POWERUP - SCORE MULTIPLIER
 
     if right_score_start_time is not None and current_frame - right_score_start_time >= SCORE_MULT_LIFESPAN * TPS:
@@ -351,25 +371,25 @@ while running:                                      #####################---- WH
         enlarge_paddle_right_start_time = None
         right_paddle_enlarge_usage += 1
         right_paddle.height = left_paddle_height_aux
-        right_paddle.y += (THE_PADDLE_INCREASE // 2)
+        right_paddle.y += (THE_PADDLE_HEIGHT_INCREASE // 2)
         right_paddle_enlarge_active = False
 
     if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN * TPS and left_paddle_enlarge_active is True:
         enlarge_paddle_left_start_time = None
         left_paddle_enlarge_usage += 1
         left_paddle.height = left_paddle_height_aux
-        left_paddle.y += (THE_PADDLE_INCREASE // 2)
+        left_paddle.y += (THE_PADDLE_HEIGHT_INCREASE // 2)
         left_paddle_enlarge_active = False
 
     if right_paddle_enlarge_active == 1:
         SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
         right_enlarge_paddle_text = SuperDreamFont.render("ENLARGE PADDLE ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
-        screen.blit(right_enlarge_paddle_text, (W_WIDTH // 1.34 - right_enlarge_paddle_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
+        screen.blit(right_enlarge_paddle_text, (W_WIDTH // 1.14 - right_enlarge_paddle_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
 
     if left_paddle_enlarge_active == 1:
         SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
         left_enlarge_paddle_text = SuperDreamFont.render("ENLARGE PADDLE ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
-        screen.blit(left_enlarge_paddle_text, (W_WIDTH // 4 - left_enlarge_paddle_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
+        screen.blit(left_enlarge_paddle_text, (W_WIDTH // 10 - left_enlarge_paddle_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
 
     if left_paddle_enlarge_active:
         left_score_mult_interdicted = True
@@ -380,6 +400,31 @@ while running:                                      #####################---- WH
         right_score_mult_interdicted = True
     elif not right_paddle_enlarge_active:
         right_score_mult_interdicted = False
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # POWERUP - PADDLE SPEED BOOST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        ###### DRAWS #######
@@ -544,9 +589,3 @@ while running:                                      #####################---- WH
 
     pygame.display.update()
     clock.tick(TPS)
-
-
-
-
-
-

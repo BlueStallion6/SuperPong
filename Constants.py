@@ -38,7 +38,9 @@ SCORE_MULT = CONFIG["powerups"]["score_mult"]
 
 TEXT_UP = CONFIG["play_configs"]["text_up"] * W_PERC
 TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
-THE_PADDLE_INCREASE = CONFIG["powerups"]["enlarge"] * W_PERC
+THE_PADDLE_HEIGHT_INCREASE = CONFIG["powerups"]["enlarge"] * W_PERC
+PADDLE_WIDTH_INCREASE = 70 * W_PERC
+
 
 SEM = 1
 Press_space_sem = True

@@ -2,7 +2,7 @@
 
 # Speed/Size Increase/Decrease override each other:
 
-1. Enlarge Paddle - Make your paddle 90% larger for 6 seconds;
+1. Enlarge Paddle - Make your paddle 90% larger for 6 seconds;                     #####################       DONE       #######################
 
 2. Paddle speed boost - Give your paddle 80% more movement speed for 6 seconds;
 
@@ -16,7 +16,7 @@
 
 7. Shrink paddle - Shrink your opponent's paddle by 35% for 10 seconds;
 
-8. Score multiplier - If you score in the next 10 seconds, you will gain 2 points (needs 5 seconds of cast time);
+8. Score multiplier - If you score in the next 10 seconds, you will gain 2 points (needs 5 seconds of cast time);    ####################      DONE       ######################
 
 9. Freeze ball - Freeze the ball for 3 seconds;
 
