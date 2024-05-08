@@ -428,6 +428,8 @@ while running:                                      #####################---- WH
             screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
             right_score_increment = 0
             left_score_increment = 0
+            right_score_mult_interdicted = False
+            left_score_mult_interdicted = False
 
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
