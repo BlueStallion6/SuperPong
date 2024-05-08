@@ -513,19 +513,37 @@ while running:                                      #####################---- WH
             print_debug(int(time.time() * 1000))
         if right_paddle.y > 0:
             right_paddle.y -= PADDLE_SPEED * RIGHT_PADDLE_SPEED_MULT / TPS
+
+    # Clip Bug Fix
+    if right_paddle.y < 0:
+        right_paddle.y = 0
+
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
         if right_paddle.y < W_HEIGHT - right_paddle.height:
             right_paddle.y += PADDLE_SPEED * RIGHT_PADDLE_SPEED_MULT / TPS
 
+    # Clip Bug Fix
+    if right_paddle.y > W_HEIGHT - right_paddle.height:
+        right_paddle.y = W_HEIGHT - right_paddle.height
+
     if KEYS_PRESSED[pygame.K_w]:
         if DEBUG_MODE: print_debug("Keydown: W")
         if left_paddle.y > 0:
             left_paddle.y -= PADDLE_SPEED * LEFT_PADDLE_SPEED_MULT / TPS
+
+    # Clip Bug Fix
+    if left_paddle.y < 0:
+        left_paddle.y = 0
+
     if KEYS_PRESSED[pygame.K_s]:
         if DEBUG_MODE: print_debug("Keydown: S")
         if left_paddle.y < W_HEIGHT - left_paddle.height:
             left_paddle.y += PADDLE_SPEED * LEFT_PADDLE_SPEED_MULT / TPS
+
+    # Clip Bug Fix
+    if left_paddle.y > W_HEIGHT - left_paddle.height:
+        left_paddle.y = W_HEIGHT - left_paddle.height
 
     if DEBUG_MODE:
         fps = clock.get_fps()
