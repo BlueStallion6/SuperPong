@@ -20,7 +20,7 @@ except ImportError:
     print("ImportError >> Please run 'pip install -r requirements.txt' in this project's directory.")
     exit()
 
-#################################################################################################################################################
+#######################################################################################################################
 
 #~WINDOW INIT~
 pygame.init()
@@ -29,7 +29,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
 score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
 
-################################################################################################################################################
+######################################################################################################################
 
 class PowerUp:
     def __init__(self):
@@ -63,8 +63,7 @@ powerup_score_multiplier_left = Score_Multiplier()
 powerup_score_multiplier_right = Score_Multiplier()
 
 
-############################################################################################################################################
-
+#######################################################################################################################
 class Paddle:
     def __init__(self, x, y, width, height, side):
         self.x = x
@@ -82,15 +81,16 @@ class Paddle:
 left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT, "LEFT")
 right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT, "RIGHT")
 
-################################################################################################################################################################
+#######################################################################################################################
 
 ball_velocity_x = 1340 * W_PERC / TPS
 ball_velocity_y = -100 * W_PERC / TPS
 velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
-score_increment = 0
-start_frame = None
-
+right_score_increment = 0
+left_score_increment = 0
+right_score_start_time = None
+left_score_start_time = None
 
 class Ball:
     def __init__(self, x, y, radius):
@@ -152,7 +152,7 @@ class Ball:
 
 
         if ball.x <= 0:   #Left_side
-            RIGHT_SCORE.inc(1 + score_increment)
+            RIGHT_SCORE.inc(1 + right_score_increment)
             ball.reset()
             ball.moving = False
             ball.x_vel = - ball_velocity_x
@@ -189,7 +189,7 @@ class Ball:
             ball.x = right_paddle.x - ball.radius - 1 * W_PERC
 
         if ball.x >= right_paddle.x + PADDLE_WIDTH + PADDLE_SPACING:   #right_side
-            LEFT_SCORE.inc(1 + score_increment)
+            LEFT_SCORE.inc(1 + left_score_increment)
             ball.reset()
             ball.moving = False
             ball.x_vel = ball_velocity_x
@@ -202,7 +202,7 @@ class Ball:
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
 
-###################################################################################################################################################################################
+#######################################################################################################################
 
 class Score:
     def __init__(self, x, y):
@@ -228,21 +228,20 @@ LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 17 * W_PERC, TEXT_UP)
 RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
 WAY_ARROW_SEM = 0
 
-###############################################################################################################################################
+#######################################################################################################################
 
 midlines_draw = True
 ball.moving = False
 player_won = False
-running = True
-Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 38)
+right_score_powerup_usage = 0
+left_score_powerup_usage = 0
 
-while running:
+running = True
+while running:                          ############################## WHILE RUNNING #################################
     screen.fill((10, 10, 15))
     current_frame = pygame.time.get_ticks()
     #print (start_frame)
-    SECONDS = 10
-
-
+    SECONDS = 30
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -262,16 +261,30 @@ while running:
                 midlines_draw = True
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN: # and pygame.time.get_ticks() - start_frame < 720: #start_time =~ 640 , 3 * TPS = 720,
-                score_increment = 1
-                start_frame = pygame.time.get_ticks()
-                print("ahuu")
+            if event.key == pygame.K_LEFT and right_score_powerup_usage == 0:  #start_time =~ 640
+                right_score_increment = 1
+                if ball.moving:
+                    right_score_powerup_usage = 1
+                right_score_start_time = pygame.time.get_ticks()
 
-    #current_frame += 1
-    if start_frame is not None and current_frame - start_frame >= SECONDS * TPS:
-        score_increment = 0
-        start_frame = None
-        print("n-ahuu")
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a and left_score_powerup_usage == 0:
+                left_score_increment = 1
+                if ball.moving:
+                    left_score_powerup_usage = 1
+                left_score_start_time = pygame.time.get_ticks()
+
+
+    if right_score_start_time is not None and current_frame - right_score_start_time >= SECONDS * TPS:
+        right_score_increment = 0
+        left_score_increment = 0
+        right_score_start_time = None
+
+    if left_score_start_time is not None and current_frame - left_score_start_time >= SECONDS * TPS:
+        right_score_increment = 0
+        left_score_increment = 0
+        left_score_start_time = None
+
 
     # Draws
     if midlines_draw:
@@ -286,16 +299,25 @@ while running:
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
 
-    if score_increment == 1:
-        Powerup_text = Powerup_font.render("Score increment active!", False, Colors.GRAY)
-        screen.blit(Powerup_text, (W_WIDTH // 2 - Powerup_text.get_width() // 2, W_HEIGHT // 5))
+    if right_score_increment == 1:
+        Score_Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
+        right_score_powerup_text = Score_Powerup_font.render("SCORE X2", True, Colors.MEGA_LIGHT_BLUE)
+        screen.blit(right_score_powerup_text, (W_WIDTH // 1.14 - right_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
 
+    if left_score_increment == 1:
+        Score_Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
+        left_score_powerup_text = Score_Powerup_font.render("SCORE X2", True, Colors.MEGA_LIGHT_RED)
+        screen.blit(left_score_powerup_text, (W_WIDTH // 10 - left_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
 
     Press_space_sem = True
     print_arrows = True
 
     # WINNING SITUATION
     if LEFT_SCORE.get() >= WINNING_SCORE or RIGHT_SCORE.get() >= WINNING_SCORE:
+        right_score_increment = 0
+        left_score_increment = 0
+        left_score_powerup_usage = 0
+        right_score_powerup_usage = 0
 
         if LEFT_SCORE.get() >= WINNING_SCORE:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
@@ -329,7 +351,6 @@ while running:
             Press_space_sem = True
             print_arrows = False
 
-
     if ball.moving:
         ball.move()
     else:
@@ -347,7 +368,8 @@ while running:
 
         if Press_space_sem:
             screen.blit(Press_space_text, (W_WIDTH // 2 - Press_space_text.get_width() // 2, W_HEIGHT // 5))
-            score_increment = 0
+            right_score_increment = 0
+            left_score_increment = 0
 
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
