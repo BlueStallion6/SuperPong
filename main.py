@@ -28,6 +28,7 @@ pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
 score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["settings"]["font_size"])
+running = True
 
 ######################################################################################################################
 
@@ -226,22 +227,23 @@ class Score:
 
 LEFT_SCORE = Score(W_WIDTH // 2 - TEXT_SPACING - 17 * W_PERC, TEXT_UP)
 RIGHT_SCORE = Score(W_WIDTH // 2 + TEXT_SPACING, TEXT_UP)
-WAY_ARROW_SEM = 0
 
 #######################################################################################################################
 
 midlines_draw = True
 ball.moving = False
 player_won = False
+WAY_ARROW_SEM = 0
 right_score_powerup_usage = 0
 left_score_powerup_usage = 0
-
-running = True
-while running:                          ############################## WHILE RUNNING #################################
-    screen.fill((10, 10, 15))
+right_score_mult_interdicted = False
+left_score_mult_interdicted = False
+                                                    ##################################################################
+while running:                                      #####################---- WHILE RUNNING ----######################
+    screen.fill(Colors.SCREEN_FILL_COLOR)           ##################################################################
     current_frame = pygame.time.get_ticks()
     #print (start_frame)
-    SECONDS = 30
+    SCORE_MULT_LIFESPAN = 35
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -258,45 +260,56 @@ while running:                          ############################## WHILE RUN
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 ball.moving = True
-                midlines_draw = True
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #POWERUP - SCORE MULTIPLIER
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and right_score_powerup_usage == 0:  #start_time =~ 640
+            if event.key == pygame.K_LEFT and right_score_powerup_usage == 0 and right_score_mult_interdicted is False:  #start_time =~ 640
                 right_score_increment = 1
                 if ball.moving:
                     right_score_powerup_usage = 1
                 right_score_start_time = pygame.time.get_ticks()
+                left_score_mult_interdicted = True
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a and left_score_powerup_usage == 0:
+            if event.key == pygame.K_a and left_score_powerup_usage == 0 and left_score_mult_interdicted is False:
                 left_score_increment = 1
                 if ball.moving:
                     left_score_powerup_usage = 1
                 left_score_start_time = pygame.time.get_ticks()
+                right_score_mult_interdicted = True
 
-    if right_score_start_time is not None and current_frame - right_score_start_time >= SECONDS * TPS:
+    if right_score_start_time is not None and current_frame - right_score_start_time >= SCORE_MULT_LIFESPAN * TPS:
         right_score_increment = 0
         left_score_increment = 0
         right_score_start_time = None
+        left_score_mult_interdicted = False
 
-    if left_score_start_time is not None and current_frame - left_score_start_time >= SECONDS * TPS:
+
+    if left_score_start_time is not None and current_frame - left_score_start_time >= SCORE_MULT_LIFESPAN * TPS:
         right_score_increment = 0
         left_score_increment = 0
         left_score_start_time = None
+        right_score_mult_interdicted = False
 
     if right_score_increment == 1:
         Score_Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
         right_score_powerup_text = Score_Powerup_font.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
         screen.blit(right_score_powerup_text, (W_WIDTH // 1.14 - right_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
+        Colors.SCREEN_FILL_COLOR = (0, 0, 12)
+    elif right_score_increment == 0 and left_score_increment == 0:
+        Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
+
 
     if left_score_increment == 1:
         Score_Powerup_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
         left_score_powerup_text = Score_Powerup_font.render("SCORE MULTIPLIER ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
         screen.blit(left_score_powerup_text, (W_WIDTH // 10 - left_score_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
+        Colors.SCREEN_FILL_COLOR = (12, 0, 0)
+    elif left_score_increment == 0 and right_score_increment == 0:
+        Colors.SCREEN_FILL_COLOR = Colors.SCREEN_FILL_COLOR_AUX
+
 
     if right_score_increment != 0:
         Colors.MEGA_LIGHT_BLUE = (0, 50, 245)
@@ -336,7 +349,8 @@ while running:                          ############################## WHILE RUN
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        # Draws
+        # DRAWS
+
     if midlines_draw:
         for i in range(0, MID_LINES_COUNT):
             LINE_START = i * 2 * W_HEIGHT / (MID_LINES_COUNT * 2)
@@ -348,7 +362,6 @@ while running:                          ############################## WHILE RUN
     ball.draw(screen)
     LEFT_SCORE.draw()
     RIGHT_SCORE.draw()
-
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

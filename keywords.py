@@ -26,7 +26,8 @@ class Colors:
 
     MEGA_LIGHT_BLUE_AUX = MEGA_LIGHT_BLUE
     MEGA_LIGHT_RED_AUX = MEGA_LIGHT_RED
-
+    SCREEN_FILL_COLOR = (10, 10, 15)
+    SCREEN_FILL_COLOR_AUX = (10, 10, 15)
 
 #Console Debugs
 def print_warning(*txt):
