@@ -1,8 +1,9 @@
-import json
 import pygame
+import json
 import requests
 from keywords import *
 from screeninfo import get_monitors
+pygame.init()
 
 try:
     open("config.json")
@@ -16,12 +17,10 @@ except FileNotFoundError:
 
 with open("config.json", "r") as file:
     CONFIG = json.load(file)
-    # print_debug(str(config["settings"]))
     file.close()
 
 if CONFIG["settings"]["window_perc"] is None:
-    #FALLBACK VALUE
-    W_PERC = 0.5  
+    W_PERC = 0.5
 else:
     W_PERC = CONFIG["settings"]["window_perc"] / 100
 
@@ -35,26 +34,16 @@ PADDLE_WIDTH, PADDLE_HEIGHT = CONFIG["play_configs"]["paddle_width"] * W_PERC, C
 TPS = CONFIG["settings"]["tps"]
 PADDLE_SPEED = CONFIG["play_configs"]["paddle_speed"] * W_PERC
 SCORE_MULT = CONFIG["powerups"]["score_mult"]
-
 TEXT_UP = CONFIG["play_configs"]["text_up"] * W_PERC
 TEXT_SPACING = CONFIG["play_configs"]["text_spacing"] * W_PERC
 THE_PADDLE_HEIGHT_INCREASE = CONFIG["powerups"]["enlarge"] * W_PERC
 PADDLE_WIDTH_INCREASE = 70 * W_PERC
-
-
-SEM = 1
-Press_space_sem = True
-ball_going_right = True
-
+PADDLE_SPEED_INCREASE = CONFIG["powerups"]["paddle_speed_increase"] * W_PERC
 MID_LINES_COUNT = CONFIG["play_configs"]["mid_lines_count"]
 PADDLE_SPACING = CONFIG["play_configs"]["paddle_spacing"] * W_PERC
 BALL_RADIUS = CONFIG["play_configs"]["ball_radius"] * W_PERC
 SFX_VOLUME = CONFIG["settings"]["sfx_volume"]
-
 WINNING_SCORE = CONFIG["play_configs"]["winning_score"]
-
-FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF
-
 RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 LEFT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 
@@ -64,3 +53,8 @@ RIGHT_PADDLE_SPEED_MULT = 1
 LEFT_PADDLE_HEIGHT_MULT = 1
 RIGHT_PADDLE_HEIGHT_MULT = 1
 
+SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
+Press_space_sem = True
+ball_going_right = True
+
+FLAGS = pygame.HWSURFACE | pygame.DOUBLEBUF

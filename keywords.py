@@ -10,6 +10,7 @@ c_rst = Style.reset
 
 #Colors
 class Colors:
+
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     RED = (210, 120, 120)
@@ -21,11 +22,16 @@ class Colors:
     DARK_GRAY = (80, 80, 80)
     VERY_DARK_GRAY = (50, 50, 50)
     WAY_TOO_DARK_GRAY = (38, 38, 38)
+
     MEGA_LIGHT_BLUE = (180, 180, 255)
     MEGA_LIGHT_RED = (255, 180, 180)
 
     MEGA_LIGHT_BLUE_AUX = MEGA_LIGHT_BLUE
+    MEGA_LIGHT_BLUE_AUX2 = MEGA_LIGHT_BLUE
+
     MEGA_LIGHT_RED_AUX = MEGA_LIGHT_RED
+    MEGA_LIGHT_RED_AUX2 = MEGA_LIGHT_RED
+
     SCREEN_FILL_COLOR = (10, 10, 15)
     SCREEN_FILL_COLOR_AUX = (10, 10, 15)
 
