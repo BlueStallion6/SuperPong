@@ -473,12 +473,6 @@ while running:                                      #####################---- WH
 
 
 
-
-
-
-
-
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        ###### DRAWS #######
 
@@ -580,8 +574,15 @@ while running:                                      #####################---- WH
             right_paddle.height = left_paddle_height_aux2
             right_paddle_enlarge_active = False
 
-            right_paddle_speed_boost_active = False
-            left_paddle_speed_boost_active = False
+
+            if right_paddle_speed_boost_active:
+                right_paddle.speed -= PADDLE_SPEED_INCREASE
+                right_paddle_speed_boost_active = False
+
+
+            if left_paddle_speed_boost_active:
+                left_paddle.speed -= PADDLE_SPEED_INCREASE
+                left_paddle_speed_boost_active = False
 
 
         if ball.x_vel < 0:
