@@ -393,6 +393,8 @@ while running:                                      #####################---- WH
         right_paddle.height = left_paddle_height_aux
         right_paddle.y += (THE_PADDLE_HEIGHT_INCREASE // 2)
         right_paddle_enlarge_active = False
+        right_score_mult_interdicted = False
+        right_paddle_speed_boost_interdicted = False
 
     if enlarge_paddle_left_start_time is not None and current_frame - enlarge_paddle_left_start_time >= ENLARGE_PADDLE_LIFESPAN and left_paddle_enlarge_active is True:
         enlarge_paddle_left_start_time = None
@@ -400,6 +402,8 @@ while running:                                      #####################---- WH
         left_paddle.height = left_paddle_height_aux
         left_paddle.y += (THE_PADDLE_HEIGHT_INCREASE // 2)
         left_paddle_enlarge_active = False
+        left_score_mult_interdicted = False
+        left_paddle_speed_boost_interdicted = False
 
     if right_paddle_enlarge_active == 1:
         right_enlarge_paddle_text = SuperDreamFont.render("ENLARGE PADDLE ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
@@ -412,16 +416,10 @@ while running:                                      #####################---- WH
     if left_paddle_enlarge_active:
         left_score_mult_interdicted = True
         left_paddle_speed_boost_interdicted = True
-    elif not left_paddle_enlarge_active:
-        left_score_mult_interdicted = False
-        left_paddle_speed_boost_interdicted = False
 
     if right_paddle_enlarge_active:
         right_score_mult_interdicted = True
         right_paddle_speed_boost_interdicted = True
-    elif not right_paddle_enlarge_active:
-        right_score_mult_interdicted = False
-        right_paddle_speed_boost_interdicted = False
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # POWERUP - PADDLE SPEED BOOST
