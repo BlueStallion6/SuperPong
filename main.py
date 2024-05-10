@@ -224,6 +224,8 @@ left_paddle_height_aux = left_paddle.height
 right_paddle_height_aux = right_paddle.height
 left_paddle_height_aux2 = left_paddle.height
 right_paddle_height_aux2 = right_paddle.height
+PADDLE_SPEED_AUX = PADDLE_SPEED
+
 
 right_score_mult_active = False
 left_score_mult_active = False
@@ -438,7 +440,7 @@ while running:                                      #####################---- WH
     if right_speed_boost_start_time is not None and current_frame - right_speed_boost_start_time >= SPEED_BOOST_LIFESPAN:
         right_speed_boost_start_time = None
         right_paddle_speed_boost_active = False
-        right_paddle.speed -= PADDLE_SPEED_INCREASE
+        right_paddle.speed = PADDLE_SPEED_AUX
         right_score_mult_interdicted = False
         right_enlarge_paddle_interdicted = False
 
@@ -446,7 +448,7 @@ while running:                                      #####################---- WH
     if left_speed_boost_start_time is not None and current_frame - left_speed_boost_start_time >= SPEED_BOOST_LIFESPAN:
         left_speed_boost_start_time = None
         left_paddle_speed_boost_active = False
-        left_paddle.speed -= PADDLE_SPEED_INCREASE
+        left_paddle.speed = PADDLE_SPEED_AUX
         left_score_mult_interdicted = False
         left_enlarge_paddle_interdicted = False
 
@@ -502,6 +504,8 @@ while running:                                      #####################---- WH
         right_score_powerup_usage = 0
         right_paddle_enlarge_usage = 0
         left_paddle_enlarge_usage = 0
+        right_paddle_speed_boost_usage = 0
+        left_paddle_speed_boost_usage = 0
 
         right_paddle.height = left_paddle_height_aux2
         #right_paddle.y += 115 * W_PERC
@@ -510,6 +514,15 @@ while running:                                      #####################---- WH
         left_paddle.height = left_paddle_height_aux2
         #left_paddle.y += 115 * W_PERC
         left_paddle_enlarge_active = False
+
+        if right_paddle_speed_boost_active:
+            right_paddle.speed = PADDLE_SPEED_AUX
+            right_paddle_speed_boost_active = False
+
+        if left_paddle_speed_boost_active:
+            left_paddle.speed = PADDLE_SPEED_AUX
+            left_paddle_speed_boost_active = False
+
 
         if LEFT_SCORE.get() >= WINNING_SCORE:
             Winning_font = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 78)
@@ -576,12 +589,12 @@ while running:                                      #####################---- WH
 
 
             if right_paddle_speed_boost_active:
-                right_paddle.speed -= PADDLE_SPEED_INCREASE
+                right_paddle.speed = PADDLE_SPEED_AUX
                 right_paddle_speed_boost_active = False
 
 
             if left_paddle_speed_boost_active:
-                left_paddle.speed -= PADDLE_SPEED_INCREASE
+                left_paddle.speed = PADDLE_SPEED_AUX
                 left_paddle_speed_boost_active = False
 
 
