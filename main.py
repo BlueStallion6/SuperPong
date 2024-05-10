@@ -260,20 +260,18 @@ while running:                                      #####################---- WH
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT and right_score_powerup_usage == 0 and right_score_mult_interdicted is False:  #start_time =~ 640
-                right_score_increment = 1
                 if ball.moving:
+                    right_score_increment = 1
                     right_score_powerup_usage = 1
                 right_score_start_time = pygame.time.get_ticks()
-                left_score_mult_interdicted = True
                 sfx.play(assets.POWERUP_SOUND)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a and left_score_powerup_usage == 0 and left_score_mult_interdicted is False:
-                left_score_increment = 1
                 if ball.moving:
+                    left_score_increment = 1
                     left_score_powerup_usage = 1
                 left_score_start_time = pygame.time.get_ticks()
-                right_score_mult_interdicted = True
                 sfx.play(assets.POWERUP_SOUND)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -307,7 +305,7 @@ while running:                                      #####################---- WH
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN and right_paddle_speed_boost_usage == 0 and right_paddle_speed_boost_interdicted is False:
-                if ball.moving and not right_paddle_speed_boost_active:
+                if ball.moving:
                     right_paddle.speed += PADDLE_SPEED_INCREASE
                     right_paddle_speed_boost_usage = 1
                     right_paddle_speed_boost_active = True
@@ -317,7 +315,7 @@ while running:                                      #####################---- WH
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q and left_paddle_speed_boost_usage == 0 and left_paddle_speed_boost_interdicted is False:
-                if ball.moving and not left_paddle_speed_boost_active:
+                if ball.moving:
                     left_paddle.speed += PADDLE_SPEED_INCREASE
                     left_paddle_speed_boost_usage = 1
                     left_paddle_speed_boost_active = True
@@ -333,14 +331,11 @@ while running:                                      #####################---- WH
 
     if right_score_start_time is not None and current_frame - right_score_start_time >= SCORE_MULT_LIFESPAN:
         right_score_increment = 0
-        left_score_increment = 0
         right_score_start_time = None
 
     if left_score_start_time is not None and current_frame - left_score_start_time >= SCORE_MULT_LIFESPAN:
-        right_score_increment = 0
         left_score_increment = 0
         left_score_start_time = None
-
 
     if right_score_increment == 1:
         right_enlarge_paddle_interdicted = True
@@ -366,7 +361,6 @@ while running:                                      #####################---- WH
         left_enlarge_paddle_interdicted = False
         left_paddle_speed_boost_interdicted = False
 
-
     if left_score_increment == 1 and right_score_increment == 1:
         Colors.SCREEN_FILL_COLOR = (10, 0, 14)
 
@@ -377,7 +371,7 @@ while running:                                      #####################---- WH
 
     if left_score_increment == 1:
         Colors.MEGA_LIGHT_RED = (240, 100, 0)
-    elif right_score_increment == 0:
+    elif left_score_increment == 0:
         Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -447,12 +441,16 @@ while running:                                      #####################---- WH
         right_speed_boost_start_time = None
         right_paddle_speed_boost_active = False
         right_paddle.speed -= PADDLE_SPEED_INCREASE
+        right_score_mult_interdicted = False
+        right_enlarge_paddle_interdicted = False
 
 
     if left_speed_boost_start_time is not None and current_frame - left_speed_boost_start_time >= SPEED_BOOST_LIFESPAN:
         left_speed_boost_start_time = None
         left_paddle_speed_boost_active = False
         left_paddle.speed -= PADDLE_SPEED_INCREASE
+        left_score_mult_interdicted = False
+        left_enlarge_paddle_interdicted = False
 
 
     if right_paddle_speed_boost_active == 1:
@@ -464,21 +462,14 @@ while running:                                      #####################---- WH
         screen.blit(left_speed_boost_text, (W_WIDTH // 10 - left_speed_boost_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 12 * W_PERC)))
 
 
-
-
     if left_paddle_speed_boost_active:
         left_score_mult_interdicted = True
         left_enlarge_paddle_interdicted = True
-    elif not left_paddle_enlarge_active:
-        left_score_mult_interdicted = False
-        left_enlarge_paddle_interdicted = False
+
 
     if right_paddle_speed_boost_active:
         right_score_mult_interdicted = True
         right_enlarge_paddle_interdicted = True
-    elif not right_paddle_enlarge_active:
-        right_score_mult_interdicted = False
-        right_enlarge_paddle_interdicted = False
 
 
 
