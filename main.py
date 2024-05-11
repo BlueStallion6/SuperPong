@@ -220,7 +220,7 @@ ball_freeze_start_time = None
 SCORE_MULT_LIFESPAN = 42 * TPS
 ENLARGE_PADDLE_LIFESPAN = 40 * TPS
 SPEED_BOOST_LIFESPAN = 40 * TPS
-BALL_FREEZE_LIFESPAN = 10 * TPS
+BALL_FREEZE_LIFESPAN = FREEZE_BALL_TIME
 
 left_paddle_height_aux = left_paddle.height
 right_paddle_height_aux = right_paddle.height

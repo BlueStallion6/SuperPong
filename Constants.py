@@ -51,6 +51,8 @@ WINNING_SCORE = CONFIG["play_configs"]["winning_score"]
 RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 LEFT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 
+FREEZE_BALL_TIME = CONFIG["powerups"]["freeze_ball_time"] * TPS
+
 LEFT_PADDLE_SPEED_MULT = 1
 RIGHT_PADDLE_SPEED_MULT = 1
 
