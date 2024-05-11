@@ -215,10 +215,12 @@ enlarge_paddle_left_start_time = None
 enlarge_paddle_right_start_time = None
 left_speed_boost_start_time = None
 right_speed_boost_start_time = None
+ball_freeze_start_time = None
 
 SCORE_MULT_LIFESPAN = 42 * TPS
 ENLARGE_PADDLE_LIFESPAN = 40 * TPS
 SPEED_BOOST_LIFESPAN = 40 * TPS
+BALL_FREEZE_LIFESPAN = 10 * TPS
 
 left_paddle_height_aux = left_paddle.height
 right_paddle_height_aux = right_paddle.height
@@ -341,29 +343,19 @@ while running:                                      #####################---- WH
                     ball_velocity_x_aux = ball.x_vel
                     ball_velocity_y_aux = ball.y_vel
                     Colors.BALL_COLOR = Colors.DARKER_BLUE
+                    ball_freeze_start_time = pygame.time.get_ticks()
                     sfx.play(assets.ICE_SOUND)
 
                     ball.x_vel = 0
                     ball.y_vel = 0
 
 
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LSHIFT:
-                if ball.moving and ball_freeze_sem is True and ball_unfreeze_usage == 0:
-
-                    ball_unfreeze_usage = 1
-
-                    ball.x_vel = ball_velocity_x_aux
-                    ball.y_vel = ball_velocity_y_aux
-                    Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
-                    sfx.play(assets.UNFREEZE_SOUND)
-
-
-
-
-
-
+    if ball_freeze_start_time is not None and current_frame - ball_freeze_start_time >= BALL_FREEZE_LIFESPAN:
+        ball.x_vel = ball_velocity_x_aux
+        ball.y_vel = ball_velocity_y_aux
+        Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
+        sfx.play(assets.UNFREEZE_SOUND)
+        ball_freeze_start_time = None
 
 
 
