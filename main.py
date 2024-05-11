@@ -75,15 +75,15 @@ class Ball:
         self.x += self.x_vel
         self.y += self.y_vel
 
-        if ball.y + ball.radius >= W_HEIGHT:  # lower barrier
+        if ball.y + ball.radius > W_HEIGHT:  # lower barrier
             ball.y_vel *= -1
             ball.y = W_HEIGHT - ball.radius
-            ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
+            ball.y_vel = ball.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND)
-        elif ball.y - ball.radius <= 0:
+        elif ball.y - ball.radius < 0:
             ball.y_vel *= -1
             ball.y = ball.radius
-            ball.y_vel = ball.y_vel - (velocity_inc_flat / 2)
+            ball.y_vel = ball.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND)
 
         #LEFT PADDLE COLLISION - 1/8 = upper side,  7/8 = lower side
@@ -215,7 +215,8 @@ enlarge_paddle_left_start_time = None
 enlarge_paddle_right_start_time = None
 left_speed_boost_start_time = None
 right_speed_boost_start_time = None
-ball_freeze_start_time = None
+ball_right_freeze_start_time = None
+ball_left_freeze_start_time = None
 
 SCORE_MULT_LIFESPAN = 42 * TPS
 ENLARGE_PADDLE_LIFESPAN = 40 * TPS
@@ -238,9 +239,13 @@ left_paddle_speed_boost_active = False
 
 ball_velocity_x_aux = None
 ball_velocity_y_aux = None
-ball_freeze_sem = False
-ball_freeze_usage = 0
-ball_unfreeze_usage = 0
+
+ball_right_freeze_sem = False
+ball_left_freeze_sem = False
+ball_right_freeze_usage = 0
+ball_left_freeze_usage = 0
+ball_right_unfreeze_usage = 0
+ball_left_unfreeze_usage = 0
 
                                                     ##################################################################
 while running:                                      #####################---- WHILE RUNNING ----######################
@@ -334,34 +339,68 @@ while running:                                      #####################---- WH
     # POWERUP - FREEZE BALL EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RSHIFT:
-                if ball.moving and ball_freeze_usage == 0 and left_paddle.x + 2 * PADDLE_WIDTH <= ball.x <= right_paddle.x - PADDLE_WIDTH:
+            if event.key == pygame.K_RSHIFT and ball_left_freeze_sem is False:
+                if ball.moving and ball_right_freeze_usage == 0 and left_paddle.x + (1.5 * PADDLE_WIDTH) <= ball.x <= right_paddle.x - PADDLE_WIDTH:
 
-                    ball_freeze_sem = True
-                    ball_freeze_usage = 1
+                    ball_right_freeze_sem = True
+                    ball_right_freeze_usage = 1
 
                     ball_velocity_x_aux = ball.x_vel
                     ball_velocity_y_aux = ball.y_vel
                     Colors.BALL_COLOR = Colors.DARKER_BLUE
-                    ball_freeze_start_time = pygame.time.get_ticks()
+                    ball_right_freeze_start_time = pygame.time.get_ticks()
                     sfx.play(assets.ICE_SOUND)
 
                     ball.x_vel = 0
                     ball.y_vel = 0
 
 
-    if ball_freeze_start_time is not None and current_frame - ball_freeze_start_time >= BALL_FREEZE_LIFESPAN:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_e and ball_right_freeze_sem is False:
+                if ball.moving and ball_left_freeze_usage == 0 and left_paddle.x + (1.5 * PADDLE_WIDTH) <= ball.x <= right_paddle.x - PADDLE_WIDTH:
+
+                    ball_left_freeze_sem = True
+                    ball_left_freeze_usage = 1
+
+                    ball_velocity_x_aux = ball.x_vel
+                    ball_velocity_y_aux = ball.y_vel
+                    Colors.BALL_COLOR = Colors.DARKER_BLUE
+                    ball_left_freeze_start_time = pygame.time.get_ticks()
+                    sfx.play(assets.ICE_SOUND)
+
+                    ball.x_vel = 0
+                    ball.y_vel = 0
+
+
+    if ball_right_freeze_start_time is not None and current_frame - ball_right_freeze_start_time >= BALL_FREEZE_LIFESPAN:
         ball.x_vel = ball_velocity_x_aux
         ball.y_vel = ball_velocity_y_aux
         Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
         sfx.play(assets.UNFREEZE_SOUND)
-        ball_freeze_start_time = None
+        ball_right_freeze_start_time = None
+        ball_right_freeze_sem = False
+
+
+    if ball_left_freeze_start_time is not None and current_frame - ball_left_freeze_start_time >= BALL_FREEZE_LIFESPAN:
+        ball.x_vel = ball_velocity_x_aux
+        ball.y_vel = ball_velocity_y_aux
+        Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
+        sfx.play(assets.UNFREEZE_SOUND)
+        ball_left_freeze_start_time = None
+        ball_left_freeze_sem = False
 
 
 
+    if ball_right_freeze_sem is True:
 
+        right_freeze_powerup_text = SuperDreamFont.render("FREEZE ACTIVE", True, Colors.MEGA_LIGHT_BLUE_AUX)
+        screen.blit(right_freeze_powerup_text, (W_WIDTH // 2 - right_freeze_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 165 * W_PERC)))
+        Colors.SCREEN_FILL_COLOR = (0, 0, 9)
 
-
+    if ball_left_freeze_sem is True:
+        left_freeze_powerup_text = SuperDreamFont.render("FREEZE ACTIVE", True, Colors.MEGA_LIGHT_RED_AUX)
+        screen.blit(left_freeze_powerup_text, (W_WIDTH // 2 - left_freeze_powerup_text.get_width() // 2, W_HEIGHT - (W_HEIGHT - 165 * W_PERC)))
+        Colors.SCREEN_FILL_COLOR = (0, 0, 9)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #POWERUP - SCORE MULTIPLIER
@@ -537,6 +576,8 @@ while running:                                      #####################---- WH
         left_paddle_enlarge_usage = 0
         right_paddle_speed_boost_usage = 0
         left_paddle_speed_boost_usage = 0
+        ball_right_freeze_usage = 0
+        ball_left_freeze_usage = 0
 
         right_paddle.height = left_paddle_height_aux2
         right_paddle_enlarge_active = False
