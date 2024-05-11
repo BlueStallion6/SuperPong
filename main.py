@@ -333,7 +333,7 @@ while running:                                      #####################---- WH
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RSHIFT:
-                if ball.moving and ball_freeze_usage == 0 and left_paddle.x + 2 * PADDLE_WIDTH <= ball.x:
+                if ball.moving and ball_freeze_usage == 0 and left_paddle.x + 2 * PADDLE_WIDTH <= ball.x <= right_paddle.x - PADDLE_WIDTH:
 
                     ball_freeze_sem = True
                     ball_freeze_usage = 1
