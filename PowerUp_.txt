@@ -18,7 +18,7 @@
 
 8. Score multiplier - If you score in the next 10 seconds, you will gain 2 points (needs 5 seconds of cast time);    #####################       DONE       #######################
 
-9. Freeze ball - Freeze the ball for 3 seconds;
+9. Freeze ball - Freeze the ball for 3 seconds;             #####################       DONE       #######################
 
 10. Ball slow - Your opponent's next 3 hits will have 30% less speed;
 

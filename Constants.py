@@ -52,12 +52,15 @@ RIGHT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 LEFT_SCORE_INCREASE_MULT = CONFIG["powerups"]["score_mult"]
 
 FREEZE_BALL_TIME = CONFIG["powerups"]["freeze_ball_time"] * TPS
+SABOTAGE_TIME = CONFIG["powerups"]["sabotage_time"] * TPS
 
 LEFT_PADDLE_SPEED_MULT = 1
 RIGHT_PADDLE_SPEED_MULT = 1
 
 LEFT_PADDLE_HEIGHT_MULT = 1
 RIGHT_PADDLE_HEIGHT_MULT = 1
+
+SABOTAGE_SPACING_INCREASE = CONFIG["powerups"]["sabotage_spacing_increase"] * W_PERC
 
 SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
 Press_space_sem = True
