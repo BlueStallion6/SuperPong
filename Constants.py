@@ -40,7 +40,11 @@ THE_PADDLE_HEIGHT_INCREASE = CONFIG["powerups"]["enlarge"] * W_PERC
 PADDLE_WIDTH_INCREASE = 70 * W_PERC
 PADDLE_SPEED_INCREASE = CONFIG["powerups"]["paddle_speed_increase"] * W_PERC
 MID_LINES_COUNT = CONFIG["play_configs"]["mid_lines_count"]
+
 PADDLE_SPACING = CONFIG["play_configs"]["paddle_spacing"] * W_PERC
+RIGHT_PADDLE_SPACING = PADDLE_SPACING
+LEFT_PADDLE_SPACING = PADDLE_SPACING
+
 BALL_RADIUS = CONFIG["play_configs"]["ball_radius"] * W_PERC
 SFX_VOLUME = CONFIG["settings"]["sfx_volume"]
 WINNING_SCORE = CONFIG["play_configs"]["winning_score"]

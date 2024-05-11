@@ -16,6 +16,7 @@ class Colors:
     RED = (210, 120, 120)
     GREEN = (0, 255, 0)
     BLUE = (120, 120, 210)
+    DARKER_BLUE = (100, 100, 220)
     GRAY = (190, 190, 190)
     LIGHT_GRAY = (215, 215, 215)
     LIGHTER_GRAY = (245, 245, 245)
@@ -34,6 +35,9 @@ class Colors:
 
     SCREEN_FILL_COLOR = (10, 10, 15)
     SCREEN_FILL_COLOR_AUX = (10, 10, 15)
+
+    BALL_COLOR = LIGHT_GRAY
+    BALL_COLOR_AUX = LIGHT_GRAY
 
 #Console Debugs
 def print_warning(*txt):

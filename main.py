@@ -47,8 +47,8 @@ class Paddle:
     def draw_left(self, win):
         pygame.draw.rect(win, Colors.MEGA_LIGHT_RED, (self.x, self.y, self.width, self.height))
 
-left_paddle = Paddle(PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT, "LEFT", PADDLE_SPEED)
-right_paddle = Paddle(W_WIDTH - PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT, "RIGHT", PADDLE_SPEED)
+left_paddle = Paddle(LEFT_PADDLE_SPACING, W_HEIGHT/2 - (PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * LEFT_PADDLE_HEIGHT_MULT, "LEFT", PADDLE_SPEED)
+right_paddle = Paddle(W_WIDTH - RIGHT_PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 - (PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT)/2, PADDLE_WIDTH, PADDLE_HEIGHT * RIGHT_PADDLE_HEIGHT_MULT, "RIGHT", PADDLE_SPEED)
 
 #######################################################################################################################
 
@@ -158,7 +158,7 @@ class Ball:
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
     def draw(self, screen):
-        pygame.draw.circle(screen, Colors.LIGHT_GRAY, (self.x, self.y), self.radius, width = 0)
+        pygame.draw.circle(screen, Colors.BALL_COLOR, (self.x, self.y), self.radius, width = 0)
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
 
@@ -216,9 +216,9 @@ enlarge_paddle_right_start_time = None
 left_speed_boost_start_time = None
 right_speed_boost_start_time = None
 
-SCORE_MULT_LIFESPAN = 35 * TPS
-ENLARGE_PADDLE_LIFESPAN = 35 * TPS
-SPEED_BOOST_LIFESPAN = 35 * TPS
+SCORE_MULT_LIFESPAN = 42 * TPS
+ENLARGE_PADDLE_LIFESPAN = 40 * TPS
+SPEED_BOOST_LIFESPAN = 40 * TPS
 
 left_paddle_height_aux = left_paddle.height
 right_paddle_height_aux = right_paddle.height
@@ -234,7 +234,11 @@ left_paddle_enlarge_active = False
 right_paddle_speed_boost_active = False
 left_paddle_speed_boost_active = False
 
-
+ball_velocity_x_aux = None
+ball_velocity_y_aux = None
+ball_freeze_sem = False
+ball_freeze_usage = 0
+ball_unfreeze_usage = 0
 
                                                     ##################################################################
 while running:                                      #####################---- WHILE RUNNING ----######################
@@ -323,6 +327,45 @@ while running:                                      #####################---- WH
                     left_paddle_speed_boost_active = True
                     left_speed_boost_start_time = pygame.time.get_ticks()
                     sfx.play(assets.POWERUP_SOUND3)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # POWERUP - FREEZE BALL EVENT
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RSHIFT:
+                if ball.moving and ball_freeze_usage == 0 and left_paddle.x + 2 * PADDLE_WIDTH <= ball.x:
+
+                    ball_freeze_sem = True
+                    ball_freeze_usage = 1
+
+                    ball_velocity_x_aux = ball.x_vel
+                    ball_velocity_y_aux = ball.y_vel
+                    Colors.BALL_COLOR = Colors.DARKER_BLUE
+                    sfx.play(assets.ICE_SOUND)
+
+                    ball.x_vel = 0
+                    ball.y_vel = 0
+
+
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LSHIFT:
+                if ball.moving and ball_freeze_sem is True and ball_unfreeze_usage == 0:
+
+                    ball_unfreeze_usage = 1
+
+                    ball.x_vel = ball_velocity_x_aux
+                    ball.y_vel = ball_velocity_y_aux
+                    Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
+                    sfx.play(assets.UNFREEZE_SOUND)
+
+
+
+
+
+
+
+
 
 
 
@@ -466,13 +509,9 @@ while running:                                      #####################---- WH
         left_score_mult_interdicted = True
         left_enlarge_paddle_interdicted = True
 
-
     if right_paddle_speed_boost_active:
         right_score_mult_interdicted = True
         right_enlarge_paddle_interdicted = True
-
-
-
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -508,11 +547,9 @@ while running:                                      #####################---- WH
         left_paddle_speed_boost_usage = 0
 
         right_paddle.height = left_paddle_height_aux2
-        #right_paddle.y += 115 * W_PERC
         right_paddle_enlarge_active = False
 
         left_paddle.height = left_paddle_height_aux2
-        #left_paddle.y += 115 * W_PERC
         left_paddle_enlarge_active = False
 
         if right_paddle_speed_boost_active:
