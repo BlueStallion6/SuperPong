@@ -203,6 +203,8 @@ right_paddle_speed_boost_usage = 0
 left_paddle_speed_boost_usage = 0
 right_paddle_sabotage_usage = 0
 left_paddle_sabotage_usage = 0
+right_paddle_reverse_controls_usage = 0
+left_paddle_reverse_controls_usage = 0
 
 right_score_mult_interdicted = False
 left_score_mult_interdicted = False
@@ -210,6 +212,8 @@ right_enlarge_paddle_interdicted = False
 left_enlarge_paddle_interdicted = False
 right_paddle_speed_boost_interdicted = False
 left_paddle_speed_boost_interdicted = False
+right_paddle_reverse_controls = False
+left_paddle_reverse_controls = False
 
 right_score_start_time = None
 left_score_start_time = None
@@ -221,6 +225,9 @@ ball_right_freeze_start_time = None
 ball_left_freeze_start_time = None
 right_paddle_sabotage_start_time = None
 left_paddle_sabotage_start_time = None
+right_paddle_reverse_controls_start_time = None
+left_paddle_reverse_controls_start_time = None
+
 
 SCORE_MULT_LIFESPAN = 42 * TPS
 ENLARGE_PADDLE_LIFESPAN = 40 * TPS
@@ -242,6 +249,8 @@ right_paddle_speed_boost_active = False
 left_paddle_speed_boost_active = False
 right_paddle_sabotage_active = False
 left_paddle_sabotage_active = False
+right_paddle_reverse_controls_active = False
+left_paddle_reverse_controls_active = False
 
 ball_velocity_x_aux = None
 ball_velocity_y_aux = None
@@ -252,6 +261,7 @@ ball_right_freeze_usage = 0
 ball_left_freeze_usage = 0
 ball_right_unfreeze_usage = 0
 ball_left_unfreeze_usage = 0
+
 
                                                     ##################################################################
 while running:                                      #####################---- WHILE RUNNING ----######################
@@ -286,7 +296,7 @@ while running:                                      #####################---- WH
                 sfx.play(assets.POWERUP_SOUND)
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a and left_score_powerup_usage == 0 and left_score_mult_interdicted is False:
+            if event.key == pygame.K_2 and left_score_powerup_usage == 0 and left_score_mult_interdicted is False:
                 if ball.moving:
                     left_score_increment = 1
                     left_score_powerup_usage = 1
@@ -309,7 +319,7 @@ while running:                                      #####################---- WH
 
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d and left_paddle_enlarge_usage == 0 and left_enlarge_paddle_interdicted is False:
+            if event.key == pygame.K_3 and left_paddle_enlarge_usage == 0 and left_enlarge_paddle_interdicted is False:
                 if ball.moving:
                     left_paddle.height += THE_PADDLE_HEIGHT_INCREASE
                     left_paddle.y -= (THE_PADDLE_HEIGHT_INCREASE / 2)
@@ -333,7 +343,7 @@ while running:                                      #####################---- WH
 
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q and left_paddle_speed_boost_usage == 0 and left_paddle_speed_boost_interdicted is False:
+            if event.key == pygame.K_4 and left_paddle_speed_boost_usage == 0 and left_paddle_speed_boost_interdicted is False:
                 if ball.moving:
                     left_paddle.speed += PADDLE_SPEED_INCREASE
                     left_paddle_speed_boost_usage = 1
@@ -362,7 +372,7 @@ while running:                                      #####################---- WH
 
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_e and ball_right_freeze_active is False:
+            if event.key == pygame.K_1 and ball_right_freeze_active is False:
                 if ball.moving and ball_left_freeze_usage == 0 and left_paddle.x + (1.5 * PADDLE_WIDTH) <= ball.x <= right_paddle.x - PADDLE_WIDTH:
 
                     ball_left_freeze_active = True
@@ -389,22 +399,49 @@ while running:                                      #####################---- WH
                     right_paddle_sabotage_usage = 1
 
                     right_paddle_sabotage_start_time = pygame.time.get_ticks()
-                    sfx.play(assets.ICE_SOUND)
+                    sfx.play(assets.SABOTAGE_SOUND)
 
                     left_paddle.x += SABOTAGE_SPACING_INCREASE
 
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r and left_paddle_sabotage_active is False:
+            if event.key == pygame.K_5 and left_paddle_sabotage_active is False:
                 if ball.moving and left_paddle_sabotage_usage == 0 and ball.x < right_paddle.x - SABOTAGE_SPACING_INCREASE:
 
                     left_paddle_sabotage_active = True
                     left_paddle_sabotage_usage = 1
 
                     left_paddle_sabotage_start_time = pygame.time.get_ticks()
-                    sfx.play(assets.ICE_SOUND)
+                    sfx.play(assets.SABOTAGE_SOUND)
 
                     right_paddle.x -= SABOTAGE_SPACING_INCREASE
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # POWERUP - REVERSE CONTROLS EVENT
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_6:
+                right_paddle_reverse_controls_active = True
+
+
+
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSLASH:
+                left_paddle_reverse_controls_active = True
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -770,7 +807,7 @@ while running:                                      #####################---- WH
                 left_paddle.x -= SABOTAGE_SPACING_INCREASE
                 right_paddle_sabotage_active = False
                 right_paddle_sabotage_start_time = None
-                
+
 
 
         if ball.x_vel < 0:
@@ -788,25 +825,47 @@ while running:                                      #####################---- WH
     #########  Controls  #########
 
     KEYS_PRESSED = pygame.key.get_pressed()
+    if KEYS_PRESSED[pygame.K_y]:
+        right_paddle_reverse_controls_active = True
+        left_paddle_reverse_controls_active = True
+    if KEYS_PRESSED[pygame.K_n]:
+        right_paddle_reverse_controls_active = False
+        left_paddle_reverse_controls_active = False
     if KEYS_PRESSED[pygame.K_UP]:
         if DEBUG_MODE: print_debug("Keydown: UP")
-        if right_paddle.y > 0:
-            right_paddle.y -= right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
+        if right_paddle_reverse_controls_active is False:
+            if right_paddle.y > 0:
+                right_paddle.y -= right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
+        else:
+            if right_paddle.y < W_HEIGHT - right_paddle.height:
+                right_paddle.y += right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_DOWN]:
         if DEBUG_MODE: print_debug("Keydown: DOWN")
-        if right_paddle.y < W_HEIGHT - right_paddle.height:
-            right_paddle.y += right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
+        if right_paddle_reverse_controls_active is False:
+            if right_paddle.y < W_HEIGHT - right_paddle.height:
+                right_paddle.y += right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
+        else:
+            if right_paddle.y > 0:
+                right_paddle.y -= right_paddle.speed * RIGHT_PADDLE_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_w]:
         if DEBUG_MODE: print_debug("Keydown: W")
-        if left_paddle.y > 0:
-            left_paddle.y -= left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
+        if left_paddle_reverse_controls_active is False:
+            if left_paddle.y > 0:
+                left_paddle.y -= left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
+        else:
+            if left_paddle.y < W_HEIGHT - left_paddle.height:
+                left_paddle.y += left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
 
     if KEYS_PRESSED[pygame.K_s]:
         if DEBUG_MODE: print_debug("Keydown: S")
-        if left_paddle.y < W_HEIGHT - left_paddle.height:
-            left_paddle.y += left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
+        if left_paddle_reverse_controls_active is False:
+            if left_paddle.y < W_HEIGHT - left_paddle.height:
+                left_paddle.y += left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
+        else:
+            if left_paddle.y > 0:
+                left_paddle.y -= left_paddle.speed * LEFT_PADDLE_SPEED_MULT / TPS
 
     ################################
     ######### Clip Bug Fix #########

@@ -6,7 +6,7 @@
 
 2. Paddle speed boost - Give your paddle 80% more movement speed for 6 seconds;     #####################       DONE       #######################
 
-3. Sabotage - Move your opponent closer to the center of the screen for 5 seconds;
+3. Sabotage - Move your opponent closer to the center of the screen for 5 seconds;   #####################       DONE       #######################
 
 4. Power shot - Your next shot will have 60% more speed on the ball;
 
