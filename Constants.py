@@ -63,6 +63,9 @@ RIGHT_PADDLE_HEIGHT_MULT = 1
 SABOTAGE_SPACING_INCREASE = CONFIG["powerups"]["sabotage_spacing_increase"] * W_PERC
 
 SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
+SuperDreamFont2 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 18)
+SuperDreamFont3 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 24)
+
 Press_space_sem = True
 ball_going_right = True
 

@@ -234,6 +234,7 @@ ENLARGE_PADDLE_LIFESPAN = 40 * TPS
 SPEED_BOOST_LIFESPAN = 40 * TPS
 BALL_FREEZE_LIFESPAN = FREEZE_BALL_TIME
 SABOTAGE_LIFESPAN = SABOTAGE_TIME
+REVERSE_CONTROLS_LIFESPAN = 30 * TPS
 
 left_paddle_height_aux = left_paddle.height
 right_paddle_height_aux = right_paddle.height
@@ -267,6 +268,7 @@ ball_left_unfreeze_usage = 0
 while running:                                      #####################---- WHILE RUNNING ----######################
     screen.fill(Colors.SCREEN_FILL_COLOR)           ##################################################################
     current_frame = pygame.time.get_ticks()
+    KEYS_PRESSED = pygame.key.get_pressed()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -288,7 +290,7 @@ while running:                                      #####################---- WH
     #POWERUP - SCORE MULTIPLIER EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and right_score_powerup_usage == 0 and right_score_mult_interdicted is False:  #start_time =~ 640
+            if event.key == pygame.K_RIGHT and right_score_powerup_usage == 0 and right_score_mult_interdicted is False:  #start_time =~ 640
                 if ball.moving:
                     right_score_increment = 1
                     right_score_powerup_usage = 1
@@ -307,7 +309,7 @@ while running:                                      #####################---- WH
     #POWERUP - PADDLE ENLARGE EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT and right_paddle_enlarge_usage == 0 and right_enlarge_paddle_interdicted is False:
+            if event.key == pygame.K_RCTRL and right_paddle_enlarge_usage == 0 and right_enlarge_paddle_interdicted is False:
                 if ball.moving:
                     right_paddle.height += THE_PADDLE_HEIGHT_INCREASE
                     right_paddle.y -= (THE_PADDLE_HEIGHT_INCREASE / 2)
@@ -333,7 +335,7 @@ while running:                                      #####################---- WH
     # POWERUP - PADDLE SPEED BOOST EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN and right_paddle_speed_boost_usage == 0 and right_paddle_speed_boost_interdicted is False:
+            if event.key == pygame.K_RSHIFT and right_paddle_speed_boost_usage == 0 and right_paddle_speed_boost_interdicted is False:
                 if ball.moving:
                     right_paddle.speed += PADDLE_SPEED_INCREASE
                     right_paddle_speed_boost_usage = 1
@@ -355,7 +357,7 @@ while running:                                      #####################---- WH
     # POWERUP - FREEZE BALL EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RSHIFT and ball_left_freeze_active is False:
+            if event.key == pygame.K_LEFT and ball_left_freeze_active is False:
                 if ball.moving and ball_right_freeze_usage == 0 and left_paddle.x + (1.5 * PADDLE_WIDTH) <= ball.x <= right_paddle.x - PADDLE_WIDTH:
 
                     ball_right_freeze_active = True
@@ -392,7 +394,7 @@ while running:                                      #####################---- WH
     # The variables are named with the paddle that activates the powerup in mind, so right_paddle_sabotage means when the right paddle uses the sabotage powerup.
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RCTRL and right_paddle_sabotage_active is False:
+            if event.key == pygame.K_RETURN and right_paddle_sabotage_active is False:
                 if ball.moving and right_paddle_sabotage_usage == 0 and ball.x > left_paddle.x + left_paddle.width + SABOTAGE_SPACING_INCREASE:
 
                     right_paddle_sabotage_active = True
@@ -420,15 +422,53 @@ while running:                                      #####################---- WH
     # POWERUP - REVERSE CONTROLS EVENT
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_6:
+            if event.key == pygame.K_6 and right_paddle_reverse_controls_usage == 0:
                 right_paddle_reverse_controls_active = True
-
+                right_paddle_reverse_controls_usage = 1
+                right_paddle_reverse_controls_start_time = pygame.time.get_ticks()
+                sfx.play(assets.POWERUP_SOUND)
 
 
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSLASH:
+            if event.key == pygame.K_BACKSLASH and left_paddle_reverse_controls_usage == 0:
                 left_paddle_reverse_controls_active = True
+                left_paddle_reverse_controls_usage = 1
+                left_paddle_reverse_controls_start_time = pygame.time.get_ticks()
+                sfx.play(assets.POWERUP_SOUND)
+
+
+
+
+
+
+
+    if right_paddle_reverse_controls_start_time is not None and current_frame - right_paddle_reverse_controls_start_time >= (REVERSE_CONTROLS_LIFESPAN / 1.1) and right_paddle_reverse_controls_active is True:
+        Colors.MEGA_LIGHT_BLUE = (0, 0, 120)
+    elif right_paddle_reverse_controls_active is True:
+        Colors.MEGA_LIGHT_BLUE = Colors.MEGA_LIGHT_BLUE_AUX
+
+    if left_paddle_reverse_controls_start_time is not None and current_frame - left_paddle_reverse_controls_start_time >= (REVERSE_CONTROLS_LIFESPAN / 1.1) and left_paddle_reverse_controls_active is True:
+        Colors.MEGA_LIGHT_RED = (120, 0, 0)
+    elif left_paddle_reverse_controls_active is True:
+        Colors.MEGA_LIGHT_RED = Colors.MEGA_LIGHT_RED_AUX
+
+
+
+    if right_paddle_reverse_controls_start_time is not None and current_frame - right_paddle_reverse_controls_start_time >= REVERSE_CONTROLS_LIFESPAN:
+        right_paddle_reverse_controls_active = False
+        right_paddle_reverse_controls_start_time = None
+
+
+    if left_paddle_reverse_controls_start_time is not None and current_frame - left_paddle_reverse_controls_start_time >= REVERSE_CONTROLS_LIFESPAN:
+        left_paddle_reverse_controls_active = False
+        left_paddle_reverse_controls_start_time = None
+
+
+
+
+
+
 
 
 
@@ -808,8 +848,6 @@ while running:                                      #####################---- WH
                 right_paddle_sabotage_active = False
                 right_paddle_sabotage_start_time = None
 
-
-
         if ball.x_vel < 0:
             WAY_ARROW_SEM = False  # Ball is moving left
         else:
@@ -821,10 +859,65 @@ while running:                                      #####################---- WH
             elif not WAY_ARROW_SEM:
                 screen.blit(Way_line_left_text, (W_WIDTH // 2 - 115 * W_PERC, W_HEIGHT // 2 - 30 * W_PERC))
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # EXPLAIN  THE CONTROLS
+
+        controls_right_text = SuperDreamFont3.render("HOLD  ENTER  TO SHOW CONTROLS:", True, Colors.BLUE_TINT)  #   1 - FREEZE
+        control_up_right_text = SuperDreamFont2.render("UP ARROW           -    MOVE UP", True, Colors.DARK_GRAY)
+        control_down_right_text = SuperDreamFont2.render("DOWN ARROW    -  MOVE DOWN", True, Colors.DARK_GRAY)
+        control_1_right_text = SuperDreamFont2.render("  >               -  FREEZE BALL", True, Colors.DARK_GRAY)  #   1 - FREEZE
+        control_2_right_text = SuperDreamFont2.render("  <               -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)  #   2 - SCORE MULT
+        control_3_right_text = SuperDreamFont2.render("R CTRL      -  ENLARGE PADDLE", True, Colors.DARK_GRAY)  #   3 - ENLARGE PADDLE
+        control_4_right_text = SuperDreamFont2.render("R SHIFT     -  SPEED BOOST", True, Colors.DARK_GRAY)  #   4 - SPEED BOOST
+        control_5_right_text = SuperDreamFont2.render("ENTER       -  SABOTAGE", True, Colors.DARK_GRAY)  #   5 - SABOTAGE
+
+
+
+        screen.blit(controls_right_text, (W_WIDTH // 1.3 + 40 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+
+
+
+        if KEYS_PRESSED[pygame.K_RETURN]:
+            screen.blit(control_up_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+            screen.blit(control_down_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+            screen.blit(control_1_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+            screen.blit(control_2_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+            screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+            screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+            screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
+
+
+
+
+        controls_left_text = SuperDreamFont3.render("HOLD   Q   TO SHOW CONTROLS:", True, Colors.RED_TINT)  # 1 - FREEZE
+        control_up_left_text = SuperDreamFont2.render("W         -  MOVE UP", True, Colors.DARK_GRAY)
+        control_down_left_text = SuperDreamFont2.render("S         -  MOVE DOWN", True, Colors.DARK_GRAY)
+        control_1_left_text = SuperDreamFont2.render("1         -  FREEZE BALL", True, Colors.DARK_GRAY)
+        control_2_left_text = SuperDreamFont2.render("2         -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)
+        control_3_left_text = SuperDreamFont2.render("3         -  ENLARGE PADDLE", True, Colors.DARK_GRAY)
+        control_4_left_text = SuperDreamFont2.render("4         -  SPEED BOOST", True, Colors.DARK_GRAY)
+        control_5_left_text = SuperDreamFont2.render("5         -  SABOTAGE", True, Colors.DARK_GRAY)
+
+
+
+        screen.blit(controls_left_text, (W_WIDTH // 8 - 190 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+
+        if KEYS_PRESSED[pygame.K_q]:
+            screen.blit(control_up_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+            screen.blit(control_down_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+            screen.blit(control_1_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+            screen.blit(control_2_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+            screen.blit(control_3_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+            screen.blit(control_4_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+            screen.blit(control_5_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
+
+
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #########  Controls  #########
 
-    KEYS_PRESSED = pygame.key.get_pressed()
     if KEYS_PRESSED[pygame.K_y]:
         right_paddle_reverse_controls_active = True
         left_paddle_reverse_controls_active = True
