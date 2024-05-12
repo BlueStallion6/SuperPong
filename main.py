@@ -863,57 +863,47 @@ while running:                                      #####################---- WH
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # EXPLAIN  THE CONTROLS
 
-        controls_right_text = SuperDreamFont3.render("HOLD   ENTER   TO SHOW CONTROLS:", True, Colors.BLUE_TINT)  #   1 - FREEZE
-        control_up_right_text = SuperDreamFont2.render("UP ARROW           -    MOVE UP", True, Colors.DARK_GRAY)
-        control_down_right_text = SuperDreamFont2.render("DOWN ARROW    -  MOVE DOWN", True, Colors.DARK_GRAY)
-        control_1_right_text = SuperDreamFont2.render("  >               -  FREEZE BALL", True, Colors.DARK_GRAY)  #   1 - FREEZE
-        control_2_right_text = SuperDreamFont2.render("  <               -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)  #   2 - SCORE MULT
-        control_3_right_text = SuperDreamFont2.render("R CTRL      -  ENLARGE PADDLE", True, Colors.DARK_GRAY)  #   3 - ENLARGE PADDLE
-        control_4_right_text = SuperDreamFont2.render("R SHIFT     -  SPEED BOOST", True, Colors.DARK_GRAY)  #   4 - SPEED BOOST
-        control_5_right_text = SuperDreamFont2.render("ENTER       -  SABOTAGE", True, Colors.DARK_GRAY)  #   5 - SABOTAGE
+        if player_won is False:
+
+            controls_right_text = SuperDreamFont3.render("HOLD   ENTER   TO SHOW CONTROLS:", True, Colors.BLUE_TINT)  #   1 - FREEZE
+            control_up_right_text = SuperDreamFont2.render("UP ARROW           -    MOVE UP", True, Colors.DARK_GRAY)
+            control_down_right_text = SuperDreamFont2.render("DOWN ARROW    -  MOVE DOWN", True, Colors.DARK_GRAY)
+            control_1_right_text = SuperDreamFont2.render("RIGHT ARROW    -  FREEZE BALL", True, Colors.DARK_GRAY)  #   1 - FREEZE
+            control_2_right_text = SuperDreamFont2.render("LEFT ARROW     -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)  #   2 - SCORE MULT
+            control_3_right_text = SuperDreamFont2.render("R CTRL      -  ENLARGE PADDLE", True, Colors.DARK_GRAY)  #   3 - ENLARGE PADDLE
+            control_4_right_text = SuperDreamFont2.render("R SHIFT     -  SPEED BOOST", True, Colors.DARK_GRAY)  #   4 - SPEED BOOST
+            control_5_right_text = SuperDreamFont2.render("ENTER       -  SABOTAGE", True, Colors.DARK_GRAY)  #   5 - SABOTAGE
+
+            screen.blit(controls_right_text, (W_WIDTH // 1.3 + 30 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+            if KEYS_PRESSED[pygame.K_RETURN]:
+                screen.blit(control_up_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+                screen.blit(control_down_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+                screen.blit(control_1_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+                screen.blit(control_2_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+                screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+                screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+                screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
 
 
 
-        screen.blit(controls_right_text, (W_WIDTH // 1.3 + 40 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+            controls_left_text = SuperDreamFont3.render("HOLD   Q   TO SHOW CONTROLS:", True, Colors.RED_TINT)  # 1 - FREEZE
+            control_up_left_text = SuperDreamFont2.render("W         -  MOVE UP", True, Colors.DARK_GRAY)
+            control_down_left_text = SuperDreamFont2.render("S         -  MOVE DOWN", True, Colors.DARK_GRAY)
+            control_1_left_text = SuperDreamFont2.render("1         -  FREEZE BALL", True, Colors.DARK_GRAY)
+            control_2_left_text = SuperDreamFont2.render("2         -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)
+            control_3_left_text = SuperDreamFont2.render("3         -  ENLARGE PADDLE", True, Colors.DARK_GRAY)
+            control_4_left_text = SuperDreamFont2.render("4         -  SPEED BOOST", True, Colors.DARK_GRAY)
+            control_5_left_text = SuperDreamFont2.render("5         -  SABOTAGE", True, Colors.DARK_GRAY)
 
-
-
-        if KEYS_PRESSED[pygame.K_RETURN]:
-            screen.blit(control_up_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
-            screen.blit(control_down_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
-            screen.blit(control_1_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
-            screen.blit(control_2_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
-            screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
-            screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
-            screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 90 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
-
-
-
-
-        controls_left_text = SuperDreamFont3.render("HOLD   Q   TO SHOW CONTROLS:", True, Colors.RED_TINT)  # 1 - FREEZE
-        control_up_left_text = SuperDreamFont2.render("W         -  MOVE UP", True, Colors.DARK_GRAY)
-        control_down_left_text = SuperDreamFont2.render("S         -  MOVE DOWN", True, Colors.DARK_GRAY)
-        control_1_left_text = SuperDreamFont2.render("1         -  FREEZE BALL", True, Colors.DARK_GRAY)
-        control_2_left_text = SuperDreamFont2.render("2         -  SCORE MULTIPLIER", True, Colors.DARK_GRAY)
-        control_3_left_text = SuperDreamFont2.render("3         -  ENLARGE PADDLE", True, Colors.DARK_GRAY)
-        control_4_left_text = SuperDreamFont2.render("4         -  SPEED BOOST", True, Colors.DARK_GRAY)
-        control_5_left_text = SuperDreamFont2.render("5         -  SABOTAGE", True, Colors.DARK_GRAY)
-
-
-
-        screen.blit(controls_left_text, (W_WIDTH // 8 - 170 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
-
-        if KEYS_PRESSED[pygame.K_q]:
-            screen.blit(control_up_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
-            screen.blit(control_down_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
-            screen.blit(control_1_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
-            screen.blit(control_2_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
-            screen.blit(control_3_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
-            screen.blit(control_4_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
-            screen.blit(control_5_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
-
-
-
+            screen.blit(controls_left_text, (W_WIDTH // 8 - 170 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+            if KEYS_PRESSED[pygame.K_q]:
+                screen.blit(control_up_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+                screen.blit(control_down_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+                screen.blit(control_1_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+                screen.blit(control_2_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+                screen.blit(control_3_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+                screen.blit(control_4_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+                screen.blit(control_5_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #########  Controls  #########
