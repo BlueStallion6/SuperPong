@@ -863,7 +863,7 @@ while running:                                      #####################---- WH
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # EXPLAIN  THE CONTROLS
 
-        controls_right_text = SuperDreamFont3.render("HOLD  ENTER  TO SHOW CONTROLS:", True, Colors.BLUE_TINT)  #   1 - FREEZE
+        controls_right_text = SuperDreamFont3.render("HOLD   ENTER   TO SHOW CONTROLS:", True, Colors.BLUE_TINT)  #   1 - FREEZE
         control_up_right_text = SuperDreamFont2.render("UP ARROW           -    MOVE UP", True, Colors.DARK_GRAY)
         control_down_right_text = SuperDreamFont2.render("DOWN ARROW    -  MOVE DOWN", True, Colors.DARK_GRAY)
         control_1_right_text = SuperDreamFont2.render("  >               -  FREEZE BALL", True, Colors.DARK_GRAY)  #   1 - FREEZE
@@ -901,16 +901,16 @@ while running:                                      #####################---- WH
 
 
 
-        screen.blit(controls_left_text, (W_WIDTH // 8 - 190 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+        screen.blit(controls_left_text, (W_WIDTH // 8 - 170 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
 
         if KEYS_PRESSED[pygame.K_q]:
-            screen.blit(control_up_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
-            screen.blit(control_down_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
-            screen.blit(control_1_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
-            screen.blit(control_2_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
-            screen.blit(control_3_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
-            screen.blit(control_4_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
-            screen.blit(control_5_left_text, (W_WIDTH // 8 - 140 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
+            screen.blit(control_up_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+            screen.blit(control_down_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+            screen.blit(control_1_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+            screen.blit(control_2_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+            screen.blit(control_3_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+            screen.blit(control_4_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+            screen.blit(control_5_left_text, (W_WIDTH // 8 - 120 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
 
 
 
