@@ -876,13 +876,13 @@ while running:                                      #####################---- WH
 
             screen.blit(controls_right_text, (W_WIDTH // 1.3 + 30 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
             if KEYS_PRESSED[pygame.K_RETURN]:
-                screen.blit(control_up_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
-                screen.blit(control_down_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
-                screen.blit(control_1_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
-                screen.blit(control_2_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
-                screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
-                screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
-                screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 88 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
+                screen.blit(control_up_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+                screen.blit(control_down_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+                screen.blit(control_1_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+                screen.blit(control_2_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+                screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+                screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+                screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 84 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
 
 
 
