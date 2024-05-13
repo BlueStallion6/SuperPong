@@ -868,7 +868,7 @@ while running:
             control_5_right_text = SuperDreamFont2.render("R CTRL    -  FREEZE BALL", True, Colors.GRAY2)
 
 
-            control_info_right_text = SuperDreamFont2.render("Note :  Power-ups can be used once at a time (except freeze)", True, Colors.BLUE_TINT2)
+            control_info_right_text = SuperDreamFont2.render("Note :  Power-ups can be used once per match", True, Colors.BLUE_TINT2)
 
             screen.blit(controls_right_text, (W_WIDTH // 1.3 + 23 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
             if KEYS_PRESSED[pygame.K_RETURN]:
@@ -879,7 +879,7 @@ while running:
                 screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
                 screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
                 screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
-                #screen.blit(control_info_right_text, (W_WIDTH // 1.3 + 23 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
+                screen.blit(control_info_right_text, (W_WIDTH // 1.3 + 23 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
 
 
             controls_left_text = SuperDreamFont3.render("HOLD   Q   TO SHOW CONTROLS:", True, Colors.RED_TINT)  # 1 - FREEZE
@@ -892,7 +892,7 @@ while running:
             control_5_left_text = SuperDreamFont2.render("5         -  SCORE MULTIPLIER", True, Colors.GRAY2)
 
 
-            control_info_left_text = SuperDreamFont2.render("Note :  Power-ups can be used once at a time (except freeze)", True, Colors.RED_TINT2)
+            control_info_left_text = SuperDreamFont2.render("Note :  Power-ups can only be used once at a time (except freeze)", True, Colors.RED_TINT2)
 
             screen.blit(controls_left_text, (W_WIDTH // 8 - 170 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
             if KEYS_PRESSED[pygame.K_q]:
