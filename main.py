@@ -879,7 +879,7 @@ while running:
                 screen.blit(control_3_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
                 screen.blit(control_4_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
                 screen.blit(control_5_right_text, (W_WIDTH // 1.3 + 77 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
-                screen.blit(control_info_right_text, (W_WIDTH // 1.3 + 23 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
+                #screen.blit(control_info_right_text, (W_WIDTH // 1.3 + 23 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
 
 
             controls_left_text = SuperDreamFont3.render("HOLD   Q   TO SHOW CONTROLS:", True, Colors.RED_TINT)  # 1 - FREEZE
