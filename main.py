@@ -859,12 +859,12 @@ while running:
         if player_won is False:
 
             controls_right_text = SuperDreamFont3.render("HOLD   ENTER   TO SHOW CONTROLS:", True, Colors.BLUE_TINT)
-            control_up_right_text = SuperDreamFont2.render("UP ARROW           -    MOVE UP", True, Colors.GRAY2)
-            control_down_right_text = SuperDreamFont2.render("DOWN ARROW    -  MOVE DOWN", True, Colors.GRAY2)
-            control_1_right_text = SuperDreamFont2.render("BACKSPACE     -  SCORE MULTIPLIER", True, Colors.GRAY2)
-            control_2_right_text = SuperDreamFont2.render("BACKSLASH      -  SABOTAGE", True, Colors.GRAY2)
+            control_up_right_text = SuperDreamFont2.render("UP ARROW      -    MOVE UP", True, Colors.GRAY2)
+            control_down_right_text = SuperDreamFont2.render("DOWN ARROW   -  MOVE DOWN", True, Colors.GRAY2)
+            control_1_right_text = SuperDreamFont2.render("BACKSPACE  -  SCORE MULTIPLIER", True, Colors.GRAY2)
+            control_2_right_text = SuperDreamFont2.render("BACKSLASH    -  SABOTAGE", True, Colors.GRAY2)
             control_3_right_text = SuperDreamFont2.render("ENTER     -  SPEED BOOST", True, Colors.GRAY2)
-            control_4_right_text = SuperDreamFont2.render("R SHIFT     -  ENLARGE PADDLE", True, Colors.GRAY2)
+            control_4_right_text = SuperDreamFont2.render("R SHIFT    -  ENLARGE PADDLE", True, Colors.GRAY2)
             control_5_right_text = SuperDreamFont2.render("R CTRL    -  FREEZE BALL", True, Colors.GRAY2)
 
 
