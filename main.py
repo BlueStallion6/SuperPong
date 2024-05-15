@@ -298,10 +298,8 @@ while running:
         screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 3 * W_PERC))
 
 
-
         pygame.display.update()
         clock.tick(TPS)
-
 
     elif start_screen is False:
         screen.fill(Colors.SCREEN_FILL_COLOR)
