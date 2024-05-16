@@ -157,10 +157,16 @@ class Ball:
             ball.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
+
+
+    #def move_start_screen(self, screen):
+        # TBD
+
     def draw(self, screen):
         pygame.draw.circle(screen, Colors.BALL_COLOR, (self.x, self.y), self.radius, width = 0)
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
+ball_start_screen = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
 
 #######################################################################################################################
 
@@ -296,6 +302,10 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     start_screen = False
+
+
+        ball_start_screen.draw(screen)
+        ball_start_screen.move()
 
 
         start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)
