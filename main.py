@@ -274,6 +274,10 @@ ball_left_unfreeze_usage = 0
 
 start_screen = True
 while running:
+
+#----------------------------------------------------------------------------------------------------------------------
+    ########### START SCREEN ###########
+
     if start_screen is True:
         screen.fill(Colors.SCREEN_FILL_COLOR)
 
@@ -294,12 +298,21 @@ while running:
                     start_screen = False
 
 
-        start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)  # 1 - FREEZE
-        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 3 * W_PERC))
+        start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)
+        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 2.8 * W_PERC))
 
+        start_screen_text2 = SuperDreamFont5.render("PRESS SPACE TO BEGIN", True, Colors.GRAY3)
+        screen.blit(start_screen_text2, (W_WIDTH // 2 - start_screen_text2.get_width() / 2 * W_PERC, W_HEIGHT / 1.8 * W_PERC))
 
         pygame.display.update()
         clock.tick(TPS)
+
+
+
+#----------------------------------------------------------------------------------------------------------------------
+    #####################################
+    ############ MAIN GAME ##############
+    #####################################
 
     elif start_screen is False:
         screen.fill(Colors.SCREEN_FILL_COLOR)
