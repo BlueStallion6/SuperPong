@@ -69,8 +69,8 @@ SABOTAGE_SPACING_INCREASE = CONFIG["powerups"]["sabotage_spacing_increase"] * W_
 SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)
 SuperDreamFont2 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 18)
 SuperDreamFont3 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 24)
-SuperDreamFont4 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 80)
-SuperDreamFont5 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 46)
+SuperDreamFont4 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 100)
+SuperDreamFont5 = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 40)
 
 Press_space_sem = True
 ball_going_right = True

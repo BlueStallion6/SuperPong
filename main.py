@@ -203,8 +203,8 @@ class Ball:
         pygame.draw.circle(screen, self.ball_color, (self.x, self.y), self.radius, width = 0)
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, ball_velocity_x, ball_velocity_y, BALL_RADIUS, Colors.BALL_COLOR)
-ball_start_screen_red = Ball(int(W_WIDTH * random_value_red_x), int(W_WIDTH * random_value_red_y), ball_velocity_x * 0.85, ball_velocity_x * 0.85, BALL_RADIUS, Colors.RED_TINT_AUX)
-ball_start_screen_blue = Ball(int(W_WIDTH * random_value_blue_x), int(W_WIDTH * random_value_blue_y), -ball_velocity_x * 0.85, ball_velocity_x * 0.85, BALL_RADIUS, Colors.BLUE_TINT_AUX)
+ball_start_screen_red = Ball(int(W_WIDTH * random_value_red_x), int(W_WIDTH * random_value_red_y), ball_velocity_x * 0.70, ball_velocity_x * 0.85, BALL_RADIUS, Colors.RED_TINT_AUX)
+ball_start_screen_blue = Ball(int(W_WIDTH * random_value_blue_x), int(W_WIDTH * random_value_blue_y), -ball_velocity_x * 0.85, ball_velocity_x * 0.70, BALL_RADIUS, Colors.BLUE_TINT_AUX)
 
 #######################################################################################################################
 
@@ -349,9 +349,9 @@ while running:
 
 
         start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)
-        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 2.8 * W_PERC))
+        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 2.5 * W_PERC))
 
-        start_screen_text2 = SuperDreamFont5.render("PRESS SPACE TO BEGIN", True, Colors.GRAY3)
+        start_screen_text2 = SuperDreamFont5.render("~ PRESS SPACE TO BEGIN ~", True, Colors.GRAY3)
         screen.blit(start_screen_text2, (W_WIDTH // 2 - start_screen_text2.get_width() / 2 * W_PERC, W_HEIGHT / 1.8 * W_PERC))
 
         pygame.display.update()
