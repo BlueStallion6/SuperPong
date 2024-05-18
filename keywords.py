@@ -30,6 +30,8 @@ class Colors:
     MEGA_LIGHT_RED = (255, 180, 180)
     BLUE_TINT = (190, 190, 220)
     RED_TINT = (220, 190, 190)
+    BLUE_TINT_AUX = BLUE_TINT
+    RED_TINT_AUX = RED_TINT
 
     BLUE_TINT2 = (170, 170, 190)
     RED_TINT2 = (190, 170, 170)

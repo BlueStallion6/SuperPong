@@ -60,6 +60,10 @@ RIGHT_PADDLE_SPEED_MULT = 1
 LEFT_PADDLE_HEIGHT_MULT = 1
 RIGHT_PADDLE_HEIGHT_MULT = 1
 
+STARTSCREEN_BALL_Y_VEL_RANDOM_START = CONFIG["play_configs"]["startscreen_ball_y_vel_random_start"]
+STARTSCREEN_BALL_Y_VEL_RANDOM_END = CONFIG["play_configs"]["startscreen_ball_y_vel_random_end"]
+
+
 SABOTAGE_SPACING_INCREASE = CONFIG["powerups"]["sabotage_spacing_increase"] * W_PERC
 
 SuperDreamFont = pygame.font.Font(".\\resources\\SuperDream-ax3vE.ttf", 22)

@@ -9,6 +9,7 @@ try:
     import json
     import resources.pygameResources as assets
     import threading
+    from random import *
     from screeninfo import get_monitors
     from resources.pygameResources import sfx
     from keywords import *
@@ -59,13 +60,24 @@ velocity_inc_flat = 32 * W_PERC / TPS
 right_score_increment = 0
 left_score_increment = 0
 
+def roll():
+    return 1, 2, 3, 4
+
+(a, b, c, d) = roll()
+
+random_value_red_x = randint(50, 950) / 1000
+random_value_red_y = randint(50, 950) / 1000
+random_value_blue_x = random_value_red_x * randint(50, 950) / 1000
+random_value_blue_y = random_value_red_y * randint(50, 950) / 1000
+
 class Ball:
-    def __init__(self, x, y, radius):
+    def __init__(self, x, y, ball_velocity_x, ball_velocity_y, radius, ball_color):
         self.x = x
         self.y = y
         self.radius = BALL_RADIUS
         self.x_vel = ball_velocity_x
         self.y_vel = ball_velocity_y
+        self.ball_color = ball_color
 
     def reset(self):
         self.x = W_WIDTH // 2
@@ -75,98 +87,124 @@ class Ball:
         self.x += self.x_vel
         self.y += self.y_vel
 
-        if ball.y + ball.radius > W_HEIGHT:  # lower barrier
-            ball.y_vel *= -1
-            ball.y = W_HEIGHT - ball.radius
-            ball.y_vel = ball.y_vel - (velocity_inc_flat / 4)
+        if self.y + self.radius > W_HEIGHT:  # lower barrier
+            self.y_vel *= -1
+            self.y = W_HEIGHT - self.radius
+            self.y_vel = self.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND)
-        elif ball.y - ball.radius < 0:
-            ball.y_vel *= -1
-            ball.y = ball.radius
-            ball.y_vel = ball.y_vel - (velocity_inc_flat / 4)
+        elif self.y - self.radius < 0:
+            self.y_vel *= -1
+            self.y = self.radius
+            self.y_vel = self.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND)
 
         #LEFT PADDLE COLLISION - 1/8 = upper side,  7/8 = lower side
-        if left_paddle.x - PADDLE_WIDTH <= ball.x - ball.radius <= left_paddle.x + left_paddle.width and left_paddle.y - ball.radius < ball.y < left_paddle.y + left_paddle.height + ball.radius:
-            if ball.y < left_paddle.y + left_paddle.height * 1 / 8:
-                ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
+        if left_paddle.x - PADDLE_WIDTH <= self.x - self.radius <= left_paddle.x + left_paddle.width and left_paddle.y - self.radius < self.y < left_paddle.y + left_paddle.height + self.radius:
+            if self.y < left_paddle.y + left_paddle.height * 1 / 8:
+                self.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
-            elif ball.y < left_paddle.y + left_paddle.height * 2 / 8:
-                ball.y_vel = (-3/5) * ball_velocity_x
+            elif self.y < left_paddle.y + left_paddle.height * 2 / 8:
+                self.y_vel = (-3/5) * ball_velocity_x
 
-            elif ball.y < left_paddle.y + left_paddle.height * 3 / 8:
-                ball.y_vel = (-3 / 10) * ball_velocity_x
+            elif self.y < left_paddle.y + left_paddle.height * 3 / 8:
+                self.y_vel = (-3 / 10) * ball_velocity_x
 
-            elif ball.y < left_paddle.y + left_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y
-            elif ball.y < left_paddle.y + left_paddle.height * 5 / 8:
-                ball.y_vel = (3 / 10) * ball_velocity_x
+            elif self.y < left_paddle.y + left_paddle.height * 4 / 8:
+                self.y_vel = ball_velocity_y
+            elif self.y < left_paddle.y + left_paddle.height * 5 / 8:
+                self.y_vel = (3 / 10) * ball_velocity_x
 
-            elif ball.y < left_paddle.y + left_paddle.height * 6 / 8:
-                ball.y_vel = (3 / 5) * ball_velocity_x
+            elif self.y < left_paddle.y + left_paddle.height * 6 / 8:
+                self.y_vel = (3 / 5) * ball_velocity_x
 
-            elif ball.y > left_paddle.y + left_paddle.height * 7 / 8:
-                ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
+            elif self.y > left_paddle.y + left_paddle.height * 7 / 8:
+                self.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
             sfx.play(assets.PADDLE_HIT_SOUND)
-            ball.x_vel *= - 1
-            ball.x_vel += velocity_inc_flat
-            ball.x = left_paddle.x + PADDLE_WIDTH + ball.radius + 1 * W_PERC
+            self.x_vel *= - 1
+            self.x_vel += velocity_inc_flat
+            self.x = left_paddle.x + PADDLE_WIDTH + self.radius + 1 * W_PERC
 
-        if ball.x <= 0:   #Left_side
+        if self.x <= 0:   #Left_side
             RIGHT_SCORE.inc(1 + right_score_increment)
-            ball.reset()
-            ball.moving = False
-            ball.x_vel = - ball_velocity_x
-            ball.y_vel = ball_velocity_y
+            self.reset()
+            self.moving = False
+            self.x_vel = - ball_velocity_x
+            self.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
         #RIGHT PADDLE COLLISION
-        if right_paddle.x + PADDLE_WIDTH >= ball.x + ball.radius >= right_paddle.x and right_paddle.y - ball.radius < ball.y < right_paddle.y + right_paddle.height + ball.radius:
+        if right_paddle.x + PADDLE_WIDTH >= self.x + ball.radius >= right_paddle.x and right_paddle.y - self.radius < self.y < right_paddle.y + right_paddle.height + self.radius:
 
-            if ball.y < right_paddle.y + right_paddle.height * 1 / 8:
-                ball.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
+            if self.y < right_paddle.y + right_paddle.height * 1 / 8:
+                self.y_vel = (-1) * ball_velocity_x + velocity_inc_flat
 
-            elif ball.y < right_paddle.y + right_paddle.height * 2 / 8:
-                ball.y_vel = (-3/5) * ball_velocity_x
+            elif self.y < right_paddle.y + right_paddle.height * 2 / 8:
+                self.y_vel = (-3/5) * ball_velocity_x
 
-            elif ball.y < right_paddle.y + right_paddle.height * 3 / 8:
-                ball.y_vel = (-3 / 10) * ball_velocity_x
-            elif ball.y < right_paddle.y + right_paddle.height * 4 / 8:
-                ball.y_vel = ball_velocity_y
+            elif self.y < right_paddle.y + right_paddle.height * 3 / 8:
+                self.y_vel = (-3 / 10) * ball_velocity_x
+            elif self.y < right_paddle.y + right_paddle.height * 4 / 8:
+                self.y_vel = ball_velocity_y
 
-            elif ball.y < right_paddle.y + right_paddle.height * 5 / 8:
-                ball.y_vel = (3 / 10) * ball_velocity_x
+            elif self.y < right_paddle.y + right_paddle.height * 5 / 8:
+                self.y_vel = (3 / 10) * ball_velocity_x
 
-            elif ball.y < right_paddle.y + right_paddle.height * 6 / 8:
-                ball.y_vel = (3 / 5) * ball_velocity_x
+            elif self.y < right_paddle.y + right_paddle.height * 6 / 8:
+                self.y_vel = (3 / 5) * ball_velocity_x
 
-            elif ball.y > right_paddle.y + right_paddle.height * 7 / 8:
-                ball.y_vel = 1 * ball_velocity_x - velocity_inc_flat
+            elif self.y > right_paddle.y + right_paddle.height * 7 / 8:
+                self.y_vel = 1 * ball_velocity_x - velocity_inc_flat
 
             sfx.play(assets.PADDLE_HIT_SOUND)
-            ball.x_vel *= -1
-            ball.x_vel -= velocity_inc_flat
-            ball.x = right_paddle.x - ball.radius - 1 * W_PERC
+            self.x_vel *= -1
+            self.x_vel -= velocity_inc_flat
+            self.x = right_paddle.x - self.radius - 1 * W_PERC
 
-        if ball.x >= screen.get_width():   #right_side
+        if self.x >= screen.get_width():   #right_side
             LEFT_SCORE.inc(1 + left_score_increment)
-            ball.reset()
-            ball.moving = False
-            ball.x_vel = ball_velocity_x
-            ball.y_vel = ball_velocity_y
+            self.reset()
+            self.moving = False
+            self.x_vel = ball_velocity_x
+            self.y_vel = ball_velocity_y
             sfx.play(assets.WIN_LOSE_ROUND_SOUND)
 
 
+    def move_start_screen(self):
+        self.x += self.x_vel
+        self.y += self.y_vel
 
-    #def move_start_screen(self, screen):
-        # TBD
+        if self.y + self.radius > W_HEIGHT:  # lower barrier
+            self.y_vel *= -1
+            self.y = W_HEIGHT - self.radius
+            self.y_vel = self.y_vel - (velocity_inc_flat / 4)
+            sfx.play(assets.MARGIN_HIT_SOUND_2)
+        elif self.y - self.radius < 0: # upper barrier
+            self.y_vel *= -1
+            self.y = self.radius
+            self.y_vel = self.y_vel - (velocity_inc_flat / 4)
+            sfx.play(assets.MARGIN_HIT_SOUND_2)
+
+
+        if self.x + ball.radius >= W_WIDTH: # right barrier
+            self.x_vel *= -1
+            self.x = W_WIDTH - self.radius
+            sfx.play(assets.MARGIN_HIT_SOUND_2)
+        if self.x - self.radius <= 0: # left barrier
+            self.x_vel *= -1
+            sfx.play(assets.MARGIN_HIT_SOUND_2)
+
+
+
+
+
 
     def draw(self, screen):
-        pygame.draw.circle(screen, Colors.BALL_COLOR, (self.x, self.y), self.radius, width = 0)
+        pygame.draw.circle(screen, self.ball_color, (self.x, self.y), self.radius, width = 0)
 
-ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
-ball_start_screen = Ball(W_WIDTH // 2, W_HEIGHT // 2, BALL_RADIUS)
+ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, ball_velocity_x, ball_velocity_y, BALL_RADIUS, Colors.BALL_COLOR)
+ball_start_screen_red = Ball(int(W_WIDTH * random_value_red_x), int(W_WIDTH * random_value_red_y), ball_velocity_x * 0.85, ball_velocity_x * 0.85, BALL_RADIUS, Colors.RED_TINT_AUX)
+ball_start_screen_blue = Ball(int(W_WIDTH * random_value_blue_x), int(W_WIDTH * random_value_blue_y), -ball_velocity_x * 0.85, ball_velocity_x * 0.85, BALL_RADIUS, Colors.BLUE_TINT_AUX)
 
 #######################################################################################################################
 
@@ -304,8 +342,10 @@ while running:
                     start_screen = False
 
 
-        ball_start_screen.draw(screen)
-        ball_start_screen.move()
+        ball_start_screen_red.draw(screen)
+        ball_start_screen_red.move_start_screen()
+        ball_start_screen_blue.draw(screen)
+        ball_start_screen_blue.move_start_screen()
 
 
         start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)
@@ -424,7 +464,7 @@ while running:
 
                         ball_velocity_x_aux = ball.x_vel
                         ball_velocity_y_aux = ball.y_vel
-                        Colors.BALL_COLOR = Colors.DARKER_BLUE
+                        ball.ball_color = Colors.DARKER_BLUE
                         ball_right_freeze_start_time = pygame.time.get_ticks()
                         sfx.play(assets.ICE_SOUND)
 
@@ -441,7 +481,7 @@ while running:
 
                         ball_velocity_x_aux = ball.x_vel
                         ball_velocity_y_aux = ball.y_vel
-                        Colors.BALL_COLOR = Colors.DARKER_BLUE
+                        ball.ball_color = Colors.DARKER_BLUE
                         ball_left_freeze_start_time = pygame.time.get_ticks()
                         sfx.play(assets.ICE_SOUND)
 
@@ -524,7 +564,7 @@ while running:
         if ball_right_freeze_start_time is not None and current_frame - ball_right_freeze_start_time >= BALL_FREEZE_LIFESPAN:
             ball.x_vel = ball_velocity_x_aux
             ball.y_vel = ball_velocity_y_aux
-            Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
+            ball.ball_color = Colors.BALL_COLOR_AUX
             sfx.play(assets.UNFREEZE_SOUND)
             ball_right_freeze_start_time = None
             ball_right_freeze_active = False
@@ -533,7 +573,7 @@ while running:
         if ball_left_freeze_start_time is not None and current_frame - ball_left_freeze_start_time >= BALL_FREEZE_LIFESPAN:
             ball.x_vel = ball_velocity_x_aux
             ball.y_vel = ball_velocity_y_aux
-            Colors.BALL_COLOR = Colors.BALL_COLOR_AUX
+            ball.ball_color = Colors.BALL_COLOR_AUX
             sfx.play(assets.UNFREEZE_SOUND)
             ball_left_freeze_start_time = None
             ball_left_freeze_active = False

@@ -4,6 +4,7 @@ pygame.mixer.init()
 sfx = pygame.mixer.Sound
 
 MARGIN_HIT_SOUND = sfx(".\\resources\\sounds\\pong_sound2.wav")
+MARGIN_HIT_SOUND_2 = sfx(".\\resources\\sounds\\pong_sound2.wav")
 PADDLE_HIT_SOUND = sfx(".\\resources\\sounds\\pong_sound1.wav")
 WIN_LOSE_ROUND_SOUND = sfx(".\\resources\\sounds\\pickupCoin2.wav")
 WIN_SOUND = sfx(".\\resources\\sounds\\Win_sound.wav")
@@ -24,3 +25,4 @@ POWERUP_SOUND3.set_volume(0.18)
 ICE_SOUND.set_volume(0.26)
 UNFREEZE_SOUND.set_volume(0.20)
 SABOTAGE_SOUND.set_volume(0.20)
+MARGIN_HIT_SOUND_2.set_volume(0.10)
