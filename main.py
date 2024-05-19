@@ -729,7 +729,7 @@ while running:
         if right_paddle_enlarge_active:
             right_score_mult_interdicted = True
             right_paddle_speed_boost_interdicted = True
-            left_paddle_sabotage_interdicted = True
+            right_paddle_sabotage_interdicted = True
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # POWERUP - PADDLE SPEED BOOST
