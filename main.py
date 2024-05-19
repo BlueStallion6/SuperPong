@@ -33,6 +33,13 @@ running = True
 leftPowerupList = ["Score Multiplier", "Enlarge Paddle", "Paddle Speed Boost"]
 rightPowerupList = ["Score Multiplier", "Enlarge Paddle", "Paddle Speed Boost"]
 channel = pygame.mixer.Channel(1)
+MAIN_SCREEN_COLOR = Colors.BLUE_TINT
+
+def MSC_TURN_RED():
+    MAIN_SCREEN_COLOR = Colors.RED_TINT
+
+def MSC_TURN_BLUE():
+    MAIN_SCREEN_COLOR = Colors.BLUE_TINT
 
 ######################################################################################################################
 
@@ -62,11 +69,6 @@ velocity_inc_rate = 1.8
 velocity_inc_flat = 32 * W_PERC / TPS
 right_score_increment = 0
 left_score_increment = 0
-
-def roll():
-    return 1, 2, 3, 4
-
-(a, b, c, d) = roll()
 
 random_value_red_x = randint(50, 950) / 1000
 random_value_red_y = randint(50, 950) / 1000
@@ -182,17 +184,18 @@ class Ball:
             self.y = W_HEIGHT - self.radius
             self.y_vel = self.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND_2)
+
         elif self.y - self.radius < 0: # upper barrier
             self.y_vel *= -1
             self.y = self.radius
             self.y_vel = self.y_vel - (velocity_inc_flat / 4)
             sfx.play(assets.MARGIN_HIT_SOUND_2)
 
-
         if self.x + ball.radius >= W_WIDTH: # right barrier
             self.x_vel *= -1
             self.x = W_WIDTH - self.radius
             sfx.play(assets.MARGIN_HIT_SOUND_2)
+
         if self.x - self.radius <= 0: # left barrier
             self.x_vel *= -1
             sfx.play(assets.MARGIN_HIT_SOUND_2)
@@ -241,6 +244,7 @@ midlines_draw = True
 ball.moving = False
 player_won = False
 WAY_ARROW_SEM = 0
+
 
 right_score_powerup_usage = 0
 left_score_powerup_usage = 0
