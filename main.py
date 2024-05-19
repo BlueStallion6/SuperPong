@@ -23,6 +23,8 @@ except ImportError:
 
 #~WINDOW INIT~
 pygame.init()
+pygame.mixer.init()
+
 pygame.display.set_caption('SuperPong')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((W_WIDTH, W_HEIGHT), FLAGS)
@@ -30,6 +32,7 @@ score_font = pygame.font.Font(".\\resources\\pong-score.ttf", size=CONFIG["setti
 running = True
 leftPowerupList = ["Score Multiplier", "Enlarge Paddle", "Paddle Speed Boost"]
 rightPowerupList = ["Score Multiplier", "Enlarge Paddle", "Paddle Speed Boost"]
+channel = pygame.mixer.Channel(1)
 
 ######################################################################################################################
 
@@ -316,8 +319,15 @@ ball_left_unfreeze_usage = 0
                                  #####################---- WHILE RUNNING ----######################
                              ##################################################################
 
+
 start_screen = True
 music_playing = False
+
+if music_playing is False:
+    channel.play(assets.MUSIC_3)
+    music_playing = True
+
+
 while running:
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -343,11 +353,16 @@ while running:
                     start_screen = False
                     sfx.play(assets.ENTER_GAME_SOUND)
 
-
-
-        if music_playing is False:
-            sfx.play(assets.MUSIC_3)
-            music_playing = True
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_m:
+                    if music_playing:
+                        channel.pause()
+                        music_playing = False
+                        break
+                    if music_playing is not True:
+                        channel.unpause()
+                        music_playing = True
+                        break
 
         ball_start_screen_red.draw(screen)
         ball_start_screen_red.move_start_screen()
@@ -356,11 +371,13 @@ while running:
 
 
         start_screen_text1 = SuperDreamFont4.render("SUPER PONG", True, Colors.BLUE_TINT)
-        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 2.5 * W_PERC))
+        screen.blit(start_screen_text1, (W_WIDTH // 2 - start_screen_text1.get_width() / 2 * W_PERC, W_HEIGHT / 2.45 * W_PERC))
 
         start_screen_text2 = SuperDreamFont5.render("~ PRESS SPACE TO BEGIN ~", True, Colors.GRAY3)
         screen.blit(start_screen_text2, (W_WIDTH // 2 - start_screen_text2.get_width() / 2 * W_PERC, W_HEIGHT / 1.8 * W_PERC))
 
+        start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
+        screen.blit(start_screen_text3, (W_WIDTH // 1.075 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
 
 
         pygame.display.update()
@@ -393,6 +410,17 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     ball.moving = True
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_m:
+                    if music_playing:
+                        channel.pause()
+                        music_playing = False
+                        break
+                    if music_playing is not True:
+                        channel.unpause()
+                        music_playing = True
+                        break
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         #POWERUP - SCORE MULTIPLIER EVENT
