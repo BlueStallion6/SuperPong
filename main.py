@@ -203,8 +203,8 @@ class Ball:
         pygame.draw.circle(screen, self.ball_color, (self.x, self.y), self.radius, width = 0)
 
 ball = Ball(W_WIDTH // 2, W_HEIGHT // 2, ball_velocity_x, ball_velocity_y, BALL_RADIUS, Colors.BALL_COLOR)
-ball_start_screen_red = Ball(int(W_WIDTH * random_value_red_x), int(W_WIDTH * random_value_red_y), ball_velocity_x * 0.70, ball_velocity_x * 0.85, BALL_RADIUS, Colors.RED_TINT_AUX)
-ball_start_screen_blue = Ball(int(W_WIDTH * random_value_blue_x), int(W_WIDTH * random_value_blue_y), -ball_velocity_x * 0.85, ball_velocity_x * 0.70, BALL_RADIUS, Colors.BLUE_TINT_AUX)
+ball_start_screen_red = Ball(int(W_WIDTH * random_value_red_x), int(W_WIDTH * random_value_red_y), ball_velocity_x * 0.60, ball_velocity_x * 0.85, BALL_RADIUS, Colors.RED_TINT_AUX)
+ball_start_screen_blue = Ball(int(W_WIDTH * random_value_blue_x), int(W_WIDTH * random_value_blue_y), -ball_velocity_x * 0.85, ball_velocity_x * 0.60, BALL_RADIUS, Colors.BLUE_TINT_AUX)
 
 #######################################################################################################################
 
@@ -317,6 +317,7 @@ ball_left_unfreeze_usage = 0
                              ##################################################################
 
 start_screen = True
+music_playing = False
 while running:
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -340,7 +341,13 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     start_screen = False
+                    sfx.play(assets.ENTER_GAME_SOUND)
 
+
+
+        if music_playing is False:
+            sfx.play(assets.MUSIC_3)
+            music_playing = True
 
         ball_start_screen_red.draw(screen)
         ball_start_screen_red.move_start_screen()
@@ -353,6 +360,8 @@ while running:
 
         start_screen_text2 = SuperDreamFont5.render("~ PRESS SPACE TO BEGIN ~", True, Colors.GRAY3)
         screen.blit(start_screen_text2, (W_WIDTH // 2 - start_screen_text2.get_width() / 2 * W_PERC, W_HEIGHT / 1.8 * W_PERC))
+
+
 
         pygame.display.update()
         clock.tick(TPS)
