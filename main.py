@@ -77,7 +77,7 @@ right_paddle = Paddle(W_WIDTH - RIGHT_PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 
 #######################################################################################################################
 
 if screen_resolution_sem == 1:
-    ball_velocity_x = 1000 * W_PERC / TPS
+    ball_velocity_x = 1050 * W_PERC / TPS
     ball_velocity_y = -100 * W_PERC / TPS
     velocity_inc_flat = 28 * W_PERC / TPS
 
