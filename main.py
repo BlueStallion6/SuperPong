@@ -77,7 +77,7 @@ right_paddle = Paddle(W_WIDTH - RIGHT_PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 
 #######################################################################################################################
 
 if screen_resolution_sem == 1:
-    ball_velocity_x = 980 * W_PERC / TPS
+    ball_velocity_x = 1000 * W_PERC / TPS
     ball_velocity_y = -100 * W_PERC / TPS
     velocity_inc_flat = 28 * W_PERC / TPS
 
@@ -1097,7 +1097,7 @@ while running:
 
 
                 if screen_resolution_sem == 1:
-                    screen.blit(controls_left_text, (W_WIDTH // 8 - 100 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
+                    screen.blit(controls_left_text, (W_WIDTH // 8 - 110 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
                 elif screen_resolution_sem == 2:
                     screen.blit(controls_left_text, (W_WIDTH // 8 - 170 * W_PERC, W_HEIGHT / 12 - 50 * W_PERC))
                 else:
@@ -1105,14 +1105,14 @@ while running:
 
                 if KEYS_PRESSED[pygame.K_q]:
                     if screen_resolution_sem == 1:
-                        screen.blit(control_up_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
-                        screen.blit(control_down_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
-                        screen.blit(control_1_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
-                        screen.blit(control_2_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
-                        screen.blit(control_3_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
-                        screen.blit(control_4_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
-                        screen.blit(control_5_left_text, (W_WIDTH // 8 - 45 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
-                        screen.blit(control_info_left_text, (W_WIDTH // 8 - 100 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
+                        screen.blit(control_up_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
+                        screen.blit(control_down_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 60 * W_PERC))
+                        screen.blit(control_1_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 110 * W_PERC))
+                        screen.blit(control_2_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 160 * W_PERC))
+                        screen.blit(control_3_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 210 * W_PERC))
+                        screen.blit(control_4_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 260 * W_PERC))
+                        screen.blit(control_5_left_text, (W_WIDTH // 8 - 55 * W_PERC, W_HEIGHT / 12 + 310 * W_PERC))
+                        screen.blit(control_info_left_text, (W_WIDTH // 8 - 110 * W_PERC, W_HEIGHT / 12 + 360 * W_PERC))
 
                     elif screen_resolution_sem == 2:
                         screen.blit(control_up_left_text, (W_WIDTH // 8 - 115 * W_PERC, W_HEIGHT / 12 + 10 * W_PERC))
