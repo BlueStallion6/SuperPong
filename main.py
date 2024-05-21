@@ -77,9 +77,9 @@ right_paddle = Paddle(W_WIDTH - RIGHT_PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 
 #######################################################################################################################
 
 if screen_resolution_sem == 1:
-    ball_velocity_x = 3040 * W_PERC / TPS
+    ball_velocity_x = 980 * W_PERC / TPS
     ball_velocity_y = -100 * W_PERC / TPS
-    velocity_inc_flat = 32 * W_PERC / TPS
+    velocity_inc_flat = 28 * W_PERC / TPS
 
 elif screen_resolution_sem == 2:
     ball_velocity_x = 1350 * W_PERC / TPS
@@ -408,7 +408,7 @@ while running:
 
         if screen_resolution_sem == 1: # FULL HD monitor
             start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
-            screen.blit(start_screen_text3, (W_WIDTH // 1.085 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
+            screen.blit(start_screen_text3, (W_WIDTH // 1.088 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
 
 
         elif screen_resolution_sem == 2: #2K monitor
