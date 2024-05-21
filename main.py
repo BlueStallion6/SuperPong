@@ -533,7 +533,7 @@ while running:
         # POWERUP - FREEZE BALL EVENT
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RCTRL and ball_left_freeze_active is False:
+                if event.key == pygame.K_LEFT and ball_left_freeze_active is False:
                     if ball.moving and ball_right_freeze_usage == 0 and left_paddle.x + (1.5 * PADDLE_WIDTH) <= ball.x <= right_paddle.x - PADDLE_WIDTH:
 
                         ball_right_freeze_active = True
@@ -1033,7 +1033,7 @@ while running:
                 control_2_right_text = SuperDreamFont2.render("BACKSLASH      -  SABOTAGE", True, Colors.GRAY2)
                 control_3_right_text = SuperDreamFont2.render("ENTER     -  SPEED BOOST", True, Colors.GRAY2)
                 control_4_right_text = SuperDreamFont2.render("R SHIFT     -  ENLARGE PADDLE", True, Colors.GRAY2)
-                control_5_right_text = SuperDreamFont2.render("R CTRL    -  FREEZE BALL", True, Colors.GRAY2)
+                control_5_right_text = SuperDreamFont2.render("LEFT ARROW  -  FREEZE BALL", True, Colors.GRAY2)
 
 
                 control_info_right_text = SuperDreamFont2.render("Note :  Power-ups can be used once per match", True, Colors.BLUE_TINT2)
