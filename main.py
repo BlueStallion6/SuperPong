@@ -35,11 +35,24 @@ rightPowerupList = ["Score Multiplier", "Enlarge Paddle", "Paddle Speed Boost"]
 channel = pygame.mixer.Channel(1)
 MAIN_SCREEN_COLOR = Colors.BLUE_TINT
 
-def MSC_TURN_RED():
-    MAIN_SCREEN_COLOR = Colors.RED_TINT
 
-def MSC_TURN_BLUE():
-    MAIN_SCREEN_COLOR = Colors.BLUE_TINT
+display_info = pygame.display.Info()
+screen_width = display_info.current_w
+screen_height = display_info.current_h
+
+print("screen is", screen_width, "in width")
+print("screen is",  screen_height, "in height")
+
+if screen_width == 1920 and screen_height == 1080:
+    screen_resolution_sem = 1        #1 = Full HD monitor
+
+elif screen_width == 2560 and screen_height == 1440:
+    screen_resolution_sem = 2        #2 = 2K monitor
+
+else:
+    screen_resolution_sem = 3        #3 = Possibly 4K or other
+    screen_resolution = f"Other ({screen_width}x{screen_height})"
+    print(f"Screen resolution: {screen_resolution}")
 
 ######################################################################################################################
 
@@ -63,10 +76,22 @@ right_paddle = Paddle(W_WIDTH - RIGHT_PADDLE_SPACING - PADDLE_WIDTH, W_HEIGHT/2 
 
 #######################################################################################################################
 
-ball_velocity_x = 1340 * W_PERC / TPS
-ball_velocity_y = -100 * W_PERC / TPS
-velocity_inc_rate = 1.8
-velocity_inc_flat = 32 * W_PERC / TPS
+if screen_resolution_sem == 1:
+    ball_velocity_x = 3040 * W_PERC / TPS
+    ball_velocity_y = -100 * W_PERC / TPS
+    velocity_inc_flat = 32 * W_PERC / TPS
+
+elif screen_resolution_sem == 2:
+    ball_velocity_x = 1350 * W_PERC / TPS
+    ball_velocity_y = -100 * W_PERC / TPS
+    velocity_inc_flat = 32 * W_PERC / TPS
+
+else:
+    ball_velocity_x = 1740 * W_PERC / TPS
+    ball_velocity_y = -100 * W_PERC / TPS
+    velocity_inc_flat = 32 * W_PERC / TPS
+
+
 right_score_increment = 0
 left_score_increment = 0
 
@@ -380,8 +405,19 @@ while running:
         start_screen_text2 = SuperDreamFont5.render("~ PRESS SPACE TO BEGIN ~", True, Colors.GRAY3)
         screen.blit(start_screen_text2, (W_WIDTH // 2 - start_screen_text2.get_width() / 2 * W_PERC, W_HEIGHT / 1.8 * W_PERC))
 
-        start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
-        screen.blit(start_screen_text3, (W_WIDTH // 1.075 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
+
+        if screen_resolution_sem == 1: # FULL HD monitor
+            start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
+            screen.blit(start_screen_text3, (W_WIDTH // 1.085 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
+
+
+        elif screen_resolution_sem == 2: #2K monitor
+            start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
+            screen.blit(start_screen_text3, (W_WIDTH // 1.075 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
+
+        else:
+            start_screen_text3 = SuperDreamFont3.render("~ press M to toggle music ~", True, Colors.GRAY3)
+            screen.blit(start_screen_text3,(W_WIDTH // 1.075 - start_screen_text3.get_width() / 2 * W_PERC, W_HEIGHT / 1.03 * W_PERC))
 
 
         pygame.display.update()
