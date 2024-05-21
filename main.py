@@ -40,8 +40,9 @@ display_info = pygame.display.Info()
 screen_width = display_info.current_w
 screen_height = display_info.current_h
 
-print("screen is", screen_width, "in width")
-print("screen is",  screen_height, "in height")
+if DEBUG_MODE:
+    print_debug("screen is", screen_width, "in width")
+    print_debug("screen is",  screen_height, "in height")
 
 if screen_width == 1920 and screen_height == 1080:
     screen_resolution_sem = 1        #1 = Full HD monitor
