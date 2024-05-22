@@ -270,6 +270,7 @@ midlines_draw = True
 ball.moving = False
 player_won = False
 WAY_ARROW_SEM = 0
+game_won_sound_sem = 0
 
 
 right_score_powerup_usage = 0
@@ -892,6 +893,12 @@ while running:
         #########   WINNING SITUATION   #########
 
         if LEFT_SCORE.get() >= WINNING_SCORE or RIGHT_SCORE.get() >= WINNING_SCORE:
+
+            if game_won_sound_sem == 0:
+                sfx.play(assets.GAME_WON_SOUND)
+                game_won_sound_sem = 1
+
+
             right_score_increment = 0
             left_score_increment = 0
             left_score_powerup_usage = 0
@@ -950,6 +957,7 @@ while running:
             Press_space_sem = False
 
             if player_won and pygame.key.get_pressed()[pygame.K_SPACE]:
+                game_won_sound_sem = 0
                 LEFT_SCORE.count = 0
                 RIGHT_SCORE.count = 0
                 ball.reset()
